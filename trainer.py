@@ -22,9 +22,11 @@ def quit():
 
 def mainLoop():
     global total
-    #splitCheck(True)
-    #softCheck(True)
-    hardCheck(True)
+    splitCheck(False)
+    softCheck(False)
+    hardCheck(False)
+    # while true:
+    # if play_token = 'none', reset stuff
     quit()
 
 def splitCheck(run_random):
@@ -58,18 +60,18 @@ def splitCheck(run_random):
             os.system('clear')
 
     else:
-        while total < 100:
+        split_array = []
+        for i in range(1, 11):
+            for j in range(1, 11):
+                split_array.append([i, j])
+        for pair in split_array:
+            row, col = pair
             play_splits = playSplits()
             if(play_splits):
                 correct += 1
             else:
                 incorrect += 1
-
             total += 1
-            col += 1
-            if col > 10:
-                col = 1
-                row += 1
             print("Count = %d" % total)
             input("Press ENTER to continue")
             os.system('clear')
@@ -105,12 +107,12 @@ def softCheck(run_random):
         play_token = 'softs'
 
     if run_random:
-        split_array = []
+        soft_array = []
         for i in range(11, 19):
             for j in range(1, 11):
-                split_array.append([i, j])
-        random.shuffle(split_array)
-        for pair in split_array:
+                soft_array.append([i, j])
+        random.shuffle(soft_array)
+        for pair in soft_array:
             row, col = pair
             play_softs = playSofts()
             if(play_softs):
@@ -123,17 +125,18 @@ def softCheck(run_random):
             os.system('clear')
 
     else:
-        while total < 80:
+        soft_array = []
+        for i in range(11, 19):
+            for j in range(1, 11):
+                soft_array.append([i, j])
+        for pair in soft_array:
+            row, col = pair
             play_softs = playSofts()
-            if (play_softs):
+            if(play_softs):
                 correct += 1
             else:
                 incorrect += 1
             total += 1
-            col += 1
-            if col > 10:
-                col = 1
-                row += 1
             print("Count = %d" % total)
             input("Press ENTER to continue")
             os.system('clear')
@@ -171,12 +174,12 @@ def hardCheck(run_random):
         play_token = 'hards'
 
     if run_random:
-        split_array = []
+        hard_array = []
         for i in range(19, 29):
             for j in range(1, 11):
-                split_array.append([i, j])
-        random.shuffle(split_array)
-        for pair in split_array:
+                hard_array.append([i, j])
+        random.shuffle(hard_array)
+        for pair in hard_array:
             row, col = pair
             play_hards = playHards()
             if(play_hards):
@@ -189,17 +192,18 @@ def hardCheck(run_random):
             os.system('clear')
 
     else:
-        while total < 100:
+        hard_array = []
+        for i in range(19, 29):
+            for j in range(1, 11):
+                hard_array.append([i, j])
+        for pair in hard_array:
+            row, col = pair
             play_hards = playHards()
-            if (play_hards):
+            if(play_hards):
                 correct += 1
             else:
                 incorrect += 1
             total += 1
-            col += 1
-            if col > 10:
-                col = 1
-                row += 1
             print("Count = %d" % total)
             input("Press ENTER to continue")
             os.system('clear')
