@@ -2,21 +2,22 @@ import os
 import sys
 import bjbs_chart
 import random
-# from playTrainer import playSplits
 
 def quit():
     sys.exit()
 
 def mainLoop():
     global arr_index, split_array, soft_array, hard_array
-    # while arr_index < len(split_array):
-    #     playSplits(True)
+    while arr_index < len(split_array):
+        playSplits(False)
+    arr_index = 0
 
-    # while arr_index < len(soft_array):
-    #     playSofts(True)
+    while arr_index < len(soft_array):
+        playSofts(False)
+    arr_index = 0
 
     while arr_index < len(hard_array):
-        playHards(True)
+        playHards(False)
     #quit()
 
 def playSplits(run_random):
