@@ -2,22 +2,24 @@ import os
 import sys
 import bjbs_chart
 import random
+# from playTrainer import playSplits
 
 def quit():
     sys.exit()
 
-def mainLoop():
-    global arr_index, split_array, soft_array, hard_array
-    while arr_index < len(split_array):
-        playSplits(False)
-    arr_index = 0
+# def mainLoop():
+#     global arr_index, split_array, soft_array, hard_array, all_array
+#     while arr_index < len(split_array):
+#         playSplits(True)
 
-    while arr_index < len(soft_array):
-        playSofts(False)
-    arr_index = 0
+    # while arr_index < len(soft_array):
+    #     playSofts(True)
 
-    while arr_index < len(hard_array):
-        playHards(False)
+    # while arr_index < len(hard_array):
+    #     playHards(True)
+
+    # while arr_index < len(all_array):
+    #     playAll(False)
     #quit()
 
 def playSplits(run_random):
@@ -42,6 +44,8 @@ def playSplits(run_random):
     print("Count: %d" % arr_index)
     arr_index += 1
 
+    return dealer_card, player_card, answer
+
 def playSofts(run_random):
     global play_token, soft_array, arr_index, correct, incorrect, answer, incorrect_arr
     if play_token != 'softs':
@@ -64,6 +68,8 @@ def playSofts(run_random):
     print("Count: %d" % arr_index)
     arr_index += 1
 
+    return dealer_card, player_card, answer
+
 def playHards(run_random):
     global play_token, hard_array, arr_index, correct, incorrect, answer, incorrect_arr
     if play_token != 'hards':
@@ -85,6 +91,32 @@ def playHards(run_random):
     print("Answer: %s" % answer)
     print("Count: %d" % arr_index)
     arr_index += 1
+
+    return dealer_card, player_card, answer
+
+def playAll(run_random):
+    global play_token, all_array, arr_index, correct, incorrect, answer, incorrect_arr
+    if play_token != 'all':
+        correct = 0
+        incorrect = 0
+        incorrect_arr = []
+        arr_index = 0
+        play_token = 'all'
+        if(run_random):
+            random.shuffle(all_array)
+
+    pair = all_array[arr_index]
+    row, col = pair
+    dealer_card = chart_array[0][col]
+    player_card = chart_array[row][0]
+    answer = chart_array[row][col]
+    print("Dealer Card: %s" % dealer_card)
+    print("Player Card: %s" % player_card)
+    print("Answer: %s" % answer)
+    print("Count: %d" % arr_index)
+    arr_index += 1
+
+    return dealer_card, player_card, answer
 
 play_token = 'none'
 arr_index = 0
@@ -110,4 +142,9 @@ for i in range(19, 29):
     for j in range(1, 11):
         hard_array.append([i, j])
 
-mainLoop()
+all_array = []
+for i in range(1, 29):
+    for j in range(1, 11):
+        all_array.append([i, j])
+
+# mainLoop()
