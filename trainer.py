@@ -19,7 +19,7 @@ def quit():
     #     playHards(True)
 
     # while arr_index < len(all_array):
-    #     playAll(False)
+    #     playAll(True)
     #quit()
 
 def playSplits(run_random):
@@ -43,6 +43,9 @@ def playSplits(run_random):
     print("Answer: %s" % answer)
     print("Count: %d" % arr_index)
     arr_index += 1
+
+    if(arr_index == len(split_array)):
+        play_token = 'none'
 
     return dealer_card, player_card, answer
 
@@ -68,6 +71,9 @@ def playSofts(run_random):
     print("Count: %d" % arr_index)
     arr_index += 1
 
+    if(arr_index == len(soft_array)):
+        play_token = 'none'
+
     return dealer_card, player_card, answer
 
 def playHards(run_random):
@@ -92,6 +98,9 @@ def playHards(run_random):
     print("Count: %d" % arr_index)
     arr_index += 1
 
+    if(arr_index == len(hard_array)):
+        play_token = 'none'
+
     return dealer_card, player_card, answer
 
 def playAll(run_random):
@@ -115,6 +124,9 @@ def playAll(run_random):
     print("Answer: %s" % answer)
     print("Count: %d" % arr_index)
     arr_index += 1
+
+    if(arr_index == len(all_array)):
+        play_token = 'none'
 
     return dealer_card, player_card, answer
 
