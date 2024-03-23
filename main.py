@@ -2,6 +2,7 @@ import tkinter as tk
 import trainer
 
 checkAnswer = ""
+play_token = "none"
 
 def nextSplit():
     global checkAnswer
@@ -12,24 +13,46 @@ def nextSplit():
     checkAnswer = answer
 
 def nextSoft():
+    global checkAnswer
     dealer_card, player_card, answer = trainer.playSofts(False)
     dealerCard.config(text="Dealer Card: " + str(dealer_card))
     playerCard.config(text="Player Card: " + str(player_card))
     correctAnswer.config(text="Correct Answer: " + str(answer))
+    checkAnswer = answer
 
 def nextHard():
+    global checkAnswer
     dealer_card, player_card, answer = trainer.playHards(False)
     dealerCard.config(text="Dealer Card: " + str(dealer_card))
     playerCard.config(text="Player Card: " + str(player_card))
     correctAnswer.config(text="Correct Answer: " + str(answer))
+    checkAnswer = answer
 
 def nextAll():
-    dealer_card, player_card, answer = trainer.playAll(False)
+    global checkAnswer
+    dealer_card, player_card, answer, check_mode = trainer.playAll(False)
     dealerCard.config(text="Dealer Card: " + str(dealer_card))
     playerCard.config(text="Player Card: " + str(player_card))
     correctAnswer.config(text="Correct Answer: " + str(answer))
+    checkAnswer = answer
+    if(check_mode == "splits"):
+        hitBtn.place_forget()
+        standBtn.place_forget()
+        doubleHitBtn.place_forget()
+        doubleStandBtn.place_forget()
+        splitYesBtn.place(x=800, y=300)
+        splitNoBtn.place(x=900, y=300)
+    else:
+        splitYesBtn.place_forget()
+        splitNoBtn.place_forget()
+        hitBtn.place(x=720, y=300)
+        standBtn.place(x=775, y=300)
+        doubleHitBtn.place(x=850, y=300)
+        doubleStandBtn.place(x=975, y=300)
 
 def changeToSplits():
+    global play_token
+    play_token = "splits"
     splitsBtn.config(relief=tk.SUNKEN, state=tk.DISABLED)
     softsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
     hardsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
@@ -42,6 +65,8 @@ def changeToSplits():
     splitNoBtn.place(x=900, y=300)
     nextSplit()
 def changeToSofts():
+    global play_token
+    play_token = "softs"
     splitsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
     softsBtn.config(relief=tk.SUNKEN, state=tk.DISABLED)
     hardsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
@@ -55,6 +80,8 @@ def changeToSofts():
     nextSoft()
 
 def changeToHards():
+    global play_token
+    play_token = "hards"
     splitsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
     softsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
     hardsBtn.config(relief=tk.SUNKEN, state=tk.DISABLED)
@@ -67,33 +94,53 @@ def changeToHards():
     doubleStandBtn.place(x=975, y=300)
     nextHard()
 def changeToAll():
-    splitsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
-    softsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
-    hardsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
-    allBtn.config(relief=tk.SUNKEN, state=tk.DISABLED)
+    global play_token
+    play_token = "all"
+    # splitsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
+    # softsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
+    # hardsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
+    # allBtn.config(relief=tk.SUNKEN, state=tk.DISABLED)
     nextAll()
 def checkSplitYes():
+    global play_token
     print("Split Yes")
     if(checkAnswer == "Y"):
         print("Correct")
     else:
         print("Incorrect. Correct answer is Do Not Split")
-    nextSplit()
+
+    if(play_token == "splits"):
+        nextSplit()
+    else:
+        nextAll()
 
 def checkSplitNo():
+    global play_token
     print("Split No")
     if(checkAnswer == "N"):
         print("Correct")
     else:
         print("Incorrect. Correct answer is Split")
-    nextSplit()
+
+    if(play_token == "splits"):
+        nextSplit()
+    else:
+        nextAll()
 
 def checkHit():
+    global play_token
     print("Hit")
     if(checkAnswer == "H"):
         print("Correct")
     else:
         print("Incorrect. Correct answer is: " + checkAnswer)
+
+    if(play_token == "softs"):
+        nextSoft()
+    elif(play_token == "hards"):
+        nextHard()
+    else:
+        nextAll()
 
 def checkStand():
     print("Stand")
@@ -102,6 +149,13 @@ def checkStand():
     else:
         print("Incorrect. Correct answer is: " + checkAnswer)
 
+    if(play_token == "softs"):
+        nextSoft()
+    elif(play_token == "hards"):
+        nextHard()
+    else:
+        nextAll()
+
 def checkDh():
     print("Double or Hit")
     if(checkAnswer == "Dh"):
@@ -109,12 +163,26 @@ def checkDh():
     else:
         print("Incorrect. Correct answer is: " + checkAnswer)
 
+    if(play_token == "softs"):
+        nextSoft()
+    elif(play_token == "hards"):
+        nextHard()
+    else:
+        nextAll()
+
 def checkDs():
     print("Double or Stand")
     if(checkAnswer == "Ds"):
         print("Correct")
     else:
         print("Incorrect. Correct answer is: " + checkAnswer)
+
+    if(play_token == "softs"):
+        nextSoft()
+    elif(play_token == "hards"):
+        nextHard()
+    else:
+        nextAll()
 
 window = tk.Tk()
 window.title("Joshy's BlackJack Basic Strategy Trainer")
