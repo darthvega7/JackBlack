@@ -128,7 +128,13 @@ def playAll(run_random):
     if(arr_index == len(all_array)):
         play_token = 'none'
 
-    return dealer_card, player_card, answer
+    check_mode = ""
+    if(row > 0 and row < 11):
+        check_mode = "splits"
+    else:
+        check_mode = "not_splits"
+
+    return dealer_card, player_card, answer, check_mode
 
 play_token = 'none'
 arr_index = 0
