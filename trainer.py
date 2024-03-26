@@ -22,6 +22,30 @@ def quit():
     #     playAll(True)
     #quit()
 
+def resetMode():
+    global play_token, split_array, soft_array, hard_array, all_array
+    play_token = 'none'
+
+    split_array = []
+    for i in range(1, 11):
+        for j in range(1, 11):
+            split_array.append([i, j])
+
+    soft_array = []
+    for i in range(11, 19):
+        for j in range(1, 11):
+            soft_array.append([i, j])
+
+    hard_array = []
+    for i in range(19, 29):
+        for j in range(1, 11):
+            hard_array.append([i, j])
+
+    all_array = []
+    for i in range(1, 29):
+        for j in range(1, 11):
+            all_array.append([i, j])
+
 def playSplits(run_random):
     global play_token, split_array, arr_index, correct, incorrect, answer, incorrect_arr
     if play_token != 'splits':
@@ -45,7 +69,7 @@ def playSplits(run_random):
     arr_index += 1
 
     if(arr_index == len(split_array)):
-        play_token = 'none'
+        resetMode()
 
     return dealer_card, player_card, answer
 
