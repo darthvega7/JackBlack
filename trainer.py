@@ -96,7 +96,7 @@ def playSofts(run_random):
     arr_index += 1
 
     if(arr_index == len(soft_array)):
-        play_token = 'none'
+        resetMode()
 
     return dealer_card, player_card, answer
 
@@ -123,7 +123,7 @@ def playHards(run_random):
     arr_index += 1
 
     if(arr_index == len(hard_array)):
-        play_token = 'none'
+        resetMode()
 
     return dealer_card, player_card, answer
 
@@ -150,7 +150,7 @@ def playAll(run_random):
     arr_index += 1
 
     if(arr_index == len(all_array)):
-        play_token = 'none'
+        resetMode()
 
     check_mode = ""
     if(row > 0 and row < 11):
