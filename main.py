@@ -3,34 +3,65 @@ import trainer
 
 checkAnswer = ""
 play_token = "none"
+play_random = True
+
+def playRandom():
+    global play_random
+    play_random = True
+    trainer.resetMode()
+    randBtn.config(relief=tk.SUNKEN, state=tk.DISABLED)
+    inOrderBtn.config(relief=tk.RAISED, state=tk.NORMAL)
+    if play_token == "splits":
+        nextSplit()
+    elif play_token == "softs":
+        nextSoft()
+    elif play_token == "hards":
+        nextHard()
+    else:
+        nextAll()
+
+def playInOrder():
+    global play_random
+    play_random = False
+    trainer.resetMode()
+    randBtn.config(relief=tk.RAISED, state=tk.NORMAL)
+    inOrderBtn.config(relief=tk.SUNKEN, state=tk.DISABLED)
+    if play_token == "splits":
+        nextSplit()
+    elif play_token == "softs":
+        nextSoft()
+    elif play_token == "hards":
+        nextHard()
+    else:
+        nextAll()
 
 def nextSplit():
-    global checkAnswer
-    dealer_card, player_card, answer = trainer.playSplits(False)
+    global checkAnswer, play_random
+    dealer_card, player_card, answer = trainer.playSplits(play_random)
     dealerCard.config(text="Dealer Card: " + str(dealer_card))
     playerCard.config(text="Player Card: " + str(player_card))
     correctAnswer.config(text="Correct Answer: " + str(answer))
     checkAnswer = answer
 
 def nextSoft():
-    global checkAnswer
-    dealer_card, player_card, answer = trainer.playSofts(False)
+    global checkAnswer, play_random
+    dealer_card, player_card, answer = trainer.playSofts(play_random)
     dealerCard.config(text="Dealer Card: " + str(dealer_card))
     playerCard.config(text="Player Card: " + str(player_card))
     correctAnswer.config(text="Correct Answer: " + str(answer))
     checkAnswer = answer
 
 def nextHard():
-    global checkAnswer
-    dealer_card, player_card, answer = trainer.playHards(False)
+    global checkAnswer, play_random
+    dealer_card, player_card, answer = trainer.playHards(play_random)
     dealerCard.config(text="Dealer Card: " + str(dealer_card))
     playerCard.config(text="Player Card: " + str(player_card))
     correctAnswer.config(text="Correct Answer: " + str(answer))
     checkAnswer = answer
 
 def nextAll():
-    global checkAnswer
-    dealer_card, player_card, answer, check_mode = trainer.playAll(False)
+    global checkAnswer, play_random
+    dealer_card, player_card, answer, check_mode = trainer.playAll(play_random)
     dealerCard.config(text="Dealer Card: " + str(dealer_card))
     playerCard.config(text="Player Card: " + str(player_card))
     correctAnswer.config(text="Correct Answer: " + str(answer))
@@ -96,10 +127,10 @@ def changeToHards():
 def changeToAll():
     global play_token
     play_token = "all"
-    # splitsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
-    # softsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
-    # hardsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
-    # allBtn.config(relief=tk.SUNKEN, state=tk.DISABLED)
+    splitsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
+    softsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
+    hardsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
+    allBtn.config(relief=tk.SUNKEN, state=tk.DISABLED)
     nextAll()
 def checkSplitYes():
     global play_token
@@ -211,6 +242,12 @@ playerCard.place(x=800, y=150)
 
 correctAnswer = tk.Label(window, text="Correct Answer: ", font=("Arial", 20))
 correctAnswer.place(x=800, y=200)
+
+randBtn = tk.Button(window, text="Play Random Hands", command=playRandom)
+inOrderBtn = tk.Button(window, text="Play Hands In Order", command=playInOrder)
+randBtn.place(x=1700, y=25)
+inOrderBtn.place(x=1700, y=60)
+randBtn.config(relief=tk.SUNKEN, state=tk.DISABLED)
 
 # nextBtn = tk.Button(window, text="Next Card", command=nextSplit)
 # nextBtn.place(x=800, y=300)
