@@ -17,7 +17,7 @@ def playRandom():
         nextSoft()
     elif play_token == "hards":
         nextHard()
-    else:
+    elif play_token == "all":
         nextAll()
 
 def playInOrder():
@@ -32,7 +32,7 @@ def playInOrder():
         nextSoft()
     elif play_token == "hards":
         nextHard()
-    else:
+    elif play_token == "all":
         nextAll()
 
 def nextSplit():
