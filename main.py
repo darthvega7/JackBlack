@@ -64,15 +64,19 @@ def randomSuit():
         case 1:
             print("Player Card 1 suit is Hearts")
             playerCard1SuitValue.config(text="♥", fg="red")
+            playerCard1Value.config(fg="red")
         case 2:
             print("Player Card 1 suit is Spades")
             playerCard1SuitValue.config(text="♠", fg="black")
+            playerCard1Value.config(fg="black")
         case 3:
             print("Player Card 1 suit is Clubs")
             playerCard1SuitValue.config(text="♣", fg="green")
+            playerCard1Value.config(fg="green")
         case 4:
             print("Player Card 1 suit is Diamonds")
             playerCard1SuitValue.config(text="♦", fg="blue")
+            playerCard1Value.config(fg="blue")
         case _:
             print("ERROR choosing p1 suit")
 
@@ -80,15 +84,19 @@ def randomSuit():
         case 1:
             print("Player Card 2 suit is Hearts")
             playerCard2SuitValue.config(text="♥", fg="red")
+            playerCard2Value.config(fg="red")
         case 2:
             print("Player Card 2 suit is Spades")
             playerCard2SuitValue.config(text="♠", fg="black")
+            playerCard2Value.config(fg="black")
         case 3:
             print("Player Card 2 suit is Clubs")
             playerCard2SuitValue.config(text="♣", fg="green")
+            playerCard2Value.config(fg="green")
         case 4:
             print("Player Card 2 suit is Diamonds")
             playerCard2SuitValue.config(text="♦", fg="blue")
+            playerCard2Value.config(fg="blue")
         case _:
             print("ERROR choosing p2 suit")
 
