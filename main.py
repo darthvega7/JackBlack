@@ -1,5 +1,6 @@
 import tkinter as tk
 import trainer
+import random
 
 checkAnswer = ""
 play_token = "none"
@@ -35,6 +36,62 @@ def playInOrder():
     elif play_token == "all":
         nextAll()
 
+def randomSuit():
+    random_dealer_suit = random.randint(1, 4)
+    match(random_dealer_suit):
+        case 1:
+            print("Dealer suit is Hearts")
+            dealerSuitValue.config(text="♥", fg="red")
+            dealerCardValue.config(fg="red")
+        case 2:
+            print("Dealer suit is Spades")
+            dealerSuitValue.config(text="♠", fg="black")
+            dealerCardValue.config(fg="black")
+        case 3:
+            print("Dealer suit is Clubs")
+            dealerSuitValue.config(text="♣", fg="green")
+            dealerCardValue.config(fg="green")
+        case 4:
+            print("Dealer suit is Diamonds")
+            dealerSuitValue.config(text="♦", fg="blue")
+            dealerCardValue.config(fg="blue")
+        case _:
+            print("ERROR choosing dealer suit")
+
+    random_p1_suit = random.randint(1, 4)
+    random_p2_suit = random.randint(1, 4)
+    match(random_p1_suit):
+        case 1:
+            print("Player Card 1 suit is Hearts")
+            playerCard1SuitValue.config(text="♥", fg="red")
+        case 2:
+            print("Player Card 1 suit is Spades")
+            playerCard1SuitValue.config(text="♠", fg="black")
+        case 3:
+            print("Player Card 1 suit is Clubs")
+            playerCard1SuitValue.config(text="♣", fg="green")
+        case 4:
+            print("Player Card 1 suit is Diamonds")
+            playerCard1SuitValue.config(text="♦", fg="blue")
+        case _:
+            print("ERROR choosing p1 suit")
+
+    match(random_p2_suit):
+        case 1:
+            print("Player Card 2 suit is Hearts")
+            playerCard2SuitValue.config(text="♥", fg="red")
+        case 2:
+            print("Player Card 2 suit is Spades")
+            playerCard2SuitValue.config(text="♠", fg="black")
+        case 3:
+            print("Player Card 2 suit is Clubs")
+            playerCard2SuitValue.config(text="♣", fg="green")
+        case 4:
+            print("Player Card 2 suit is Diamonds")
+            playerCard2SuitValue.config(text="♦", fg="blue")
+        case _:
+            print("ERROR choosing p2 suit")
+
 def nextSplit():
     global checkAnswer, play_random
     dealer_card, player_card, answer = trainer.playSplits(play_random)
@@ -42,6 +99,11 @@ def nextSplit():
     playerCard.config(text="Player Card: " + str(player_card))
     correctAnswer.config(text="Correct Answer: " + str(answer))
     checkAnswer = answer
+    dealerCardValue.config(text=dealer_card)
+    p1, p2 = player_card.split(",")
+    playerCard1Value.config(text=p1)
+    playerCard2Value.config(text=p2)
+    randomSuit()
 
 def nextSoft():
     global checkAnswer, play_random
@@ -50,6 +112,11 @@ def nextSoft():
     playerCard.config(text="Player Card: " + str(player_card))
     correctAnswer.config(text="Correct Answer: " + str(answer))
     checkAnswer = answer
+    dealerCardValue.config(text=dealer_card)
+    p1, p2 = player_card.split(",")
+    playerCard1Value.config(text=p1)
+    playerCard2Value.config(text=p2)
+    randomSuit()
 
 def nextHard():
     global checkAnswer, play_random
@@ -58,6 +125,8 @@ def nextHard():
     playerCard.config(text="Player Card: " + str(player_card))
     correctAnswer.config(text="Correct Answer: " + str(answer))
     checkAnswer = answer
+    dealerCardValue.config(text=dealer_card)
+    playerCard1Value.config(text=player_card)
 
 def nextAll():
     global checkAnswer, play_random
@@ -71,15 +140,15 @@ def nextAll():
         standBtn.place_forget()
         doubleHitBtn.place_forget()
         doubleStandBtn.place_forget()
-        splitYesBtn.place(x=800, y=300)
-        splitNoBtn.place(x=900, y=300)
+        splitYesBtn.place(x=875, y=800)
+        splitNoBtn.place(x=975, y=800)
     else:
         splitYesBtn.place_forget()
         splitNoBtn.place_forget()
-        hitBtn.place(x=720, y=300)
-        standBtn.place(x=775, y=300)
-        doubleHitBtn.place(x=850, y=300)
-        doubleStandBtn.place(x=975, y=300)
+        hitBtn.place(x=770, y=800)
+        standBtn.place(x=825, y=800)
+        doubleHitBtn.place(x=900, y=800)
+        doubleStandBtn.place(x=1025, y=800)
 
 def changeToSplits():
     global play_token
@@ -92,8 +161,8 @@ def changeToSplits():
     standBtn.place_forget()
     doubleHitBtn.place_forget()
     doubleStandBtn.place_forget()
-    splitYesBtn.place(x=800, y=300)
-    splitNoBtn.place(x=900, y=300)
+    splitYesBtn.place(x=875, y=800)
+    splitNoBtn.place(x=975, y=800)
     nextSplit()
 def changeToSofts():
     global play_token
@@ -104,10 +173,10 @@ def changeToSofts():
     allBtn.config(relief=tk.RAISED, state=tk.NORMAL)
     splitYesBtn.place_forget()
     splitNoBtn.place_forget()
-    hitBtn.place(x=720, y=300)
-    standBtn.place(x=775, y=300)
-    doubleHitBtn.place(x=850, y=300)
-    doubleStandBtn.place(x=975, y=300)
+    hitBtn.place(x=770, y=800)
+    standBtn.place(x=825, y=800)
+    doubleHitBtn.place(x=900, y=800)
+    doubleStandBtn.place(x=1025, y=800)
     nextSoft()
 
 def changeToHards():
@@ -119,10 +188,10 @@ def changeToHards():
     allBtn.config(relief=tk.RAISED, state=tk.NORMAL)
     splitYesBtn.place_forget()
     splitNoBtn.place_forget()
-    hitBtn.place(x=720, y=300)
-    standBtn.place(x=775, y=300)
-    doubleHitBtn.place(x=850, y=300)
-    doubleStandBtn.place(x=975, y=300)
+    hitBtn.place(x=770, y=800)
+    standBtn.place(x=825, y=800)
+    doubleHitBtn.place(x=900, y=800)
+    doubleStandBtn.place(x=1025, y=800)
     nextHard()
 def changeToAll():
     global play_token
@@ -221,27 +290,28 @@ window.geometry("1920x1080")
 window.geometry("+0+0")
 icon = tk.PhotoImage(file="bitcoin.png")
 window.iconphoto(True, icon)
+window.configure(background="#3aa31a")
 
 splitsBtn = tk.Button(window, text="Play Splits", command=changeToSplits)
-splitsBtn.place(x=650, y=25)
+splitsBtn.place(x=700, y=25)
 
 softsBtn = tk.Button(window, text="Play Soft Totals", command=changeToSofts)
-softsBtn.place(x=750, y=25)
+softsBtn.place(x=815, y=25)
 
 hardsBtn = tk.Button(window, text="Play Hard Totals", command=changeToHards)
-hardsBtn.place(x=885, y=25)
+hardsBtn.place(x=975, y=25)
 
 allBtn = tk.Button(window, text="Play All", command=changeToAll)
-allBtn.place(x=1025, y=25)
+allBtn.place(x=1125, y=25)
 
 dealerCard = tk.Label(window, text="Dealer Card: ", font=("Arial", 20))
-dealerCard.place(x=800, y=100)
+dealerCard.place(x=100, y=300)
 
 playerCard = tk.Label(window, text="Player Card: ", font=("Arial", 20))
-playerCard.place(x=800, y=150)
+playerCard.place(x=100, y=350)
 
 correctAnswer = tk.Label(window, text="Correct Answer: ", font=("Arial", 20))
-correctAnswer.place(x=800, y=200)
+correctAnswer.place(x=100, y=400)
 
 randBtn = tk.Button(window, text="Play Random Hands", command=playRandom)
 inOrderBtn = tk.Button(window, text="Play Hands In Order", command=playInOrder)
@@ -259,5 +329,28 @@ hitBtn = tk.Button(window, text="Hit", command=checkHit)
 standBtn = tk.Button(window, text="Stand", command=checkStand)
 doubleHitBtn = tk.Button(window, text="Double or Hit", command=checkDh)
 doubleStandBtn = tk.Button(window, text="Double or Stand", command=checkDs)
+
+#dealerCardCanvas = tk.Canvas(window, width=250, height=350, bg="white")
+dealerCardCanvas = tk.Canvas(window, width=200, height=300, bg="white")
+dealerCardCanvas.place(x=850, y=75)
+
+playerCard1Canvas = tk.Canvas(window, width=200, height=300, bg="white")
+playerCard1Canvas.place(x=735, y=450)
+playerCard2Canvas = tk.Canvas(window, width=200, height=300, bg="white")
+playerCard2Canvas.place(x=985, y=450)
+
+dealerCardValue = tk.Label(text="X", font=("Arial", 75, "bold"), bg="white")
+dealerSuitValue = tk.Label(text="O", font=("Arial", 75, "bold"), bg="white")
+dealerCardValue.place(x=875, y=100)
+dealerSuitValue.place(x=950, y=240)
+playerCard1Value = tk.Label(text="X", font=("Arial", 75, "bold"), bg="white")
+playerCard2Value = tk.Label(text="X", font=("Arial", 75, "bold"), bg="white")
+playerCard1SuitValue = tk.Label(text="O", font=("Arial", 75, "bold"), bg="white")
+playerCard2SuitValue = tk.Label(text="O", font=("Arial", 75, "bold"), bg="white")
+playerCard1Value.place(x=760, y=475)
+playerCard2Value.place(x=1010, y=475)
+# x + 75, y + 140
+playerCard1SuitValue.place(x=835, y=615)
+playerCard2SuitValue.place(x=1085, y=615)
 
 window.mainloop()
