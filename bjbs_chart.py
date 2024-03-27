@@ -15,7 +15,7 @@ chart_array[0][6] = 7 # VS Dealer 7
 chart_array[0][7] = 8 # VS Dealer 8
 chart_array[0][8] = 9 # VS Dealer 9
 chart_array[0][9] = 10 # VS Dealer 10
-chart_array[0][10] = 11 # VS Dealer Ace
+chart_array[0][10] = 'A' # VS Dealer Ace
 
 ### PLAYER SPLIT CARDS ###
 
