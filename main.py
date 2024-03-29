@@ -100,6 +100,132 @@ def randomSuit():
         case _:
             print("ERROR choosing p2 suit")
 
+def hardTotalToCards(input):
+    match(int(input)):
+        case 17:
+            rand_value = random.randint(0, 1)
+            match(rand_value):
+                case 0:
+                    print("GOT 10,7")
+                    return 10,7
+                case 1:
+                    return 9,8
+                    print("GOT 9,8")
+                case _:
+                    print("ERROR on Hard 17")
+        case 16:
+            rand_value = random.randint(0, 2)
+            match(rand_value):
+                case 0:
+                    return 10,6
+                case 1:
+                    return 9,7
+                case 2:
+                    return 8,8
+                case _:
+                    print("ERROR on Hard 16")
+        case 15:
+            rand_value = random.randint(0, 2)
+            match(rand_value):
+                case 0:
+                    return 10,5
+                case 1:
+                    return 9,6
+                case 2:
+                    return 8,7
+                case _:
+                    print("ERROR on Hard 15")
+        case 14:
+            rand_value = random.randint(0, 3)
+            match(rand_value):
+                case 0:
+                    return 10,4
+                case 1:
+                    return 9,5
+                case 2:
+                    return 8,6
+                case 3:
+                    return 7,7
+                case _:
+                    print("ERROR on Hard 14")
+        case 13:
+            rand_value = random.randint(0, 3)
+            match(rand_value):
+                case 0:
+                    return 10,3
+                case 1:
+                    return 9,4
+                case 2:
+                    return 8,5
+                case 3:
+                    return 7,6
+                case _:
+                    print("ERROR on Hard 13")
+        case 12:
+            rand_value = random.randint(0, 4)
+            match(rand_value):
+                case 0:
+                    return 10,2
+                case 1:
+                    return 9,3
+                case 2:
+                    return 8,4
+                case 3:
+                    return 7,5
+                case 4:
+                    return 6,6
+                case _:
+                    print("ERROR on Hard 12")
+        case 11:
+            rand_value = random.randint(0, 3)
+            match(rand_value):
+                case 0:
+                    return 9,2
+                case 1:
+                    return 8,3
+                case 2:
+                    return 7,4
+                case 3:
+                    return 6,5
+                case _:
+                    print("ERROR on Hard 11")
+        case 10:
+            rand_value = random.randint(0, 3)
+            match(rand_value):
+                case 0:
+                    return 8,2
+                case 1:
+                    return 7,3
+                case 2:
+                    return 6,4
+                case 3:
+                    return 5,5
+                case _:
+                    print("ERROR on Hard 10")
+        case 9:
+            rand_value = random.randint(0, 2)
+            match(rand_value):
+                case 0:
+                    return 7,2
+                case 1:
+                    return 6,3
+                case 2:
+                    return 5,4
+                case _:
+                    print("ERROR on Hard 9")
+        case 8:
+            rand_value = random.randint(0, 2)
+            match(rand_value):
+                case 0:
+                    return 6,2
+                case 1:
+                    return 5,3
+                case 2:
+                    return 4,4
+                case _:
+                    print("ERROR on Hard 8")
+        case _:
+            print("ERROR: Hard Total not in list")
 def nextSplit():
     global checkAnswer, play_random
     dealer_card, player_card, answer = trainer.playSplits(play_random)
@@ -134,7 +260,11 @@ def nextHard():
     correctAnswer.config(text="Correct Answer: " + str(answer))
     checkAnswer = answer
     dealerCardValue.config(text=dealer_card)
-    playerCard1Value.config(text=player_card)
+    #playerCard1Value.config(text=player_card)    playerCard1Value.config(text)
+    p1, p2 = hardTotalToCards(player_card)
+    playerCard1Value.config(text=p1)
+    playerCard2Value.config(text=p2)
+    randomSuit()
 
 def nextAll():
     global checkAnswer, play_random
