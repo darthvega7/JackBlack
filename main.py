@@ -114,14 +114,12 @@ def hardTotalToCards(input):
                 case _:
                     print("ERROR on Hard 17")
         case 16:
-            rand_value = random.randint(0, 2)
+            rand_value = random.randint(0, 1)
             match(rand_value):
                 case 0:
                     return 10,6
                 case 1:
                     return 9,7
-                case 2:
-                    return 8,8
                 case _:
                     print("ERROR on Hard 16")
         case 15:
@@ -136,7 +134,7 @@ def hardTotalToCards(input):
                 case _:
                     print("ERROR on Hard 15")
         case 14:
-            rand_value = random.randint(0, 3)
+            rand_value = random.randint(0, 2)
             match(rand_value):
                 case 0:
                     return 10,4
@@ -144,8 +142,6 @@ def hardTotalToCards(input):
                     return 9,5
                 case 2:
                     return 8,6
-                case 3:
-                    return 7,7
                 case _:
                     print("ERROR on Hard 14")
         case 13:
@@ -162,7 +158,7 @@ def hardTotalToCards(input):
                 case _:
                     print("ERROR on Hard 13")
         case 12:
-            rand_value = random.randint(0, 4)
+            rand_value = random.randint(0, 3)
             match(rand_value):
                 case 0:
                     return 10,2
@@ -172,8 +168,6 @@ def hardTotalToCards(input):
                     return 8,4
                 case 3:
                     return 7,5
-                case 4:
-                    return 6,6
                 case _:
                     print("ERROR on Hard 12")
         case 11:
@@ -190,7 +184,7 @@ def hardTotalToCards(input):
                 case _:
                     print("ERROR on Hard 11")
         case 10:
-            rand_value = random.randint(0, 3)
+            rand_value = random.randint(0, 2)
             match(rand_value):
                 case 0:
                     return 8,2
@@ -198,8 +192,6 @@ def hardTotalToCards(input):
                     return 7,3
                 case 2:
                     return 6,4
-                case 3:
-                    return 5,5
                 case _:
                     print("ERROR on Hard 10")
         case 9:
@@ -214,14 +206,12 @@ def hardTotalToCards(input):
                 case _:
                     print("ERROR on Hard 9")
         case 8:
-            rand_value = random.randint(0, 2)
+            rand_value = random.randint(0, 1)
             match(rand_value):
                 case 0:
                     return 6,2
                 case 1:
                     return 5,3
-                case 2:
-                    return 4,4
                 case _:
                     print("ERROR on Hard 8")
         case _:
@@ -231,7 +221,7 @@ def nextSplit():
     dealer_card, player_card, answer = trainer.playSplits(play_random)
     dealerCard.config(text="Dealer Card: " + str(dealer_card))
     playerCard.config(text="Player Card: " + str(player_card))
-    correctAnswer.config(text="Correct Answer: " + str(answer))
+    #correctAnswer.config(text="Correct Answer: " + str(answer))
     checkAnswer = answer
     dealerCardValue.config(text=dealer_card)
     p1, p2 = player_card.split(",")
@@ -244,7 +234,7 @@ def nextSoft():
     dealer_card, player_card, answer = trainer.playSofts(play_random)
     dealerCard.config(text="Dealer Card: " + str(dealer_card))
     playerCard.config(text="Player Card: " + str(player_card))
-    correctAnswer.config(text="Correct Answer: " + str(answer))
+    #correctAnswer.config(text="Correct Answer: " + str(answer))
     checkAnswer = answer
     dealerCardValue.config(text=dealer_card)
     p1, p2 = player_card.split(",")
@@ -257,7 +247,7 @@ def nextHard():
     dealer_card, player_card, answer = trainer.playHards(play_random)
     dealerCard.config(text="Dealer Card: " + str(dealer_card))
     playerCard.config(text="Player Card: " + str(player_card))
-    correctAnswer.config(text="Correct Answer: " + str(answer))
+    #correctAnswer.config(text="Correct Answer: " + str(answer))
     checkAnswer = answer
     dealerCardValue.config(text=dealer_card)
     #playerCard1Value.config(text=player_card)    playerCard1Value.config(text)
@@ -271,7 +261,7 @@ def nextAll():
     dealer_card, player_card, answer, check_mode = trainer.playAll(play_random)
     dealerCard.config(text="Dealer Card: " + str(dealer_card))
     playerCard.config(text="Player Card: " + str(player_card))
-    correctAnswer.config(text="Correct Answer: " + str(answer))
+    #correctAnswer.config(text="Correct Answer: " + str(answer))
     checkAnswer = answer
     if(check_mode == "splits"):
         hitBtn.place_forget()
@@ -344,8 +334,10 @@ def checkSplitYes():
     print("Split Yes")
     if(checkAnswer == "Y"):
         print("Correct")
+        correctCheck.config(text="CORRECT!", fg="green")
     else:
         print("Incorrect. Correct answer is Do Not Split")
+        correctCheck.config(text="Incorrect", fg="red")
 
     if(play_token == "splits"):
         nextSplit()
@@ -357,8 +349,10 @@ def checkSplitNo():
     print("Split No")
     if(checkAnswer == "N"):
         print("Correct")
+        correctCheck.config(text="CORRECT!", fg="green")
     else:
         print("Incorrect. Correct answer is Split")
+        correctCheck.config(text="Incorrect", fg="red")
 
     if(play_token == "splits"):
         nextSplit()
@@ -370,8 +364,10 @@ def checkHit():
     print("Hit")
     if(checkAnswer == "H"):
         print("Correct")
+        correctCheck.config(text="CORRECT!", fg="green")
     else:
         print("Incorrect. Correct answer is: " + checkAnswer)
+        correctCheck.config(text="Incorrect", fg="red")
 
     if(play_token == "softs"):
         nextSoft()
@@ -384,8 +380,10 @@ def checkStand():
     print("Stand")
     if(checkAnswer == "S"):
         print("Correct")
+        correctCheck.config(text="CORRECT!", fg="green")
     else:
         print("Incorrect. Correct answer is: " + checkAnswer)
+        correctCheck.config(text="Incorrect", fg="red")
 
     if(play_token == "softs"):
         nextSoft()
@@ -398,8 +396,10 @@ def checkDh():
     print("Double or Hit")
     if(checkAnswer == "Dh"):
         print("Correct")
+        correctCheck.config(text="CORRECT!", fg="green")
     else:
         print("Incorrect. Correct answer is: " + checkAnswer)
+        correctCheck.config(text="Incorrect", fg="red")
 
     if(play_token == "softs"):
         nextSoft()
@@ -412,8 +412,10 @@ def checkDs():
     print("Double or Stand")
     if(checkAnswer == "Ds"):
         print("Correct")
+        correctCheck.config(text="CORRECT!", fg="green")
     else:
         print("Incorrect. Correct answer is: " + checkAnswer)
+        correctCheck.config(text="Incorrect", fg="red")
 
     if(play_token == "softs"):
         nextSoft()
@@ -448,8 +450,11 @@ dealerCard.place(x=100, y=300)
 playerCard = tk.Label(window, text="Player Card: ", font=("Arial", 20))
 playerCard.place(x=100, y=350)
 
-correctAnswer = tk.Label(window, text="Correct Answer: ", font=("Arial", 20))
-correctAnswer.place(x=100, y=400)
+# correctAnswer = tk.Label(window, text="Correct Answer: ", font=("Arial", 20))
+# correctAnswer.place(x=100, y=400)
+
+correctCheck = tk.Label(window, text="", font=("Arial", 20))
+correctCheck.place(x=1300, y=400)
 
 randBtn = tk.Button(window, text="Play Random Hands", command=playRandom)
 inOrderBtn = tk.Button(window, text="Play Hands In Order", command=playInOrder)
