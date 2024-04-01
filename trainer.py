@@ -155,8 +155,12 @@ def playAll(run_random):
     check_mode = ""
     if(row > 0 and row < 11):
         check_mode = "splits"
+    elif(row >= 11 and row < 19):
+        check_mode = "softs"
+    elif(row >= 19 and row < 29):
+        check_mode = "hards"
     else:
-        check_mode = "not_splits"
+        check_mode = "none"
 
     return dealer_card, player_card, answer, check_mode
 
