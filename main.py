@@ -250,7 +250,6 @@ def nextHard():
     #correctAnswer.config(text="Correct Answer: " + str(answer))
     checkAnswer = answer
     dealerCardValue.config(text=dealer_card)
-    #playerCard1Value.config(text=player_card)    playerCard1Value.config(text)
     p1, p2 = hardTotalToCards(player_card)
     playerCard1Value.config(text=p1)
     playerCard2Value.config(text=p2)
@@ -277,6 +276,24 @@ def nextAll():
         standBtn.place(x=825, y=800)
         doubleHitBtn.place(x=900, y=800)
         doubleStandBtn.place(x=1025, y=800)
+    if(check_mode == "splits"):
+        dealerCardValue.config(text=dealer_card)
+        p1, p2 = player_card.split(",")
+        playerCard1Value.config(text=p1)
+        playerCard2Value.config(text=p2)
+    elif(check_mode == "softs"):
+        dealerCardValue.config(text=dealer_card)
+        p1, p2 = player_card.split(",")
+        playerCard1Value.config(text=p1)
+        playerCard2Value.config(text=p2)
+    elif(check_mode == "hards"):
+        dealerCardValue.config(text=dealer_card)
+        p1, p2 = hardTotalToCards(player_card)
+        playerCard1Value.config(text=p1)
+        playerCard2Value.config(text=p2)
+    else:
+        print("ERROR in All Mode: Mode Not Found")
+    randomSuit()
 
 def changeToSplits():
     global play_token
@@ -407,7 +424,6 @@ def checkDh():
         nextHard()
     else:
         nextAll()
-
 def checkDs():
     print("Double or Stand")
     if(checkAnswer == "Ds"):
