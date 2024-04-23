@@ -1,19 +1,102 @@
 import tkinter as tk
 import trainer_engine as trainer
+import bjbs_chart
 import random
 
 checkAnswer = ""
 play_token = "none"
 play_random = True
 
-def chart_window():
-    chart = tk.Toplevel()
-    chart.title("Basic Strategy Chart")
-    chart.geometry("1280x720")
-    chart.geometry("+0+0")
-    #chart_icon = tk.PhotoImage(file="bitcoin.png")
-    #chart.iconphoto(True, chart_icon)
-    chart.configure(background="#3aa31a")
+def splitsChart():
+    rows = 11
+    cols = 11
+
+    splits_chart = tk.Toplevel()
+    splits_chart.title("Basic Strategy Chart: Splits")
+    splits_chart.geometry("1280x720")
+    #splits_chart.geometry("1920x1080")
+    splits_chart.geometry("+0+0")
+    #splits_chart_icon = tk.PhotoImage(file="bitcoin.png")
+    #splits_chart.iconphoto(True, chart_icon)
+    splits_chart.configure(background="#3aa31a")
+
+    for i in range(rows):
+        for j in range(cols):
+            cell_value = bjbs_chart.chart_array[i][j]
+            label = tk.Label(
+                splits_chart, text=cell_value, padx=10, pady=5, relief=tk.RIDGE, borderwidth=2,
+                font=("Arial", 20)
+            )
+            label.grid(row=i, column=j, sticky="nsew")
+
+    for i in range(rows):
+        splits_chart.grid_rowconfigure(i, weight=1, minsize=40)
+    for j in range(cols):
+        splits_chart.grid_columnconfigure(j, weight=1, minsize=80)
+
+    splits_chart.grid_slaves(0, 0)[0].config(text="")
+
+    # Always Splits Aces
+    for j in range(1, 11):
+        label = splits_chart.grid_slaves(row=1, column=j)[0]
+        label.config(bg="green")
+
+    # Never Split 10's
+    for j in range(1, 11):
+        label = splits_chart.grid_slaves(row=2, column=j)[0]
+        label.config(bg="white")
+
+    # Split 9's against 2 thru 9 except for 7
+    for j in range(1, 9):
+        label = splits_chart.grid_slaves(row=3, column=j)[0]
+        label.config(bg="green")
+    for j in range(9, 11):
+        label = splits_chart.grid_slaves(row=3, column=j)[0]
+        label.config(bg="white")
+    splits_chart.grid_slaves(3, 6)[0].config(bg="white")
+
+    # Always Split 8's
+    for j in range(1, 11):
+        label = splits_chart.grid_slaves(row=4, column=j)[0]
+        label.config(bg="green")
+
+    # Split 7's against 2 thru 7
+    for j in range(1, 7):
+        label = splits_chart.grid_slaves(row=5, column=j)[0]
+        label.config(bg="green")
+    for j in range(7, 11):
+        label = splits_chart.grid_slaves(row=5, column=j)[0]
+        label.config(bg="white")
+
+    # Split 6's against 2 thru 6
+    for j in range(1, 6):
+        label = splits_chart.grid_slaves(row=6, column=j)[0]
+        label.config(bg="green")
+    for j in range(6, 11):
+        label = splits_chart.grid_slaves(row=6, column=j)[0]
+        label.config(bg="white")
+
+    # Never Split 5's
+    for j in range(1, 11):
+        label = splits_chart.grid_slaves(row=7, column=j)[0]
+        label.config(bg="white")
+
+    # Split 4's against 5 and 6
+    for j in range(1, 11):
+        label = splits_chart.grid_slaves(row=8, column=j)[0]
+        label.config(bg="white")
+    for j in range(4, 6):
+        label = splits_chart.grid_slaves(row=8, column=j)[0]
+        label.config(bg="green")
+
+    # Split 3's and 2's against 2 thru 7
+    for i in range(9, 11):
+        for j in range(1, 7):
+            label = splits_chart.grid_slaves(row=i, column=j)[0]
+            label.config(bg="green")
+        for j in range(7, 11):
+            label = splits_chart.grid_slaves(row=i, column=j)[0]
+            label.config(bg="white")
 
 def resetCards():
     dealerCardValue.config(text="X")
@@ -413,7 +496,7 @@ playerCard2Value.place(x=1010, y=475)
 playerCard1SuitValue.place(x=835, y=615)
 playerCard2SuitValue.place(x=1085, y=615)
 
-chartButton = tk.Button(window, text="Basic Strategy Chart", command=chart_window)
+chartButton = tk.Button(window, text="Splits Chart", command=splitsChart)
 chartButton.place(x=1700, y=200)
 
 window.mainloop()
