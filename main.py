@@ -1,10 +1,27 @@
 import tkinter as tk
-import trainer
+import trainer_engine as trainer
 import random
 
 checkAnswer = ""
 play_token = "none"
 play_random = True
+
+def chart_window():
+    chart = tk.Toplevel()
+    chart.title("Basic Strategy Chart")
+    chart.geometry("1280x720")
+    chart.geometry("+0+0")
+    #chart_icon = tk.PhotoImage(file="bitcoin.png")
+    #chart.iconphoto(True, chart_icon)
+    chart.configure(background="#3aa31a")
+
+def resetCards():
+    dealerCardValue.config(text="X")
+    dealerSuitValue.config(text="O")
+    playerCard1Value.config(text="X")
+    playerCard2Value.config(text="X")
+    playerCard1SuitValue.config(text="O")
+    playerCard2SuitValue.config(text="O")
 
 def playRandom():
     global play_random
@@ -40,19 +57,19 @@ def randomSuit():
     random_dealer_suit = random.randint(1, 4)
     match(random_dealer_suit):
         case 1:
-            print("Dealer suit is Hearts")
+            #print("Dealer suit is Hearts")
             dealerSuitValue.config(text="♥", fg="red")
             dealerCardValue.config(fg="red")
         case 2:
-            print("Dealer suit is Spades")
+            #print("Dealer suit is Spades")
             dealerSuitValue.config(text="♠", fg="black")
             dealerCardValue.config(fg="black")
         case 3:
-            print("Dealer suit is Clubs")
+            #print("Dealer suit is Clubs")
             dealerSuitValue.config(text="♣", fg="green")
             dealerCardValue.config(fg="green")
         case 4:
-            print("Dealer suit is Diamonds")
+            #print("Dealer suit is Diamonds")
             dealerSuitValue.config(text="♦", fg="blue")
             dealerCardValue.config(fg="blue")
         case _:
@@ -62,19 +79,19 @@ def randomSuit():
     random_p2_suit = random.randint(1, 4)
     match(random_p1_suit):
         case 1:
-            print("Player Card 1 suit is Hearts")
+            #print("Player Card 1 suit is Hearts")
             playerCard1SuitValue.config(text="♥", fg="red")
             playerCard1Value.config(fg="red")
         case 2:
-            print("Player Card 1 suit is Spades")
+            #print("Player Card 1 suit is Spades")
             playerCard1SuitValue.config(text="♠", fg="black")
             playerCard1Value.config(fg="black")
         case 3:
-            print("Player Card 1 suit is Clubs")
+            #print("Player Card 1 suit is Clubs")
             playerCard1SuitValue.config(text="♣", fg="green")
             playerCard1Value.config(fg="green")
         case 4:
-            print("Player Card 1 suit is Diamonds")
+            #print("Player Card 1 suit is Diamonds")
             playerCard1SuitValue.config(text="♦", fg="blue")
             playerCard1Value.config(fg="blue")
         case _:
@@ -82,140 +99,24 @@ def randomSuit():
 
     match(random_p2_suit):
         case 1:
-            print("Player Card 2 suit is Hearts")
+            #print("Player Card 2 suit is Hearts")
             playerCard2SuitValue.config(text="♥", fg="red")
             playerCard2Value.config(fg="red")
         case 2:
-            print("Player Card 2 suit is Spades")
+            #print("Player Card 2 suit is Spades")
             playerCard2SuitValue.config(text="♠", fg="black")
             playerCard2Value.config(fg="black")
         case 3:
-            print("Player Card 2 suit is Clubs")
+            #print("Player Card 2 suit is Clubs")
             playerCard2SuitValue.config(text="♣", fg="green")
             playerCard2Value.config(fg="green")
         case 4:
-            print("Player Card 2 suit is Diamonds")
+            #print("Player Card 2 suit is Diamonds")
             playerCard2SuitValue.config(text="♦", fg="blue")
             playerCard2Value.config(fg="blue")
         case _:
             print("ERROR choosing p2 suit")
 
-def hardTotalToCards(input):
-    match(int(input)):
-        case 17:
-            rand_value = random.randint(0, 1)
-            match(rand_value):
-                case 0:
-                    print("GOT 10,7")
-                    return 10,7
-                case 1:
-                    return 9,8
-                    print("GOT 9,8")
-                case _:
-                    print("ERROR on Hard 17")
-        case 16:
-            rand_value = random.randint(0, 1)
-            match(rand_value):
-                case 0:
-                    return 10,6
-                case 1:
-                    return 9,7
-                case _:
-                    print("ERROR on Hard 16")
-        case 15:
-            rand_value = random.randint(0, 2)
-            match(rand_value):
-                case 0:
-                    return 10,5
-                case 1:
-                    return 9,6
-                case 2:
-                    return 8,7
-                case _:
-                    print("ERROR on Hard 15")
-        case 14:
-            rand_value = random.randint(0, 2)
-            match(rand_value):
-                case 0:
-                    return 10,4
-                case 1:
-                    return 9,5
-                case 2:
-                    return 8,6
-                case _:
-                    print("ERROR on Hard 14")
-        case 13:
-            rand_value = random.randint(0, 3)
-            match(rand_value):
-                case 0:
-                    return 10,3
-                case 1:
-                    return 9,4
-                case 2:
-                    return 8,5
-                case 3:
-                    return 7,6
-                case _:
-                    print("ERROR on Hard 13")
-        case 12:
-            rand_value = random.randint(0, 3)
-            match(rand_value):
-                case 0:
-                    return 10,2
-                case 1:
-                    return 9,3
-                case 2:
-                    return 8,4
-                case 3:
-                    return 7,5
-                case _:
-                    print("ERROR on Hard 12")
-        case 11:
-            rand_value = random.randint(0, 3)
-            match(rand_value):
-                case 0:
-                    return 9,2
-                case 1:
-                    return 8,3
-                case 2:
-                    return 7,4
-                case 3:
-                    return 6,5
-                case _:
-                    print("ERROR on Hard 11")
-        case 10:
-            rand_value = random.randint(0, 2)
-            match(rand_value):
-                case 0:
-                    return 8,2
-                case 1:
-                    return 7,3
-                case 2:
-                    return 6,4
-                case _:
-                    print("ERROR on Hard 10")
-        case 9:
-            rand_value = random.randint(0, 2)
-            match(rand_value):
-                case 0:
-                    return 7,2
-                case 1:
-                    return 6,3
-                case 2:
-                    return 5,4
-                case _:
-                    print("ERROR on Hard 9")
-        case 8:
-            rand_value = random.randint(0, 1)
-            match(rand_value):
-                case 0:
-                    return 6,2
-                case 1:
-                    return 5,3
-                case _:
-                    print("ERROR on Hard 8")
-        case _:
-            print("ERROR: Hard Total not in list")
 def nextSplit():
     global checkAnswer, play_random
     dealer_card, player_card, answer = trainer.playSplits(play_random)
@@ -250,7 +151,7 @@ def nextHard():
     #correctAnswer.config(text="Correct Answer: " + str(answer))
     checkAnswer = answer
     dealerCardValue.config(text=dealer_card)
-    p1, p2 = hardTotalToCards(player_card)
+    p1, p2 = trainer.hardTotalToCards(player_card)
     playerCard1Value.config(text=p1)
     playerCard2Value.config(text=p2)
     randomSuit()
@@ -288,7 +189,7 @@ def nextAll():
         playerCard2Value.config(text=p2)
     elif(check_mode == "hards"):
         dealerCardValue.config(text=dealer_card)
-        p1, p2 = hardTotalToCards(player_card)
+        p1, p2 = trainer.hardTotalToCards(player_card)
         playerCard1Value.config(text=p1)
         playerCard2Value.config(text=p2)
     else:
@@ -511,5 +412,8 @@ playerCard2Value.place(x=1010, y=475)
 # x + 75, y + 140
 playerCard1SuitValue.place(x=835, y=615)
 playerCard2SuitValue.place(x=1085, y=615)
+
+chartButton = tk.Button(window, text="Basic Strategy Chart", command=chart_window)
+chartButton.place(x=1700, y=200)
 
 window.mainloop()
