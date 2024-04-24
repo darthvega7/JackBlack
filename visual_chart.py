@@ -1,7 +1,7 @@
 import tkinter as tk
 import bjbs_chart
 
-def create_grid(root, rows, columns):
+def create_grid_splits(root, rows, columns):
     rects = []
     labels = []
 
@@ -11,7 +11,7 @@ def create_grid(root, rows, columns):
             y1 = row * cell_size
             x2 = x1 + cell_size
             y2 = y1 + cell_size
-            rect = canvas.create_rectangle(x1, y1, x2, y2, outline="black", fill="white")
+            rect = splits_canvas.create_rectangle(x1, y1, x2, y2, outline="black", fill="white")
             rects.append(rect)
             # Calculate center of the square
             center_x = x1 + (cell_size / 2)
@@ -19,13 +19,13 @@ def create_grid(root, rows, columns):
             label_text = bjbs_chart.chart_array[row][col]
             if label_text != "X":
                 label = tk.Label(root, text=label_text, font=("Arial", 20))  # Adjust font size as needed
-                label_id = canvas.create_window(center_x, center_y, window=label)
+                label_id = splits_canvas.create_window(center_x, center_y, window=label)
                 labels.append((label, label_id))
 
     def change_color(row, col, color):
         index = row * columns + col
         if 0 <= index < len(rects):
-            canvas.itemconfig(rects[index], fill=color)
+            splits_canvas.itemconfig(rects[index], fill=color)
             #labels[index][0].config(bg=color)
 
     def change_label_color(row, col, color):
@@ -96,9 +96,11 @@ root.iconphoto(True, icon)
 
 cell_size = 60  # Adjust this value to change the size of each cell
 
-canvas = tk.Canvas(root, width=cell_size*11, height=cell_size*11, borderwidth=0, highlightthickness=0)
-canvas.pack()
+splits_canvas = tk.Canvas(root, width=cell_size*11, height=cell_size*11, borderwidth=0, highlightthickness=0)
+splits_canvas.pack()
 
-create_grid(root, 11, 11)
+create_grid_splits(root, 11, 11)
+
+### Create new_grid, tie grid to canvas, make a canvasB, hide canvasA when btn clicked
 
 root.mainloop()
