@@ -26,7 +26,6 @@ def create_grid_splits(root, rows, columns):
         index = row * columns + col
         if 0 <= index < len(rects):
             splits_canvas.itemconfig(rects[index], fill=color)
-            #labels[index][0].config(bg=color)
 
     def change_label_color(row, col, color):
         index = row * columns + col
@@ -87,10 +86,89 @@ def create_grid_splits(root, rows, columns):
             change_label_color(9, x, "white")
             change_label_color(10, x, "white")
 
+def create_grid_softs(root, rows, columns):
+    rects = []
+    labels = []
+
+    for row in range(rows):
+        for col in range(columns):
+            x1 = col * cell_size
+            y1 = row * cell_size
+            x2 = x1 + cell_size
+            y2 = y1 + cell_size
+            rect = softs_canvas.create_rectangle(x1, y1, x2, y2, outline="black", fill="white")
+            rects.append(rect)
+            # Calculate center of the square
+            center_x = x1 + (cell_size / 2)
+            center_y = y1 + (cell_size / 2)
+            label_text = bjbs_chart.chart_array[row + 10][col]
+            label = tk.Label(root, text=label_text, font=("Arial", 20))  # Adjust font size as needed
+            label_id = softs_canvas.create_window(center_x, center_y, window=label)
+            labels.append((label, label_id))
+
+
+    def change_color(row, col, color):
+        index = row * columns + col
+        if 0 <= index < len(rects):
+            softs_canvas.itemconfig(rects[index], fill=color)
+
+    def change_label_color(row, col, color):
+        index = row * columns + col
+        if 0 <= index < len(labels):
+            labels[index][0].config(bg=color)
+
+    def change_row0_text(text_list):
+        for col, text in enumerate(text_list):
+            labels[col][0].config(text=text)
+
+    change_row0_text(["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "A"])
+    for j in range(0, 11):
+        change_color(0, j, "lightgrey")
+        change_label_color(0, j, "lightgrey")
+    for i in range(1, 11):
+        change_color(i, 0, "lightgrey")
+        change_label_color(i, 0, "lightgrey")
+    #change_color(0, 0, "lightgrey")
+
+    for i in range(1, 3):
+        for j in range(1, 11):
+            change_color(i, j, "#efc514")
+            change_label_color(i, j, "#efc514")
+    change_color(2, 5, "#3ebab4")
+    change_label_color(2, 5, "#3ebab4")
+
+    for j in range(1, 6):
+        change_color(3, j, "#3ebab4")
+        change_label_color(3, j, "#3ebab4")
+    for j in range(6, 8):
+        change_color(3, j, "#efc514")
+        change_label_color(3, j, "#efc514")
+    for j in range(8, 11):
+        change_label_color(3, j, "white")
+    for j in range(1, 11):
+        change_color(4, j, "white")
+        change_label_color(4, j, "white")
+    for j in range(2, 6):
+        change_color(4, j, "#24b670")
+        change_label_color(4, j, "#24b670")
+    for i in range(5, 7):
+        for j in range(1, 11):
+            change_color(i, j, "white")
+            change_label_color(i, j, "white")
+        for j in range(3, 6):
+            change_color(i, j, "#24b670")
+            change_label_color(i, j, "#24b670")
+    for i in range(7, 9):
+        for j in range(1, 11):
+            change_color(i, j, "white")
+            change_label_color(i, j, "white")
+        for j in range(4, 6):
+            change_color(i, j, "#24b670")
+            change_label_color(i, j, "#24b670")
 
 
 root = tk.Tk()
-root.title("Basic Strategy Chart: Splits")
+root.title("Basic Strategy Chart")
 icon = tk.PhotoImage(file="bitcoin.png")
 root.iconphoto(True, icon)
 
@@ -98,8 +176,12 @@ cell_size = 60  # Adjust this value to change the size of each cell
 
 splits_canvas = tk.Canvas(root, width=cell_size*11, height=cell_size*11, borderwidth=0, highlightthickness=0)
 splits_canvas.pack()
-
 create_grid_splits(root, 11, 11)
+
+softs_canvas = tk.Canvas(root, width=cell_size*11, height=cell_size*9, borderwidth=0, highlightthickness=0)
+splits_canvas.pack_forget()
+softs_canvas.pack()
+create_grid_softs(root, 9, 11)
 
 ### Create new_grid, tie grid to canvas, make a canvasB, hide canvasA when btn clicked
 
