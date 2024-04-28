@@ -167,22 +167,34 @@ def create_grid_softs(root, rows, columns):
             change_label_color(i, j, "#24b670")
 
 
+def change_to_splits():
+    softs_canvas.place_forget()
+    splits_canvas.place(x=0, y=65)
+def change_to_softs():
+    splits_canvas.place_forget()
+    softs_canvas.place(x=0, y=65)
+
+
 root = tk.Tk()
 root.title("Basic Strategy Chart")
 icon = tk.PhotoImage(file="bitcoin.png")
 root.iconphoto(True, icon)
+root.geometry("700x800")
 
 cell_size = 60  # Adjust this value to change the size of each cell
 
 splits_canvas = tk.Canvas(root, width=cell_size*11, height=cell_size*11, borderwidth=0, highlightthickness=0)
-splits_canvas.pack()
+splits_canvas.place(x=0, y=65)
 create_grid_splits(root, 11, 11)
 
 softs_canvas = tk.Canvas(root, width=cell_size*11, height=cell_size*9, borderwidth=0, highlightthickness=0)
-splits_canvas.pack_forget()
-softs_canvas.pack()
 create_grid_softs(root, 9, 11)
 
-### Create new_grid, tie grid to canvas, make a canvasB, hide canvasA when btn clicked
+splits_btn = tk.Button(root, text="Splits Chart", command=change_to_splits)
+softs_btn = tk.Button(root, text="Soft Totals Chart", command=change_to_softs)
+splits_btn.place(x=150, y=20)
+softs_btn.place(x=275, y=20)
+
+
 
 root.mainloop()
