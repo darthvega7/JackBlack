@@ -307,6 +307,10 @@ def change_to_hards():
     hards_btn.config(relief=tk.SUNKEN, state=tk.DISABLED)
     hards_canvas.place(x=0, y=65)
 
+    split_yes_key_canvas.place_forget()
+    split_yes_key_label.place_forget()
+    split_no_key_canvas.place_forget()
+    split_no_key_label.place_forget()
     stand_key_canvas.place(x=700, y=75)
     stand_key_label.place(x=120 / 2, y=60 / 2, anchor="center")
     hit_key_canvas.place(x=700, y=150)
