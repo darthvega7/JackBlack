@@ -1,6 +1,6 @@
 import tkinter as tk
 import trainer_engine as trainer
-import bjbs_chart
+import visual_chart as vischart
 import random
 
 checkAnswer = ""
@@ -407,9 +407,7 @@ playerCard2Value.place(x=1010, y=475)
 playerCard1SuitValue.place(x=835, y=615)
 playerCard2SuitValue.place(x=1085, y=615)
 
-# splitsChartBtn = tk.Button(window, text="Splits Chart", command=splitsChart)
-# splitsChartBtn.place(x=1700, y=200)
-# softsChartBtn = tk.Button(window, text="Soft Totals Chart", command=softsChart)
-# softsChartBtn.place(x=1700, y=240)
+chart_btn = tk.Button(window, text="Basic Strategy Chart", command=vischart.runMain)
+chart_btn.place(x=1700, y=400)
 
 window.mainloop()
