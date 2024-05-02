@@ -6,20 +6,33 @@ import random
 checkAnswer = ""
 play_token = "none"
 play_random = True
+count = 0
 
 def resetCards():
-    global play_token
+    global play_token, count
     dealerCardValue.config(text="X")
     dealerSuitValue.config(text="O")
     playerCard1Value.config(text="X")
     playerCard2Value.config(text="X")
     playerCard1SuitValue.config(text="O")
     playerCard2SuitValue.config(text="O")
+    splitsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
+    softsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
+    hardsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
+    allBtn.config(relief=tk.RAISED, state=tk.NORMAL)
+    splitYesBtn.place_forget()
+    splitNoBtn.place_forget()
+    hitBtn.place_forget()
+    standBtn.place_forget()
+    doubleHitBtn.place_forget()
+    doubleStandBtn.place_forget()
     play_token = "none"
+    count = 0
 
 def playRandom():
-    global play_random
+    global play_random, count
     play_random = True
+    count = 0
     trainer.resetMode()
     randBtn.config(relief=tk.SUNKEN, state=tk.DISABLED)
     inOrderBtn.config(relief=tk.RAISED, state=tk.NORMAL)
@@ -33,8 +46,9 @@ def playRandom():
         nextAll()
 
 def playInOrder():
-    global play_random
+    global play_random, count
     play_random = False
+    count = 0
     trainer.resetMode()
     randBtn.config(relief=tk.RAISED, state=tk.NORMAL)
     inOrderBtn.config(relief=tk.SUNKEN, state=tk.DISABLED)
@@ -112,7 +126,7 @@ def randomSuit():
             print("ERROR choosing p2 suit")
 
 def nextSplit():
-    global checkAnswer, play_random
+    global checkAnswer, play_random, count
     dealer_card, player_card, answer = trainer.playSplits(play_random)
     dealerCard.config(text="Dealer Card: " + str(dealer_card))
     playerCard.config(text="Player Card: " + str(player_card))
@@ -123,9 +137,10 @@ def nextSplit():
     playerCard1Value.config(text=p1)
     playerCard2Value.config(text=p2)
     randomSuit()
+    count += 1
 
 def nextSoft():
-    global checkAnswer, play_random
+    global checkAnswer, play_random, count
     dealer_card, player_card, answer = trainer.playSofts(play_random)
     dealerCard.config(text="Dealer Card: " + str(dealer_card))
     playerCard.config(text="Player Card: " + str(player_card))
@@ -136,9 +151,10 @@ def nextSoft():
     playerCard1Value.config(text=p1)
     playerCard2Value.config(text=p2)
     randomSuit()
+    count += 1
 
 def nextHard():
-    global checkAnswer, play_random
+    global checkAnswer, play_random, count
     dealer_card, player_card, answer = trainer.playHards(play_random)
     dealerCard.config(text="Dealer Card: " + str(dealer_card))
     playerCard.config(text="Player Card: " + str(player_card))
@@ -149,9 +165,10 @@ def nextHard():
     playerCard1Value.config(text=p1)
     playerCard2Value.config(text=p2)
     randomSuit()
+    count += 1
 
 def nextAll():
-    global checkAnswer, play_random
+    global checkAnswer, play_random, count
     dealer_card, player_card, answer, check_mode = trainer.playAll(play_random)
     dealerCard.config(text="Dealer Card: " + str(dealer_card))
     playerCard.config(text="Player Card: " + str(player_card))
@@ -189,10 +206,12 @@ def nextAll():
     else:
         print("ERROR in All Mode: Mode Not Found")
     randomSuit()
+    count += 1
 
 def changeToSplits():
-    global play_token
+    global play_token, count
     play_token = "splits"
+    count = 0
     splitsBtn.config(relief=tk.SUNKEN, state=tk.DISABLED)
     softsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
     hardsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
@@ -205,8 +224,9 @@ def changeToSplits():
     splitNoBtn.place(x=975, y=800)
     nextSplit()
 def changeToSofts():
-    global play_token
+    global play_token, count
     play_token = "softs"
+    count = 0
     splitsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
     softsBtn.config(relief=tk.SUNKEN, state=tk.DISABLED)
     hardsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
@@ -220,8 +240,9 @@ def changeToSofts():
     nextSoft()
 
 def changeToHards():
-    global play_token
+    global play_token, count
     play_token = "hards"
+    count = 0
     splitsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
     softsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
     hardsBtn.config(relief=tk.SUNKEN, state=tk.DISABLED)
@@ -234,8 +255,9 @@ def changeToHards():
     doubleStandBtn.place(x=1025, y=800)
     nextHard()
 def changeToAll():
-    global play_token
+    global play_token, count
     play_token = "all"
+    count = 0
     splitsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
     softsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
     hardsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
@@ -252,7 +274,10 @@ def checkSplitYes():
         correctCheck.config(text="Incorrect", fg="red")
 
     if(play_token == "splits"):
-        nextSplit()
+        if count >= 100:
+            resetCards()
+        else:
+            nextSplit()
     else:
         nextAll()
 
@@ -267,7 +292,10 @@ def checkSplitNo():
         correctCheck.config(text="Incorrect", fg="red")
 
     if(play_token == "splits"):
-        nextSplit()
+        if count >= 100:
+            resetCards()
+        else:
+            nextSplit()
     else:
         nextAll()
 
@@ -282,7 +310,10 @@ def checkHit():
         correctCheck.config(text="Incorrect", fg="red")
 
     if(play_token == "softs"):
-        nextSoft()
+        if count >= 80:
+            resetCards()
+        else:
+            nextSoft()
     elif(play_token == "hards"):
         nextHard()
     else:
@@ -298,7 +329,10 @@ def checkStand():
         correctCheck.config(text="Incorrect", fg="red")
 
     if(play_token == "softs"):
-        nextSoft()
+        if count >= 80:
+            resetCards()
+        else:
+            nextSoft()
     elif(play_token == "hards"):
         nextHard()
     else:
@@ -314,7 +348,10 @@ def checkDh():
         correctCheck.config(text="Incorrect", fg="red")
 
     if(play_token == "softs"):
-        nextSoft()
+        if count >= 80:
+            resetCards()
+        else:
+            nextSoft()
     elif(play_token == "hards"):
         nextHard()
     else:
@@ -329,7 +366,10 @@ def checkDs():
         correctCheck.config(text="Incorrect", fg="red")
 
     if(play_token == "softs"):
-        nextSoft()
+        if count >= 80:
+            resetCards()
+        else:
+            nextSoft()
     elif(play_token == "hards"):
         nextHard()
     else:
