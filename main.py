@@ -315,7 +315,10 @@ def checkHit():
         else:
             nextSoft()
     elif(play_token == "hards"):
-        nextHard()
+        if count >= 100:
+            resetCards()
+        else:
+            nextHard()
     else:
         nextAll()
 
@@ -334,7 +337,10 @@ def checkStand():
         else:
             nextSoft()
     elif(play_token == "hards"):
-        nextHard()
+        if count >= 100:
+            resetCards()
+        else:
+            nextHard()
     else:
         nextAll()
 
@@ -353,7 +359,10 @@ def checkDh():
         else:
             nextSoft()
     elif(play_token == "hards"):
-        nextHard()
+        if count >= 100:
+            resetCards()
+        else:
+            nextHard()
     else:
         nextAll()
 def checkDs():
@@ -371,7 +380,10 @@ def checkDs():
         else:
             nextSoft()
     elif(play_token == "hards"):
-        nextHard()
+        if count >= 100:
+            resetCards()
+        else:
+            nextHard()
     else:
         nextAll()
 
