@@ -285,7 +285,7 @@ def runMain():
         splits_btn.config(relief=tk.RAISED, state=tk.NORMAL)
         softs_btn.config(relief=tk.SUNKEN, state=tk.DISABLED)
         hards_btn.config(relief=tk.RAISED, state=tk.NORMAL)
-        softs_canvas.place(x=0, y=65)
+        softs_canvas.place(x=0, y=75)
 
         split_yes_key_canvas.place_forget()
         split_yes_key_label.place_forget()
@@ -308,7 +308,7 @@ def runMain():
         splits_btn.config(relief=tk.RAISED, state=tk.NORMAL)
         softs_btn.config(relief=tk.RAISED, state=tk.NORMAL)
         hards_btn.config(relief=tk.SUNKEN, state=tk.DISABLED)
-        hards_canvas.place(x=0, y=65)
+        hards_canvas.place(x=0, y=75)
 
         split_yes_key_canvas.place_forget()
         split_yes_key_label.place_forget()
@@ -333,7 +333,7 @@ def runMain():
     root.geometry("1200x900")
 
     splits_canvas = tk.Canvas(root, width=cell_size*11, height=cell_size*11, borderwidth=0, highlightthickness=0)
-    splits_canvas.place(x=0, y=65)
+    splits_canvas.place(x=0, y=75)
     create_grid_splits(root, 11, 11)
 
     softs_canvas = tk.Canvas(root, width=cell_size*11, height=cell_size*9, borderwidth=0, highlightthickness=0)
@@ -342,14 +342,14 @@ def runMain():
     hards_canvas = tk.Canvas(root, width=cell_size*11, height=cell_size*11, borderwidth=0, highlightthickness=0)
     create_grid_hards(root, 11, 11)
 
-    splits_btn = tk.Button(root, text="Splits Chart", command=change_to_splits)
+    splits_btn = tk.Button(root, text="Splits Chart", font=("Arial", 20), command=change_to_splits)
     splits_btn.config(relief=tk.SUNKEN, state=tk.DISABLED)
-    softs_btn = tk.Button(root, text="Soft Totals Chart", command=change_to_softs)
-    hards_btn = tk.Button(root, text="Hard Totals Chart", command=change_to_hards)
+    softs_btn = tk.Button(root, text="Soft Totals Chart", font=("Arial", 20), command=change_to_softs)
+    hards_btn = tk.Button(root, text="Hard Totals Chart", font=("Arial", 20), command=change_to_hards)
     close_btn = tk.Button(root, text="Close Window", font=("Arial", 20), command=close_window)
-    splits_btn.place(x=150, y=20)
-    softs_btn.place(x=275, y=20)
-    hards_btn.place(x=430, y=20)
+    splits_btn.place(x=20, y=15)
+    softs_btn.place(x=195, y=15)
+    hards_btn.place(x=430, y=15)
     close_btn.place(x=500, y=750)
 
     split_yes_key_canvas = tk.Canvas(root, width=120, height=60, bg=green_color)
