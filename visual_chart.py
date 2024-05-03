@@ -8,6 +8,42 @@ def runMain():
 
     cell_size = 60  # Adjust this value to change the size of each cell
 
+    MAIN_CANVAS_X = 0
+    MAIN_CANVAS_Y = 75
+    BUTTON_FONT = 20
+    SPLITS_BTN_X = 20
+    SPLITS_BTN_Y = 15
+    SOFTS_BTN_X = 195
+    SOFTS_BTN_Y = 15
+    HARDS_BTN_X = 430
+    HARDS_BTN_Y = 15
+    CLOSE_BTN_X = 500
+    CLOSE_BTN_Y = 750
+    SPLIT_YES_KEY_WIDTH = 120
+    SPLIT_YES_KEY_HEIGHT = 60
+    SPLIT_YES_KEY_X = 700
+    SPLIT_YES_KEY_Y = 75
+    SPLIT_NO_KEY_WIDTH = 210
+    SPLIT_NO_KEY_HEIGHT = 60
+    SPLIT_NO_KEY_X = 700
+    SPLIT_NO_KEY_Y = 150
+    STAND_KEY_X = 700
+    STAND_KEY_Y = 75
+    STAND_KEY_WIDTH = 120
+    STAND_KEY_HEIGHT = 60
+    HIT_KEY_X = 700
+    HIT_KEY_Y = 150
+    HIT_KEY_WIDTH = 120
+    HIT_KEY_HEIGHT = 60
+    DH_KEY_X = 700
+    DH_KEY_Y = 225
+    DH_KEY_WIDTH = 240
+    DH_KEY_HEIGHT = 60
+    DS_KEY_X = 700
+    DS_KEY_Y = 300
+    DS_KEY_WIDTH = 270
+    DS_KEY_HEIGHT = 60
+
     def create_grid_splits(root, rows, columns):
         rects = []
         labels = []
@@ -25,7 +61,7 @@ def runMain():
                 center_y = y1 + (cell_size / 2)
                 label_text = bjbs_chart.chart_array[row][col]
                 if label_text != "X":
-                    label = tk.Label(root, text=label_text, font=("Arial", 20))  # Adjust font size as needed
+                    label = tk.Label(root, text=label_text, font=("Arial", BUTTON_FONT))  # Adjust font size as needed
                     label_id = splits_canvas.create_window(center_x, center_y, window=label)
                     labels.append((label, label_id))
 
@@ -109,7 +145,7 @@ def runMain():
                 center_x = x1 + (cell_size / 2)
                 center_y = y1 + (cell_size / 2)
                 label_text = bjbs_chart.chart_array[row + 10][col]
-                label = tk.Label(root, text=label_text, font=("Arial", 20))  # Adjust font size as needed
+                label = tk.Label(root, text=label_text, font=("Arial", BUTTON_FONT))  # Adjust font size as needed
                 label_id = softs_canvas.create_window(center_x, center_y, window=label)
                 labels.append((label, label_id))
 
@@ -188,7 +224,7 @@ def runMain():
                 center_x = x1 + (cell_size / 2)
                 center_y = y1 + (cell_size / 2)
                 label_text = bjbs_chart.chart_array[row + 18][col]
-                label = tk.Label(root, text=label_text, font=("Arial", 20))  # Adjust font size as needed
+                label = tk.Label(root, text=label_text, font=("Arial", BUTTON_FONT))  # Adjust font size as needed
                 label_id = hards_canvas.create_window(center_x, center_y, window=label)
                 labels.append((label, label_id))
 
@@ -262,12 +298,12 @@ def runMain():
         splits_btn.config(relief=tk.SUNKEN, state=tk.DISABLED)
         softs_btn.config(relief=tk.RAISED, state=tk.NORMAL)
         hards_btn.config(relief=tk.RAISED, state=tk.NORMAL)
-        splits_canvas.place(x=0, y=65)
+        splits_canvas.place(x=MAIN_CANVAS_X, y=MAIN_CANVAS_Y)
 
-        split_yes_key_canvas.place(x=700, y=75)
-        split_yes_key_label.place(x=120 / 2, y=60 / 2, anchor="center")
-        split_no_key_canvas.place(x=700, y=150)
-        split_no_key_label.place(x=210 / 2, y=60 / 2, anchor="center")
+        split_yes_key_canvas.place(x=SPLIT_YES_KEY_X, y=SPLIT_YES_KEY_Y)
+        split_yes_key_label.place(x=SPLIT_YES_KEY_WIDTH / 2, y=SPLIT_YES_KEY_HEIGHT / 2, anchor="center")
+        split_no_key_canvas.place(x=SPLIT_NO_KEY_X, y=SPLIT_NO_KEY_Y)
+        split_no_key_label.place(x=SPLIT_NO_KEY_WIDTH / 2, y=SPLIT_NO_KEY_HEIGHT / 2, anchor="center")
 
         stand_key_canvas.place_forget()
         stand_key_label.place_forget()
@@ -285,21 +321,21 @@ def runMain():
         splits_btn.config(relief=tk.RAISED, state=tk.NORMAL)
         softs_btn.config(relief=tk.SUNKEN, state=tk.DISABLED)
         hards_btn.config(relief=tk.RAISED, state=tk.NORMAL)
-        softs_canvas.place(x=0, y=75)
+        softs_canvas.place(x=MAIN_CANVAS_X, y=MAIN_CANVAS_Y)
 
         split_yes_key_canvas.place_forget()
         split_yes_key_label.place_forget()
         split_no_key_canvas.place_forget()
         split_no_key_label.place_forget()
 
-        stand_key_canvas.place(x=700, y=75)
-        stand_key_label.place(x=120 / 2, y=60 / 2, anchor="center")
-        hit_key_canvas.place(x=700, y=150)
-        hit_key_label.place(x=120 / 2, y=60 / 2, anchor="center")
-        doubleHit_key_canvas.place(x=700, y=225)
-        doubleHit_key_label.place(x=240 / 2, y=60 / 2, anchor="center")
-        doubleStand_key_canvas.place(x=700, y=300)
-        doubleStand_key_label.place(x=270 / 2, y=60 / 2, anchor="center")
+        stand_key_canvas.place(x=STAND_KEY_X, y=STAND_KEY_Y)
+        stand_key_label.place(x=STAND_KEY_WIDTH / 2, y=STAND_KEY_HEIGHT / 2, anchor="center")
+        hit_key_canvas.place(x=HIT_KEY_X, y=HIT_KEY_Y)
+        hit_key_label.place(x=HIT_KEY_WIDTH / 2, y=HIT_KEY_HEIGHT / 2, anchor="center")
+        doubleHit_key_canvas.place(x=DH_KEY_X, y=DH_KEY_Y)
+        doubleHit_key_label.place(x=DH_KEY_WIDTH / 2, y=DH_KEY_HEIGHT / 2, anchor="center")
+        doubleStand_key_canvas.place(x=DS_KEY_X, y=DS_KEY_Y)
+        doubleStand_key_label.place(x=DS_KEY_WIDTH / 2, y=DS_KEY_HEIGHT / 2, anchor="center")
 
     def change_to_hards():
         root.title("Basic Strategy Chart: Hard Totals")
@@ -308,18 +344,18 @@ def runMain():
         splits_btn.config(relief=tk.RAISED, state=tk.NORMAL)
         softs_btn.config(relief=tk.RAISED, state=tk.NORMAL)
         hards_btn.config(relief=tk.SUNKEN, state=tk.DISABLED)
-        hards_canvas.place(x=0, y=75)
+        hards_canvas.place(x=MAIN_CANVAS_X, y=MAIN_CANVAS_Y)
 
         split_yes_key_canvas.place_forget()
         split_yes_key_label.place_forget()
         split_no_key_canvas.place_forget()
         split_no_key_label.place_forget()
-        stand_key_canvas.place(x=700, y=75)
-        stand_key_label.place(x=120 / 2, y=60 / 2, anchor="center")
-        hit_key_canvas.place(x=700, y=150)
-        hit_key_label.place(x=120 / 2, y=60 / 2, anchor="center")
-        doubleHit_key_canvas.place(x=700, y=225)
-        doubleHit_key_label.place(x=240 / 2, y=60 / 2, anchor="center")
+        stand_key_canvas.place(x=STAND_KEY_X, y=STAND_KEY_Y)
+        stand_key_label.place(x=STAND_KEY_WIDTH / 2, y=STAND_KEY_HEIGHT / 2, anchor="center")
+        hit_key_canvas.place(x=HIT_KEY_X, y=HIT_KEY_Y)
+        hit_key_label.place(x=HIT_KEY_WIDTH / 2, y=HIT_KEY_HEIGHT / 2, anchor="center")
+        doubleHit_key_canvas.place(x=DH_KEY_X, y=DH_KEY_Y)
+        doubleHit_key_label.place(x=DH_KEY_WIDTH / 2, y=DH_KEY_HEIGHT / 2, anchor="center")
         doubleStand_key_canvas.place_forget()
         doubleStand_key_label.place_forget()
 
@@ -333,7 +369,7 @@ def runMain():
     root.geometry("1200x900")
 
     splits_canvas = tk.Canvas(root, width=cell_size*11, height=cell_size*11, borderwidth=0, highlightthickness=0)
-    splits_canvas.place(x=0, y=75)
+    splits_canvas.place(x=MAIN_CANVAS_X, y=MAIN_CANVAS_Y)
     create_grid_splits(root, 11, 11)
 
     softs_canvas = tk.Canvas(root, width=cell_size*11, height=cell_size*9, borderwidth=0, highlightthickness=0)
@@ -342,44 +378,38 @@ def runMain():
     hards_canvas = tk.Canvas(root, width=cell_size*11, height=cell_size*11, borderwidth=0, highlightthickness=0)
     create_grid_hards(root, 11, 11)
 
-    splits_btn = tk.Button(root, text="Splits Chart", font=("Arial", 20), command=change_to_splits)
+    splits_btn = tk.Button(root, text="Splits Chart", font=("Arial", BUTTON_FONT), command=change_to_splits)
     splits_btn.config(relief=tk.SUNKEN, state=tk.DISABLED)
-    softs_btn = tk.Button(root, text="Soft Totals Chart", font=("Arial", 20), command=change_to_softs)
-    hards_btn = tk.Button(root, text="Hard Totals Chart", font=("Arial", 20), command=change_to_hards)
-    close_btn = tk.Button(root, text="Close Window", font=("Arial", 20), command=close_window)
-    splits_btn.place(x=20, y=15)
-    softs_btn.place(x=195, y=15)
-    hards_btn.place(x=430, y=15)
-    close_btn.place(x=500, y=750)
+    softs_btn = tk.Button(root, text="Soft Totals Chart", font=("Arial", BUTTON_FONT), command=change_to_softs)
+    hards_btn = tk.Button(root, text="Hard Totals Chart", font=("Arial", BUTTON_FONT), command=change_to_hards)
+    close_btn = tk.Button(root, text="Close Window", font=("Arial", BUTTON_FONT), command=close_window)
+    splits_btn.place(x=SPLITS_BTN_X, y=SPLITS_BTN_Y)
+    softs_btn.place(x=SOFTS_BTN_X, y=SOFTS_BTN_Y)
+    hards_btn.place(x=HARDS_BTN_X, y=HARDS_BTN_Y)
+    close_btn.place(x=CLOSE_BTN_X, y=CLOSE_BTN_Y)
 
-    split_yes_key_canvas = tk.Canvas(root, width=120, height=60, bg=green_color)
-    split_yes_key_canvas.place(x=700, y=75)
-    split_yes_key_label = tk.Label(split_yes_key_canvas, text="Y = Split", font=("Arial", 20), bg=green_color)
-    split_yes_key_label.place(x=120/2, y=60/2, anchor="center")
+    split_yes_key_canvas = tk.Canvas(root, width=SPLIT_YES_KEY_WIDTH, height=SPLIT_YES_KEY_HEIGHT, bg=green_color)
+    split_yes_key_canvas.place(x=SPLIT_YES_KEY_X, y=SPLIT_YES_KEY_Y)
+    split_yes_key_label = tk.Label(split_yes_key_canvas, text="Y = Split", font=("Arial", BUTTON_FONT), bg=green_color)
+    split_yes_key_label.place(x=SPLIT_YES_KEY_WIDTH/2, y=SPLIT_YES_KEY_HEIGHT/2, anchor="center")
 
-    split_no_key_canvas = tk.Canvas(root, width=210, height=60, bg="white")
-    split_no_key_canvas.place(x=700, y=150)
-    split_no_key_label = tk.Label(split_no_key_canvas, text="N = Do Not Split", font=("Arial", 20), bg="white")
-    split_no_key_label.place(x=210/2, y=60/2, anchor="center")
+    split_no_key_canvas = tk.Canvas(root, width=SPLIT_NO_KEY_WIDTH, height=SPLIT_NO_KEY_HEIGHT, bg="white")
+    split_no_key_canvas.place(x=SPLIT_NO_KEY_X, y=SPLIT_NO_KEY_Y)
+    split_no_key_label = tk.Label(split_no_key_canvas, text="N = Do Not Split", font=("Arial", BUTTON_FONT), bg="white")
+    split_no_key_label.place(x=SPLIT_NO_KEY_WIDTH/2, y=SPLIT_NO_KEY_HEIGHT/2, anchor="center")
 
-    stand_key_canvas = tk.Canvas(root, width=120, height=60, bg=yellow_color)
-    #stand_key_canvas.place(x=700, y=75)
-    stand_key_label = tk.Label(stand_key_canvas, text="Stand", font=("Arial", 20), bg=yellow_color)
-    #stand_key_label.place(x=120/2, y=60/2, anchor="center")
+    stand_key_canvas = tk.Canvas(root, width=STAND_KEY_WIDTH, height=STAND_KEY_HEIGHT, bg=yellow_color)
+    stand_key_label = tk.Label(stand_key_canvas, text="Stand", font=("Arial", BUTTON_FONT), bg=yellow_color)
 
-    hit_key_canvas = tk.Canvas(root, width=120, height=60, bg="white")
-    #hit_key_canvas.place(x=700, y=150)
-    hit_key_label = tk.Label(hit_key_canvas, text="Hit", font=("Arial", 20), bg="white")
-    #hit_key_label.place(x=120/2, y=60/2, anchor="center")
+    hit_key_canvas = tk.Canvas(root, width=HIT_KEY_WIDTH, height=HIT_KEY_HEIGHT, bg="white")
+    hit_key_label = tk.Label(hit_key_canvas, text="Hit", font=("Arial", BUTTON_FONT), bg="white")
 
-    doubleHit_key_canvas = tk.Canvas(root, width=240, height=60, bg=green_color)
-    #doubleHit_key_canvas.place(x=700, y=225)
-    doubleHit_key_label = tk.Label(doubleHit_key_canvas, text="Dh = Double or Hit", font=("Arial", 20), bg=green_color)
-    #doubleHit_key_label.place(x=240/2, y=60/2, anchor="center")
+    doubleHit_key_canvas = tk.Canvas(root, width=DH_KEY_WIDTH, height=DH_KEY_HEIGHT, bg=green_color)
+    doubleHit_key_label = tk.Label(doubleHit_key_canvas, text="Dh = Double or Hit", font=("Arial", BUTTON_FONT), bg=green_color)
 
-    doubleStand_key_canvas = tk.Canvas(root, width=270, height=60, bg=blue_color)
-    #doubleStand_key_canvas.place(x=700, y=300)
-    doubleStand_key_label = tk.Label(doubleStand_key_canvas, text="Ds = Double or Stand", font=("Arial", 20), bg=blue_color)
-    #doubleStand_key_label.place(x=270/2, y=60/2, anchor="center")
+    doubleStand_key_canvas = tk.Canvas(root, width=DS_KEY_WIDTH, height=DS_KEY_HEIGHT, bg=blue_color)
+    doubleStand_key_label = tk.Label(doubleStand_key_canvas, text="Ds = Double or Stand", font=("Arial", BUTTON_FONT), bg=blue_color)
 
     root.mainloop()
+
+#runMain()
