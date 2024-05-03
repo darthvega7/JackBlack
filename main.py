@@ -130,6 +130,7 @@ def nextSplit():
     dealer_card, player_card, answer = trainer.playSplits(play_random)
     dealerCard.config(text="Dealer Card: " + str(dealer_card))
     playerCard.config(text="Player Card: " + str(player_card))
+    curr_count.config(text="Count: " + str(count))
     #correctAnswer.config(text="Correct Answer: " + str(answer))
     checkAnswer = answer
     dealerCardValue.config(text=dealer_card)
@@ -144,6 +145,7 @@ def nextSoft():
     dealer_card, player_card, answer = trainer.playSofts(play_random)
     dealerCard.config(text="Dealer Card: " + str(dealer_card))
     playerCard.config(text="Player Card: " + str(player_card))
+    curr_count.config(text="Count: " + str(count))
     #correctAnswer.config(text="Correct Answer: " + str(answer))
     checkAnswer = answer
     dealerCardValue.config(text=dealer_card)
@@ -158,6 +160,7 @@ def nextHard():
     dealer_card, player_card, answer = trainer.playHards(play_random)
     dealerCard.config(text="Dealer Card: " + str(dealer_card))
     playerCard.config(text="Player Card: " + str(player_card))
+    curr_count.config(text="Count: " + str(count))
     #correctAnswer.config(text="Correct Answer: " + str(answer))
     checkAnswer = answer
     dealerCardValue.config(text=dealer_card)
@@ -172,6 +175,7 @@ def nextAll():
     dealer_card, player_card, answer, check_mode = trainer.playAll(play_random)
     dealerCard.config(text="Dealer Card: " + str(dealer_card))
     playerCard.config(text="Player Card: " + str(player_card))
+    curr_count.config(text="Count: " + str(count))
     #correctAnswer.config(text="Correct Answer: " + str(answer))
     checkAnswer = answer
     if(check_mode == "splits"):
@@ -279,7 +283,10 @@ def checkSplitYes():
         else:
             nextSplit()
     else:
-        nextAll()
+        if count >= 280:
+            resetCards()
+        else:
+            nextAll()
 
 def checkSplitNo():
     global play_token
@@ -297,7 +304,10 @@ def checkSplitNo():
         else:
             nextSplit()
     else:
-        nextAll()
+        if count >= 280:
+            resetCards()
+        else:
+            nextAll()
 
 def checkHit():
     global play_token
@@ -320,7 +330,10 @@ def checkHit():
         else:
             nextHard()
     else:
-        nextAll()
+        if count >= 280:
+            resetCards()
+        else:
+            nextAll()
 
 def checkStand():
     print("Stand")
@@ -342,7 +355,10 @@ def checkStand():
         else:
             nextHard()
     else:
-        nextAll()
+        if count >= 280:
+            resetCards()
+        else:
+            nextAll()
 
 def checkDh():
     print("Double or Hit")
@@ -364,7 +380,10 @@ def checkDh():
         else:
             nextHard()
     else:
-        nextAll()
+        if count >= 280:
+            resetCards()
+        else:
+            nextAll()
 def checkDs():
     print("Double or Stand")
     if(checkAnswer == "Ds"):
@@ -385,7 +404,10 @@ def checkDs():
         else:
             nextHard()
     else:
-        nextAll()
+        if count >= 280:
+            resetCards()
+        else:
+            nextAll()
 
 window = tk.Tk()
 window.title("Joshy's BlackJack Basic Strategy Trainer")
@@ -413,8 +435,8 @@ dealerCard.place(x=100, y=300)
 playerCard = tk.Label(window, text="Player Card: ", font=("Arial", 20))
 playerCard.place(x=100, y=350)
 
-# correctAnswer = tk.Label(window, text="Correct Answer: ", font=("Arial", 20))
-# correctAnswer.place(x=100, y=400)
+curr_count = tk.Label(window, text="Count: ", font=("Arial", 20))
+curr_count.place(x=100, y=400)
 
 correctCheck = tk.Label(window, text="", font=("Arial", 20))
 correctCheck.place(x=1300, y=400)
