@@ -3,6 +3,33 @@ import trainer_engine as trainer
 import visual_chart as vischart
 import random
 
+SPLITS_BTN_X = 700
+SPLITS_BTN_Y = 25
+SOFTS_BTN_X = 815
+SOFTS_BTN_Y = 25
+HARDS_BTN_X = 975
+HARDS_BTN_Y = 25
+ALL_BTN_X = 1125
+ALL_BTN_Y = 25
+RAND_BTN_X = 1700
+RAND_BTN_Y = 25
+INORDER_BTN_X = 1700
+INORDER_BTN_Y = 60
+DEALER_CARD_CANVAS_X = 850
+DEALER_CARD_CANVAS_Y = 75
+DEALER_CARD_CANVAS_WIDTH = 200
+DEALER_CARD_CANVAS_HEIGHT = 300
+PLAYERCARD1_CANVAS_X = 735
+PLAYERCARD1_CANVAS_Y = 450
+PLAYERCARD1_CANVAS_WIDTH = 200
+PLAYERCARD1_CANVAS_HEIGHT = 300
+PLAYERCARD2_CANVAS_X = 985
+PLAYERCARD2_CANVAS_Y = 450
+PLAYERCARD2_CANVAS_WIDTH = 200
+PLAYERCARD2_CANVAS_HEIGHT = 300
+CHART_BTN_X = 1700
+CHART_BTN_Y = 400
+
 checkAnswer = ""
 play_token = "none"
 play_random = True
@@ -418,16 +445,16 @@ window.iconphoto(True, icon)
 window.configure(background="#3aa31a")
 
 splitsBtn = tk.Button(window, text="Play Splits", command=changeToSplits)
-splitsBtn.place(x=700, y=25)
+splitsBtn.place(x=SPLITS_BTN_X, y=SPLITS_BTN_Y)
 
 softsBtn = tk.Button(window, text="Play Soft Totals", command=changeToSofts)
-softsBtn.place(x=815, y=25)
+softsBtn.place(x=SOFTS_BTN_X, y=SOFTS_BTN_Y)
 
 hardsBtn = tk.Button(window, text="Play Hard Totals", command=changeToHards)
-hardsBtn.place(x=975, y=25)
+hardsBtn.place(x=HARDS_BTN_X, y=HARDS_BTN_Y)
 
 allBtn = tk.Button(window, text="Play All", command=changeToAll)
-allBtn.place(x=1125, y=25)
+allBtn.place(x=ALL_BTN_X, y=ALL_BTN_Y)
 
 dealerCard = tk.Label(window, text="Dealer Card: ", font=("Arial", 20))
 dealerCard.place(x=100, y=300)
@@ -443,12 +470,9 @@ correctCheck.place(x=1300, y=400)
 
 randBtn = tk.Button(window, text="Play Random Hands", command=playRandom)
 inOrderBtn = tk.Button(window, text="Play Hands In Order", command=playInOrder)
-randBtn.place(x=1700, y=25)
-inOrderBtn.place(x=1700, y=60)
+randBtn.place(x=RAND_BTN_X, y=RAND_BTN_Y)
+inOrderBtn.place(x=INORDER_BTN_X, y=INORDER_BTN_Y)
 randBtn.config(relief=tk.SUNKEN, state=tk.DISABLED)
-
-# nextBtn = tk.Button(window, text="Next Card", command=nextSplit)
-# nextBtn.place(x=800, y=300)
 
 splitYesBtn = tk.Button(window, text="Split", command=checkSplitYes)
 splitNoBtn = tk.Button(window, text="Do Not Split", command=checkSplitNo)
@@ -458,30 +482,30 @@ standBtn = tk.Button(window, text="Stand", command=checkStand)
 doubleHitBtn = tk.Button(window, text="Double or Hit", command=checkDh)
 doubleStandBtn = tk.Button(window, text="Double or Stand", command=checkDs)
 
-#dealerCardCanvas = tk.Canvas(window, width=250, height=350, bg="white")
-dealerCardCanvas = tk.Canvas(window, width=200, height=300, bg="white")
-dealerCardCanvas.place(x=850, y=75)
+dealerCardCanvas = tk.Canvas(window, width=DEALER_CARD_CANVAS_WIDTH, height=DEALER_CARD_CANVAS_HEIGHT, bg="white")
+dealerCardCanvas.place(x=DEALER_CARD_CANVAS_X, y=DEALER_CARD_CANVAS_Y)
 
-playerCard1Canvas = tk.Canvas(window, width=200, height=300, bg="white")
-playerCard1Canvas.place(x=735, y=450)
-playerCard2Canvas = tk.Canvas(window, width=200, height=300, bg="white")
-playerCard2Canvas.place(x=985, y=450)
+playerCard1Canvas = tk.Canvas(window, width=PLAYERCARD1_CANVAS_WIDTH, height=PLAYERCARD1_CANVAS_HEIGHT, bg="white")
+playerCard1Canvas.place(x=PLAYERCARD1_CANVAS_X, y=PLAYERCARD1_CANVAS_Y)
+playerCard2Canvas = tk.Canvas(window, width=PLAYERCARD2_CANVAS_WIDTH, height=PLAYERCARD2_CANVAS_HEIGHT, bg="white")
+playerCard2Canvas.place(x=PLAYERCARD2_CANVAS_X, y=PLAYERCARD2_CANVAS_Y)
 
 dealerCardValue = tk.Label(text="X", font=("Arial", 75, "bold"), bg="white")
 dealerSuitValue = tk.Label(text="O", font=("Arial", 75, "bold"), bg="white")
 dealerCardValue.place(x=875, y=100)
 dealerSuitValue.place(x=950, y=240)
+
 playerCard1Value = tk.Label(text="X", font=("Arial", 75, "bold"), bg="white")
 playerCard2Value = tk.Label(text="X", font=("Arial", 75, "bold"), bg="white")
 playerCard1SuitValue = tk.Label(text="O", font=("Arial", 75, "bold"), bg="white")
 playerCard2SuitValue = tk.Label(text="O", font=("Arial", 75, "bold"), bg="white")
+
 playerCard1Value.place(x=760, y=475)
 playerCard2Value.place(x=1010, y=475)
-# x + 75, y + 140
 playerCard1SuitValue.place(x=835, y=615)
 playerCard2SuitValue.place(x=1085, y=615)
 
 chart_btn = tk.Button(window, text="Basic Strategy Chart", command=vischart.runMain)
-chart_btn.place(x=1700, y=400)
+chart_btn.place(x=CHART_BTN_X, y=CHART_BTN_Y)
 
 window.mainloop()
