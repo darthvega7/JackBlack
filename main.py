@@ -3,6 +3,8 @@ import trainer_engine as trainer
 import visual_chart as vischart
 import random
 
+BUTTON_FONT = 20
+CARD_FONT = 75
 SPLITS_BTN_X = 700
 SPLITS_BTN_Y = 25
 SOFTS_BTN_X = 815
@@ -19,6 +21,10 @@ DEALER_CARD_CANVAS_X = 850
 DEALER_CARD_CANVAS_Y = 75
 DEALER_CARD_CANVAS_WIDTH = 200
 DEALER_CARD_CANVAS_HEIGHT = 300
+DEALER_CARD_VALUE_X = 25
+DEALER_CARD_VALUE_Y = 25
+DEALER_SUIT_VALUE_X = 100
+DEALER_SUIT_VALUE_Y = 165
 PLAYERCARD1_CANVAS_X = 735
 PLAYERCARD1_CANVAS_Y = 450
 PLAYERCARD1_CANVAS_WIDTH = 200
@@ -27,8 +33,28 @@ PLAYERCARD2_CANVAS_X = 985
 PLAYERCARD2_CANVAS_Y = 450
 PLAYERCARD2_CANVAS_WIDTH = 200
 PLAYERCARD2_CANVAS_HEIGHT = 300
+PLAYERCARD1_VALUE_X = 25
+PLAYERCARD1_VALUE_Y = 25
+PLAYERCARD1_SUIT_X = 100
+PLAYERCARD1_SUIT_Y = 165
+PLAYERCARD2_VALUE_X = 25
+PLAYERCARD2_VALUE_Y = 25
+PLAYERCARD2_SUIT_X = 100
+PLAYERCARD2_SUIT_Y = 165
 CHART_BTN_X = 1700
 CHART_BTN_Y = 400
+SPLIT_YES_BTN_X = 875
+SPLIT_YES_BTN_Y = 800
+SPLIT_NO_BTN_X = 975
+SPLIT_NO_BTN_Y = 800
+HIT_BTN_X = 770
+HIT_BTN_Y = 800
+STAND_BTN_X = 825
+STAND_BTN_Y = 800
+DH_BTN_X = 900
+DH_BTN_Y = 800
+DS_BTN_X = 1025
+DS_BTN_Y = 800
 
 checkAnswer = ""
 play_token = "none"
@@ -210,15 +236,15 @@ def nextAll():
         standBtn.place_forget()
         doubleHitBtn.place_forget()
         doubleStandBtn.place_forget()
-        splitYesBtn.place(x=875, y=800)
-        splitNoBtn.place(x=975, y=800)
+        splitYesBtn.place(x=SPLIT_YES_BTN_X, y=SPLIT_YES_BTN_Y)
+        splitNoBtn.place(x=SPLIT_NO_BTN_X, y=SPLIT_NO_BTN_Y)
     else:
         splitYesBtn.place_forget()
         splitNoBtn.place_forget()
-        hitBtn.place(x=770, y=800)
-        standBtn.place(x=825, y=800)
-        doubleHitBtn.place(x=900, y=800)
-        doubleStandBtn.place(x=1025, y=800)
+        hitBtn.place(x=HIT_BTN_X, y=HIT_BTN_Y)
+        standBtn.place(x=STAND_BTN_X, y=STAND_BTN_Y)
+        doubleHitBtn.place(x=DH_BTN_X, y=DH_BTN_Y)
+        doubleStandBtn.place(x=DS_BTN_X, y=DS_BTN_Y)
     if(check_mode == "splits"):
         dealerCardValue.config(text=dealer_card)
         p1, p2 = player_card.split(",")
@@ -251,8 +277,8 @@ def changeToSplits():
     standBtn.place_forget()
     doubleHitBtn.place_forget()
     doubleStandBtn.place_forget()
-    splitYesBtn.place(x=875, y=800)
-    splitNoBtn.place(x=975, y=800)
+    splitYesBtn.place(x=SPLIT_YES_BTN_X, y=SPLIT_YES_BTN_Y)
+    splitNoBtn.place(x=SPLIT_NO_BTN_X, y=SPLIT_NO_BTN_Y)
     nextSplit()
 def changeToSofts():
     global play_token, count
@@ -264,10 +290,10 @@ def changeToSofts():
     allBtn.config(relief=tk.RAISED, state=tk.NORMAL)
     splitYesBtn.place_forget()
     splitNoBtn.place_forget()
-    hitBtn.place(x=770, y=800)
-    standBtn.place(x=825, y=800)
-    doubleHitBtn.place(x=900, y=800)
-    doubleStandBtn.place(x=1025, y=800)
+    hitBtn.place(x=HIT_BTN_X, y=HIT_BTN_Y)
+    standBtn.place(x=STAND_BTN_X, y=STAND_BTN_Y)
+    doubleHitBtn.place(x=DH_BTN_X, y=DH_BTN_Y)
+    doubleStandBtn.place(x=DS_BTN_X, y=DS_BTN_Y)
     nextSoft()
 
 def changeToHards():
@@ -280,10 +306,10 @@ def changeToHards():
     allBtn.config(relief=tk.RAISED, state=tk.NORMAL)
     splitYesBtn.place_forget()
     splitNoBtn.place_forget()
-    hitBtn.place(x=770, y=800)
-    standBtn.place(x=825, y=800)
-    doubleHitBtn.place(x=900, y=800)
-    doubleStandBtn.place(x=1025, y=800)
+    hitBtn.place(x=HIT_BTN_X, y=HIT_BTN_Y)
+    standBtn.place(x=STAND_BTN_X, y=STAND_BTN_Y)
+    doubleHitBtn.place(x=DH_BTN_X, y=DH_BTN_Y)
+    doubleStandBtn.place(x=DS_BTN_X, y=DS_BTN_Y)
     nextHard()
 def changeToAll():
     global play_token, count
@@ -456,16 +482,16 @@ hardsBtn.place(x=HARDS_BTN_X, y=HARDS_BTN_Y)
 allBtn = tk.Button(window, text="Play All", command=changeToAll)
 allBtn.place(x=ALL_BTN_X, y=ALL_BTN_Y)
 
-dealerCard = tk.Label(window, text="Dealer Card: ", font=("Arial", 20))
+dealerCard = tk.Label(window, text="Dealer Card: ", font=("Arial", BUTTON_FONT))
 dealerCard.place(x=100, y=300)
 
-playerCard = tk.Label(window, text="Player Card: ", font=("Arial", 20))
+playerCard = tk.Label(window, text="Player Card: ", font=("Arial", BUTTON_FONT))
 playerCard.place(x=100, y=350)
 
-curr_count = tk.Label(window, text="Count: ", font=("Arial", 20))
+curr_count = tk.Label(window, text="Count: ", font=("Arial", BUTTON_FONT))
 curr_count.place(x=100, y=400)
 
-correctCheck = tk.Label(window, text="", font=("Arial", 20))
+correctCheck = tk.Label(window, text="", font=("Arial", BUTTON_FONT))
 correctCheck.place(x=1300, y=400)
 
 randBtn = tk.Button(window, text="Play Random Hands", command=playRandom)
@@ -490,20 +516,22 @@ playerCard1Canvas.place(x=PLAYERCARD1_CANVAS_X, y=PLAYERCARD1_CANVAS_Y)
 playerCard2Canvas = tk.Canvas(window, width=PLAYERCARD2_CANVAS_WIDTH, height=PLAYERCARD2_CANVAS_HEIGHT, bg="white")
 playerCard2Canvas.place(x=PLAYERCARD2_CANVAS_X, y=PLAYERCARD2_CANVAS_Y)
 
-dealerCardValue = tk.Label(text="X", font=("Arial", 75, "bold"), bg="white")
-dealerSuitValue = tk.Label(text="O", font=("Arial", 75, "bold"), bg="white")
-dealerCardValue.place(x=875, y=100)
-dealerSuitValue.place(x=950, y=240)
+dealerCardValue = tk.Label(dealerCardCanvas, text="X", font=("Arial", CARD_FONT, "bold"), bg="white")
+dealerSuitValue = tk.Label(dealerCardCanvas, text="O", font=("Arial", CARD_FONT, "bold"), bg="white")
+# dealerCardValue.place(x=875, y=100)
+# dealerSuitValue.place(x=950, y=240)
+dealerCardValue.place(x=DEALER_CARD_VALUE_X, y=DEALER_CARD_VALUE_Y)
+dealerSuitValue.place(x=DEALER_SUIT_VALUE_X, y=DEALER_SUIT_VALUE_Y)
 
-playerCard1Value = tk.Label(text="X", font=("Arial", 75, "bold"), bg="white")
-playerCard2Value = tk.Label(text="X", font=("Arial", 75, "bold"), bg="white")
-playerCard1SuitValue = tk.Label(text="O", font=("Arial", 75, "bold"), bg="white")
-playerCard2SuitValue = tk.Label(text="O", font=("Arial", 75, "bold"), bg="white")
+playerCard1Value = tk.Label(playerCard1Canvas, text="X", font=("Arial", CARD_FONT, "bold"), bg="white")
+playerCard2Value = tk.Label(playerCard2Canvas, text="X", font=("Arial", CARD_FONT, "bold"), bg="white")
+playerCard1SuitValue = tk.Label(playerCard1Canvas, text="O", font=("Arial", CARD_FONT, "bold"), bg="white")
+playerCard2SuitValue = tk.Label(playerCard2Canvas, text="O", font=("Arial", CARD_FONT, "bold"), bg="white")
 
-playerCard1Value.place(x=760, y=475)
-playerCard2Value.place(x=1010, y=475)
-playerCard1SuitValue.place(x=835, y=615)
-playerCard2SuitValue.place(x=1085, y=615)
+playerCard1Value.place(x=PLAYERCARD1_VALUE_X, y=PLAYERCARD1_VALUE_Y)
+playerCard2Value.place(x=PLAYERCARD2_VALUE_X, y=PLAYERCARD2_VALUE_Y)
+playerCard1SuitValue.place(x=PLAYERCARD1_SUIT_X, y=PLAYERCARD1_SUIT_Y)
+playerCard2SuitValue.place(x=PLAYERCARD2_SUIT_X, y=PLAYERCARD2_SUIT_Y)
 
 chart_btn = tk.Button(window, text="Basic Strategy Chart", command=vischart.runMain)
 chart_btn.place(x=CHART_BTN_X, y=CHART_BTN_Y)
