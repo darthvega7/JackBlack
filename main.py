@@ -5,20 +5,20 @@ import random
 
 BUTTON_FONT = 20
 CARD_FONT = 75
-SPLITS_BTN_X = 700
+SPLITS_BTN_X = 500
 SPLITS_BTN_Y = 25
-SOFTS_BTN_X = 815
+SOFTS_BTN_X = 700
 SOFTS_BTN_Y = 25
-HARDS_BTN_X = 975
+HARDS_BTN_X = 950
 HARDS_BTN_Y = 25
-ALL_BTN_X = 1125
+ALL_BTN_X = 1210
 ALL_BTN_Y = 25
-RAND_BTN_X = 1700
+RAND_BTN_X = 1600
 RAND_BTN_Y = 25
-INORDER_BTN_X = 1700
-INORDER_BTN_Y = 60
+INORDER_BTN_X = 1600
+INORDER_BTN_Y = 80
 DEALER_CARD_CANVAS_X = 850
-DEALER_CARD_CANVAS_Y = 75
+DEALER_CARD_CANVAS_Y = 100
 DEALER_CARD_CANVAS_WIDTH = 200
 DEALER_CARD_CANVAS_HEIGHT = 300
 DEALER_CARD_VALUE_X = 25
@@ -41,20 +41,20 @@ PLAYERCARD2_VALUE_X = 25
 PLAYERCARD2_VALUE_Y = 25
 PLAYERCARD2_SUIT_X = 100
 PLAYERCARD2_SUIT_Y = 165
-CHART_BTN_X = 1700
+CHART_BTN_X = 1600
 CHART_BTN_Y = 400
-SPLIT_YES_BTN_X = 875
+SPLIT_YES_BTN_X = 800
 SPLIT_YES_BTN_Y = 800
-SPLIT_NO_BTN_X = 975
+SPLIT_NO_BTN_X = 1005
 SPLIT_NO_BTN_Y = 800
-HIT_BTN_X = 770
-HIT_BTN_Y = 800
-STAND_BTN_X = 825
-STAND_BTN_Y = 800
-DH_BTN_X = 900
-DH_BTN_Y = 800
-DS_BTN_X = 1025
-DS_BTN_Y = 800
+HIT_BTN_X = 800
+HIT_BTN_Y = 775
+STAND_BTN_X = 785
+STAND_BTN_Y = 850
+DH_BTN_X = 1000
+DH_BTN_Y = 775
+DS_BTN_X = 985
+DS_BTN_Y = 850
 
 checkAnswer = ""
 play_token = "none"
@@ -470,16 +470,16 @@ icon = tk.PhotoImage(file="bitcoin.png")
 window.iconphoto(True, icon)
 window.configure(background="#3aa31a")
 
-splitsBtn = tk.Button(window, text="Play Splits", command=changeToSplits)
+splitsBtn = tk.Button(window, text="Play Splits", font=("Arial", BUTTON_FONT), command=changeToSplits)
 splitsBtn.place(x=SPLITS_BTN_X, y=SPLITS_BTN_Y)
 
-softsBtn = tk.Button(window, text="Play Soft Totals", command=changeToSofts)
+softsBtn = tk.Button(window, text="Play Soft Totals", font=("Arial", BUTTON_FONT), command=changeToSofts)
 softsBtn.place(x=SOFTS_BTN_X, y=SOFTS_BTN_Y)
 
-hardsBtn = tk.Button(window, text="Play Hard Totals", command=changeToHards)
+hardsBtn = tk.Button(window, text="Play Hard Totals", font=("Arial", BUTTON_FONT), command=changeToHards)
 hardsBtn.place(x=HARDS_BTN_X, y=HARDS_BTN_Y)
 
-allBtn = tk.Button(window, text="Play All", command=changeToAll)
+allBtn = tk.Button(window, text="Play All", font=("Arial", BUTTON_FONT), command=changeToAll)
 allBtn.place(x=ALL_BTN_X, y=ALL_BTN_Y)
 
 dealerCard = tk.Label(window, text="Dealer Card: ", font=("Arial", BUTTON_FONT))
@@ -494,19 +494,19 @@ curr_count.place(x=100, y=400)
 correctCheck = tk.Label(window, text="", font=("Arial", BUTTON_FONT))
 correctCheck.place(x=1300, y=400)
 
-randBtn = tk.Button(window, text="Play Random Hands", command=playRandom)
-inOrderBtn = tk.Button(window, text="Play Hands In Order", command=playInOrder)
+randBtn = tk.Button(window, text="Play Random Hands", font=("Arial", BUTTON_FONT), command=playRandom)
+inOrderBtn = tk.Button(window, text="Play Hands In Order", font=("Arial", BUTTON_FONT), command=playInOrder)
 randBtn.place(x=RAND_BTN_X, y=RAND_BTN_Y)
 inOrderBtn.place(x=INORDER_BTN_X, y=INORDER_BTN_Y)
 randBtn.config(relief=tk.SUNKEN, state=tk.DISABLED)
 
-splitYesBtn = tk.Button(window, text="Split", command=checkSplitYes)
-splitNoBtn = tk.Button(window, text="Do Not Split", command=checkSplitNo)
+splitYesBtn = tk.Button(window, text="Split", font=("Arial", BUTTON_FONT), command=checkSplitYes)
+splitNoBtn = tk.Button(window, text="Do Not Split", font=("Arial", BUTTON_FONT), command=checkSplitNo)
 
-hitBtn = tk.Button(window, text="Hit", command=checkHit)
-standBtn = tk.Button(window, text="Stand", command=checkStand)
-doubleHitBtn = tk.Button(window, text="Double or Hit", command=checkDh)
-doubleStandBtn = tk.Button(window, text="Double or Stand", command=checkDs)
+hitBtn = tk.Button(window, text="Hit", font=("Arial", BUTTON_FONT), command=checkHit)
+standBtn = tk.Button(window, text="Stand", font=("Arial", BUTTON_FONT), command=checkStand)
+doubleHitBtn = tk.Button(window, text="Double or Hit", font=("Arial", BUTTON_FONT), command=checkDh)
+doubleStandBtn = tk.Button(window, text="Double or Stand", font=("Arial", BUTTON_FONT), command=checkDs)
 
 dealerCardCanvas = tk.Canvas(window, width=DEALER_CARD_CANVAS_WIDTH, height=DEALER_CARD_CANVAS_HEIGHT, bg="white")
 dealerCardCanvas.place(x=DEALER_CARD_CANVAS_X, y=DEALER_CARD_CANVAS_Y)
@@ -533,7 +533,7 @@ playerCard2Value.place(x=PLAYERCARD2_VALUE_X, y=PLAYERCARD2_VALUE_Y)
 playerCard1SuitValue.place(x=PLAYERCARD1_SUIT_X, y=PLAYERCARD1_SUIT_Y)
 playerCard2SuitValue.place(x=PLAYERCARD2_SUIT_X, y=PLAYERCARD2_SUIT_Y)
 
-chart_btn = tk.Button(window, text="Basic Strategy Chart", command=vischart.runMain)
+chart_btn = tk.Button(window, text="Basic Strategy Chart", font=("Arial", BUTTON_FONT), command=vischart.runMain)
 chart_btn.place(x=CHART_BTN_X, y=CHART_BTN_Y)
 
 window.mainloop()
