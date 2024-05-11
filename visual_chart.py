@@ -367,6 +367,7 @@ def runMain():
     # icon2 = tk.PhotoImage(file="bitcoin.png")
     # root.iconphoto(True, icon2)
     root.geometry("1200x900")
+    root.geometry("+0+0")
 
     splits_canvas = tk.Canvas(root, width=cell_size*11, height=cell_size*11, borderwidth=0, highlightthickness=0)
     splits_canvas.place(x=MAIN_CANVAS_X, y=MAIN_CANVAS_Y)
