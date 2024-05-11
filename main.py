@@ -5,6 +5,13 @@ import random
 
 BUTTON_FONT = 20
 CARD_FONT = 75
+ANSWER_FONT = 30
+CORRECT_ANSWER_CANVAS_WIDTH = 500
+CORRECT_ANSWER_CANVAS_HEIGHT = 100
+INCORRECT_ANSWER_CANVAS_WIDTH = 500
+INCORRECT_ANSWER_CANVAS_HEIGHT = 200
+ANSWER_CANVAS_X = 705
+ANSWER_CANVAS_Y = 370
 SPLITS_BTN_X = 500
 SPLITS_BTN_Y = 25
 SOFTS_BTN_X = 700
@@ -81,6 +88,48 @@ def resetCards():
     doubleStandBtn.place_forget()
     play_token = "none"
     count = 0
+
+def result(corr, answer):
+    global play_token
+
+    def show(time):
+        answer_label.place(relx=0.5, rely=0.5, anchor="center")
+        window.after(time, hide)
+    def hide():
+        answer_canvas.place_forget()
+        answer_label.place_forget()
+
+    if corr:
+        answer_canvas = tk.Canvas(window, width=CORRECT_ANSWER_CANVAS_WIDTH, height=CORRECT_ANSWER_CANVAS_HEIGHT,
+                                  bg="green")
+        answer_canvas.place(x=ANSWER_CANVAS_X, y=ANSWER_CANVAS_Y)
+        answer_label = tk.Label(answer_canvas, text="CORRECT!", font=("Arial", ANSWER_FONT), fg="white", bg="green")
+        show(2000)
+    else:
+        answer_canvas = tk.Canvas(window, width=INCORRECT_ANSWER_CANVAS_WIDTH, height=INCORRECT_ANSWER_CANVAS_HEIGHT,
+                                  bg="red")
+        answer_canvas.place(x=ANSWER_CANVAS_X, y=ANSWER_CANVAS_Y)
+        if answer == "Y":
+            answer_label = tk.Label(answer_canvas, text="Incorrect\nCorrect Answer Is:\nSplit",
+                                    font=("Arial", ANSWER_FONT), fg="white", bg="red")
+        elif answer == "N":
+            answer_label = tk.Label(answer_canvas, text="Incorrect\nCorrect Answer Is:\nDo Not Split",
+                                    font=("Arial", ANSWER_FONT), fg="white", bg="red")
+        elif answer == "H":
+            answer_label = tk.Label(answer_canvas, text="Incorrect\nCorrect Answer Is:\nHit",
+                                    font=("Arial", ANSWER_FONT), fg="white", bg="red")
+        elif answer == "S":
+            answer_label = tk.Label(answer_canvas, text="Incorrect\nCorrect Answer Is:\nStand",
+                                    font=("Arial", ANSWER_FONT), fg="white", bg="red")
+        elif answer == "Dh":
+            answer_label = tk.Label(answer_canvas, text="Incorrect\nCorrect Answer Is:\nDouble or Hit",
+                                    font=("Arial", ANSWER_FONT), fg="white", bg="red")
+        elif answer == "Ds":
+            answer_label = tk.Label(answer_canvas, text="Incorrect\nCorrect Answer Is:\nDouble or Stand",
+                                    font=("Arial", ANSWER_FONT), fg="white", bg="red")
+        else:
+            print("Error in Answer")
+        show(4000)
 
 def playRandom():
     global play_random, count
@@ -184,7 +233,6 @@ def nextSplit():
     dealerCard.config(text="Dealer Card: " + str(dealer_card))
     playerCard.config(text="Player Card: " + str(player_card))
     curr_count.config(text="Count: " + str(count))
-    #correctAnswer.config(text="Correct Answer: " + str(answer))
     checkAnswer = answer
     dealerCardValue.config(text=dealer_card)
     p1, p2 = player_card.split(",")
@@ -199,7 +247,6 @@ def nextSoft():
     dealerCard.config(text="Dealer Card: " + str(dealer_card))
     playerCard.config(text="Player Card: " + str(player_card))
     curr_count.config(text="Count: " + str(count))
-    #correctAnswer.config(text="Correct Answer: " + str(answer))
     checkAnswer = answer
     dealerCardValue.config(text=dealer_card)
     p1, p2 = player_card.split(",")
@@ -214,7 +261,6 @@ def nextHard():
     dealerCard.config(text="Dealer Card: " + str(dealer_card))
     playerCard.config(text="Player Card: " + str(player_card))
     curr_count.config(text="Count: " + str(count))
-    #correctAnswer.config(text="Correct Answer: " + str(answer))
     checkAnswer = answer
     dealerCardValue.config(text=dealer_card)
     p1, p2 = trainer.hardTotalToCards(player_card)
@@ -229,7 +275,6 @@ def nextAll():
     dealerCard.config(text="Dealer Card: " + str(dealer_card))
     playerCard.config(text="Player Card: " + str(player_card))
     curr_count.config(text="Count: " + str(count))
-    #correctAnswer.config(text="Correct Answer: " + str(answer))
     checkAnswer = answer
     if(check_mode == "splits"):
         hitBtn.place_forget()
@@ -325,10 +370,10 @@ def checkSplitYes():
     print("Split Yes")
     if(checkAnswer == "Y"):
         print("Correct")
-        correctCheck.config(text="CORRECT!", fg="green")
+        result(True, checkAnswer)
     else:
         print("Incorrect. Correct answer is Do Not Split")
-        correctCheck.config(text="Incorrect", fg="red")
+        result(False, checkAnswer)
 
     if(play_token == "splits"):
         if count >= 100:
@@ -346,10 +391,10 @@ def checkSplitNo():
     print("Split No")
     if(checkAnswer == "N"):
         print("Correct")
-        correctCheck.config(text="CORRECT!", fg="green")
+        result(True, checkAnswer)
     else:
         print("Incorrect. Correct answer is Split")
-        correctCheck.config(text="Incorrect", fg="red")
+        result(False, checkAnswer)
 
     if(play_token == "splits"):
         if count >= 100:
@@ -367,10 +412,10 @@ def checkHit():
     print("Hit")
     if(checkAnswer == "H"):
         print("Correct")
-        correctCheck.config(text="CORRECT!", fg="green")
+        result(True, checkAnswer)
     else:
         print("Incorrect. Correct answer is: " + checkAnswer)
-        correctCheck.config(text="Incorrect", fg="red")
+        result(False, checkAnswer)
 
     if(play_token == "softs"):
         if count >= 80:
@@ -392,10 +437,10 @@ def checkStand():
     print("Stand")
     if(checkAnswer == "S"):
         print("Correct")
-        correctCheck.config(text="CORRECT!", fg="green")
+        result(True, checkAnswer)
     else:
         print("Incorrect. Correct answer is: " + checkAnswer)
-        correctCheck.config(text="Incorrect", fg="red")
+        result(False, checkAnswer)
 
     if(play_token == "softs"):
         if count >= 80:
@@ -417,10 +462,10 @@ def checkDh():
     print("Double or Hit")
     if(checkAnswer == "Dh"):
         print("Correct")
-        correctCheck.config(text="CORRECT!", fg="green")
+        result(True, checkAnswer)
     else:
         print("Incorrect. Correct answer is: " + checkAnswer)
-        correctCheck.config(text="Incorrect", fg="red")
+        result(False, checkAnswer)
 
     if(play_token == "softs"):
         if count >= 80:
@@ -441,10 +486,10 @@ def checkDs():
     print("Double or Stand")
     if(checkAnswer == "Ds"):
         print("Correct")
-        correctCheck.config(text="CORRECT!", fg="green")
+        result(True, checkAnswer)
     else:
         print("Incorrect. Correct answer is: " + checkAnswer)
-        correctCheck.config(text="Incorrect", fg="red")
+        result(False, checkAnswer)
 
     if(play_token == "softs"):
         if count >= 80:
@@ -490,9 +535,6 @@ playerCard.place(x=100, y=350)
 
 curr_count = tk.Label(window, text="Count: ", font=("Arial", BUTTON_FONT))
 curr_count.place(x=100, y=400)
-
-correctCheck = tk.Label(window, text="", font=("Arial", BUTTON_FONT))
-correctCheck.place(x=1300, y=400)
 
 randBtn = tk.Button(window, text="Play Random Hands", font=("Arial", BUTTON_FONT), command=playRandom)
 inOrderBtn = tk.Button(window, text="Play Hands In Order", font=("Arial", BUTTON_FONT), command=playInOrder)
