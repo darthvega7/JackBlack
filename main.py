@@ -62,6 +62,8 @@ DH_BTN_X = 1000
 DH_BTN_Y = 775
 DS_BTN_X = 985
 DS_BTN_Y = 850
+CLOSE_BTN_X = 1650
+CLOSE_BTN_Y = 875
 
 checkAnswer = ""
 play_token = "none"
@@ -70,12 +72,12 @@ count = 0
 
 def resetCards():
     global play_token, count
-    dealerCardValue.config(text="X")
-    dealerSuitValue.config(text="O")
-    playerCard1Value.config(text="X")
-    playerCard2Value.config(text="X")
-    playerCard1SuitValue.config(text="O")
-    playerCard2SuitValue.config(text="O")
+    dealerCardValue.config(text="")
+    dealerSuitValue.config(text="")
+    playerCard1Value.config(text="")
+    playerCard2Value.config(text="")
+    playerCard1SuitValue.config(text="")
+    playerCard2SuitValue.config(text="")
     splitsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
     softsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
     hardsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
@@ -90,8 +92,6 @@ def resetCards():
     count = 0
 
 def result(corr, answer):
-    global play_token
-
     def show(time):
         answer_label.place(relx=0.5, rely=0.5, anchor="center")
         window.after(time, hide)
@@ -507,6 +507,9 @@ def checkDs():
         else:
             nextAll()
 
+def close_window():
+    window.destroy()
+
 window = tk.Tk()
 window.title("Joshy's BlackJack Basic Strategy Trainer")
 window.geometry("1920x1080")
@@ -558,17 +561,17 @@ playerCard1Canvas.place(x=PLAYERCARD1_CANVAS_X, y=PLAYERCARD1_CANVAS_Y)
 playerCard2Canvas = tk.Canvas(window, width=PLAYERCARD2_CANVAS_WIDTH, height=PLAYERCARD2_CANVAS_HEIGHT, bg="white")
 playerCard2Canvas.place(x=PLAYERCARD2_CANVAS_X, y=PLAYERCARD2_CANVAS_Y)
 
-dealerCardValue = tk.Label(dealerCardCanvas, text="X", font=("Arial", CARD_FONT, "bold"), bg="white")
-dealerSuitValue = tk.Label(dealerCardCanvas, text="O", font=("Arial", CARD_FONT, "bold"), bg="white")
+dealerCardValue = tk.Label(dealerCardCanvas, text="", font=("Arial", CARD_FONT, "bold"), bg="white")
+dealerSuitValue = tk.Label(dealerCardCanvas, text="", font=("Arial", CARD_FONT, "bold"), bg="white")
 # dealerCardValue.place(x=875, y=100)
 # dealerSuitValue.place(x=950, y=240)
 dealerCardValue.place(x=DEALER_CARD_VALUE_X, y=DEALER_CARD_VALUE_Y)
 dealerSuitValue.place(x=DEALER_SUIT_VALUE_X, y=DEALER_SUIT_VALUE_Y)
 
-playerCard1Value = tk.Label(playerCard1Canvas, text="X", font=("Arial", CARD_FONT, "bold"), bg="white")
-playerCard2Value = tk.Label(playerCard2Canvas, text="X", font=("Arial", CARD_FONT, "bold"), bg="white")
-playerCard1SuitValue = tk.Label(playerCard1Canvas, text="O", font=("Arial", CARD_FONT, "bold"), bg="white")
-playerCard2SuitValue = tk.Label(playerCard2Canvas, text="O", font=("Arial", CARD_FONT, "bold"), bg="white")
+playerCard1Value = tk.Label(playerCard1Canvas, text="", font=("Arial", CARD_FONT, "bold"), bg="white")
+playerCard2Value = tk.Label(playerCard2Canvas, text="", font=("Arial", CARD_FONT, "bold"), bg="white")
+playerCard1SuitValue = tk.Label(playerCard1Canvas, text="", font=("Arial", CARD_FONT, "bold"), bg="white")
+playerCard2SuitValue = tk.Label(playerCard2Canvas, text="", font=("Arial", CARD_FONT, "bold"), bg="white")
 
 playerCard1Value.place(x=PLAYERCARD1_VALUE_X, y=PLAYERCARD1_VALUE_Y)
 playerCard2Value.place(x=PLAYERCARD2_VALUE_X, y=PLAYERCARD2_VALUE_Y)
@@ -577,5 +580,8 @@ playerCard2SuitValue.place(x=PLAYERCARD2_SUIT_X, y=PLAYERCARD2_SUIT_Y)
 
 chart_btn = tk.Button(window, text="Basic Strategy Chart", font=("Arial", BUTTON_FONT), command=vischart.runMain)
 chart_btn.place(x=CHART_BTN_X, y=CHART_BTN_Y)
+
+close_btn = tk.Button(window, text="Close Window", font=("Arial", BUTTON_FONT), command=close_window)
+close_btn.place(x=CLOSE_BTN_X, y=CLOSE_BTN_Y)
 
 window.mainloop()
