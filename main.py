@@ -93,11 +93,19 @@ def resetCards():
 
 def result(corr, answer):
     def show(time):
+        global should_continue
+        should_continue = False
         answer_label.place(relx=0.5, rely=0.5, anchor="center")
+        answer_canvas.bind("<Button-1>", lambda event: hide())
+        answer_label.bind("<Button-1>", lambda event: hide())
         window.after(time, hide)
+        while not should_continue:
+            window.update()
     def hide():
+        global should_continue
         answer_canvas.place_forget()
         answer_label.place_forget()
+        should_continue = True
 
     if corr:
         answer_canvas = tk.Canvas(window, width=CORRECT_ANSWER_CANVAS_WIDTH, height=CORRECT_ANSWER_CANVAS_HEIGHT,
