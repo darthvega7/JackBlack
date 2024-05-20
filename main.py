@@ -2,6 +2,7 @@ import tkinter as tk
 import trainer_engine as trainer
 import visual_chart as vischart
 import random
+#from PIL import Image, ImageTk
 
 BUTTON_FONT = 20
 CARD_FONT = 75
@@ -91,10 +92,31 @@ def resetCards():
     play_token = "none"
     count = 0
 
+# def create_transparent_canvas(window, width, height, opacity):
+#     blank_canvas = tk.Canvas(window, width=width, height=height, bg="white")
+#     blank_canvas.place(x=0, y=0)
+#     overlay = Image.new("RGBA", (width, height), (255, 255, 255, int(255 * opacity)))
+#     overlay_image = ImageTk.PhotoImage(overlay)
+#     blank_canvas.create_image(0, 0, image=overlay_image, anchor='nw')
+#     blank_canvas.overlay_image = overlay_image
+#     return blank_canvas
 def result(corr, answer):
+    global play_token, play_random
     def show(time):
         global should_continue
         should_continue = False
+        splitYesBtn.config(state=tk.DISABLED)
+        splitNoBtn.config(state=tk.DISABLED)
+        hitBtn.config(state=tk.DISABLED)
+        standBtn.config(state=tk.DISABLED)
+        doubleHitBtn.config(state=tk.DISABLED)
+        doubleStandBtn.config(state=tk.DISABLED)
+        splitsBtn.config(state=tk.DISABLED)
+        softsBtn.config(state=tk.DISABLED)
+        hardsBtn.config(state=tk.DISABLED)
+        allBtn.config(state=tk.DISABLED)
+        randBtn.config(state=tk.DISABLED)
+        inOrderBtn.config(state=tk.DISABLED)
         answer_label.place(relx=0.5, rely=0.5, anchor="center")
         answer_canvas.bind("<Button-1>", lambda event: hide())
         answer_label.bind("<Button-1>", lambda event: hide())
@@ -105,7 +127,34 @@ def result(corr, answer):
         global should_continue
         answer_canvas.place_forget()
         answer_label.place_forget()
+        #blank_canvas.place_forget()
         should_continue = True
+        splitYesBtn.config(state=tk.NORMAL)
+        splitNoBtn.config(state=tk.NORMAL)
+        hitBtn.config(state=tk.NORMAL)
+        standBtn.config(state=tk.NORMAL)
+        doubleHitBtn.config(state=tk.NORMAL)
+        doubleStandBtn.config(state=tk.NORMAL)
+        if play_token == "splits":
+            softsBtn.config(state=tk.NORMAL)
+            hardsBtn.config(state=tk.NORMAL)
+            allBtn.config(state=tk.NORMAL)
+        elif play_token == "softs":
+            splitsBtn.config(state=tk.NORMAL)
+            hardsBtn.config(state=tk.NORMAL)
+            allBtn.config(state=tk.NORMAL)
+        elif play_token == "hards":
+            splitsBtn.config(state=tk.NORMAL)
+            softsBtn.config(state=tk.NORMAL)
+            allBtn.config(state=tk.NORMAL)
+        elif play_token == "all":
+            splitsBtn.config(state=tk.NORMAL)
+            softsBtn.config(state=tk.NORMAL)
+            hardsBtn.config(state=tk.NORMAL)
+        if play_random:
+            inOrderBtn.config(state=tk.NORMAL)
+        else:
+            randBtn.config(state=tk.NORMAL)
 
     if corr:
         answer_canvas = tk.Canvas(window, width=CORRECT_ANSWER_CANVAS_WIDTH, height=CORRECT_ANSWER_CANVAS_HEIGHT,
@@ -238,9 +287,9 @@ def randomSuit():
 def nextSplit():
     global checkAnswer, play_random, count
     dealer_card, player_card, answer = trainer.playSplits(play_random)
-    dealerCard.config(text="Dealer Card: " + str(dealer_card))
-    playerCard.config(text="Player Card: " + str(player_card))
-    curr_count.config(text="Count: " + str(count))
+    #dealerCard.config(text="Dealer Card: " + str(dealer_card))
+    #playerCard.config(text="Player Card: " + str(player_card))
+    curr_count.config(text="Number of Cards: " + str(count))
     checkAnswer = answer
     dealerCardValue.config(text=dealer_card)
     p1, p2 = player_card.split(",")
@@ -252,9 +301,9 @@ def nextSplit():
 def nextSoft():
     global checkAnswer, play_random, count
     dealer_card, player_card, answer = trainer.playSofts(play_random)
-    dealerCard.config(text="Dealer Card: " + str(dealer_card))
-    playerCard.config(text="Player Card: " + str(player_card))
-    curr_count.config(text="Count: " + str(count))
+    #dealerCard.config(text="Dealer Card: " + str(dealer_card))
+    #playerCard.config(text="Player Card: " + str(player_card))
+    curr_count.config(text="Number of Cards: " + str(count))
     checkAnswer = answer
     dealerCardValue.config(text=dealer_card)
     p1, p2 = player_card.split(",")
@@ -266,9 +315,9 @@ def nextSoft():
 def nextHard():
     global checkAnswer, play_random, count
     dealer_card, player_card, answer = trainer.playHards(play_random)
-    dealerCard.config(text="Dealer Card: " + str(dealer_card))
-    playerCard.config(text="Player Card: " + str(player_card))
-    curr_count.config(text="Count: " + str(count))
+    #dealerCard.config(text="Dealer Card: " + str(dealer_card))
+    #playerCard.config(text="Player Card: " + str(player_card))
+    curr_count.config(text="Number of Cards: " + str(count))
     checkAnswer = answer
     dealerCardValue.config(text=dealer_card)
     p1, p2 = trainer.hardTotalToCards(player_card)
@@ -280,9 +329,9 @@ def nextHard():
 def nextAll():
     global checkAnswer, play_random, count
     dealer_card, player_card, answer, check_mode = trainer.playAll(play_random)
-    dealerCard.config(text="Dealer Card: " + str(dealer_card))
-    playerCard.config(text="Player Card: " + str(player_card))
-    curr_count.config(text="Count: " + str(count))
+    #dealerCard.config(text="Dealer Card: " + str(dealer_card))
+    #playerCard.config(text="Player Card: " + str(player_card))
+    curr_count.config(text="Number of Cards: " + str(count))
     checkAnswer = answer
     if(check_mode == "splits"):
         hitBtn.place_forget()
@@ -538,13 +587,13 @@ hardsBtn.place(x=HARDS_BTN_X, y=HARDS_BTN_Y)
 allBtn = tk.Button(window, text="Play All", font=("Arial", BUTTON_FONT), command=changeToAll)
 allBtn.place(x=ALL_BTN_X, y=ALL_BTN_Y)
 
-dealerCard = tk.Label(window, text="Dealer Card: ", font=("Arial", BUTTON_FONT))
-dealerCard.place(x=100, y=300)
+#dealerCard = tk.Label(window, text="Dealer Card: ", font=("Arial", BUTTON_FONT))
+#dealerCard.place(x=100, y=300)
 
-playerCard = tk.Label(window, text="Player Card: ", font=("Arial", BUTTON_FONT))
-playerCard.place(x=100, y=350)
+#playerCard = tk.Label(window, text="Player Card: ", font=("Arial", BUTTON_FONT))
+#playerCard.place(x=100, y=350)
 
-curr_count = tk.Label(window, text="Count: ", font=("Arial", BUTTON_FONT))
+curr_count = tk.Label(window, text="Number of Cards: ", font=("Arial", BUTTON_FONT))
 curr_count.place(x=100, y=400)
 
 randBtn = tk.Button(window, text="Play Random Hands", font=("Arial", BUTTON_FONT), command=playRandom)
