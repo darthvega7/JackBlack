@@ -2,7 +2,10 @@ import tkinter as tk
 import trainer_engine as trainer
 import visual_chart as vischart
 import random
-#from PIL import Image, ImageTk
+
+green_color = "#24b670"
+yellow_color = "#efc514"
+blue_color = "#3ebab4"
 
 BUTTON_FONT = 20
 CARD_FONT = 75
@@ -51,10 +54,10 @@ PLAYERCARD2_SUIT_X = 100
 PLAYERCARD2_SUIT_Y = 165
 CHART_BTN_X = 20
 CHART_BTN_Y = 400
-SPLIT_YES_BTN_X = 800
-SPLIT_YES_BTN_Y = 800
-SPLIT_NO_BTN_X = 1005
-SPLIT_NO_BTN_Y = 800
+SPLIT_YES_BTN_X = 1250
+SPLIT_YES_BTN_Y = 365
+SPLIT_NO_BTN_X = 1250
+SPLIT_NO_BTN_Y = 440
 HIT_BTN_X = 1250
 HIT_BTN_Y = 290
 STAND_BTN_X = 1250
@@ -65,6 +68,7 @@ DS_BTN_X = 1250
 DS_BTN_Y = 515
 ACTION_BUTTON_WIDTH = 15
 ACTION_BUTTON_HEIGHT = 2
+ACTION_BUTTON_BORDER = 5
 CLOSE_BTN_X = 860
 CLOSE_BTN_Y = 875
 
@@ -92,7 +96,6 @@ def resetCards():
     doubleHitBtn.place_forget()
     doubleStandBtn.place_forget()
     play_token = "none"
-    count = 0
 
 def result(corr, answer):
     global play_token, play_random
@@ -598,17 +601,19 @@ randBtn.place(x=RAND_BTN_X, y=RAND_BTN_Y)
 inOrderBtn.place(x=INORDER_BTN_X, y=INORDER_BTN_Y)
 randBtn.config(relief=tk.SUNKEN, state=tk.DISABLED)
 
-splitYesBtn = tk.Button(window, text="Split", font=("Arial", BUTTON_FONT), command=checkSplitYes)
-splitNoBtn = tk.Button(window, text="Do Not Split", font=("Arial", BUTTON_FONT), command=checkSplitNo)
+splitYesBtn = tk.Button(window, text="Split", width=ACTION_BUTTON_WIDTH, height=ACTION_BUTTON_HEIGHT,
+                        font=("Arial", BUTTON_FONT), bg=green_color, bd=ACTION_BUTTON_BORDER, command=checkSplitYes)
+splitNoBtn = tk.Button(window, text="Do Not Split", width=ACTION_BUTTON_WIDTH, height=ACTION_BUTTON_HEIGHT,
+                       font=("Arial", BUTTON_FONT), bg="white", bd=ACTION_BUTTON_BORDER, command=checkSplitNo)
 
 hitBtn = tk.Button(window, text="Hit", width=ACTION_BUTTON_WIDTH, height=ACTION_BUTTON_HEIGHT,
-                   font=("Arial", BUTTON_FONT), bg="white", command=checkHit)
+                   font=("Arial", BUTTON_FONT), bg="white", bd=ACTION_BUTTON_BORDER, command=checkHit)
 standBtn = tk.Button(window, text="Stand", width=ACTION_BUTTON_WIDTH, height=ACTION_BUTTON_HEIGHT,
-                     font=("Arial", BUTTON_FONT), bg="#efc514", command=checkStand)
+                     font=("Arial", BUTTON_FONT), bg=yellow_color, bd=ACTION_BUTTON_BORDER, command=checkStand)
 doubleHitBtn = tk.Button(window, text="Double or Hit", width=ACTION_BUTTON_WIDTH, height=ACTION_BUTTON_HEIGHT,
-                         font=("Arial", BUTTON_FONT), bg="#24b670", command=checkDh)
+                         font=("Arial", BUTTON_FONT), bg=green_color, bd=ACTION_BUTTON_BORDER, command=checkDh)
 doubleStandBtn = tk.Button(window, text="Double or Stand", width=ACTION_BUTTON_WIDTH, height=ACTION_BUTTON_HEIGHT,
-                           font=("Arial", BUTTON_FONT), bg="#3ebab4", command=checkDs)
+                           font=("Arial", BUTTON_FONT), bg=blue_color, bd=ACTION_BUTTON_BORDER, command=checkDs)
 
 dealerCardCanvas = tk.Canvas(window, width=DEALER_CARD_CANVAS_WIDTH, height=DEALER_CARD_CANVAS_HEIGHT, bg="white")
 dealerCardCanvas.place(x=DEALER_CARD_CANVAS_X, y=DEALER_CARD_CANVAS_Y)
