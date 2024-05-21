@@ -17,18 +17,18 @@ INCORRECT_ANSWER_CANVAS_WIDTH = 500
 INCORRECT_ANSWER_CANVAS_HEIGHT = 200
 ANSWER_CANVAS_X = 705
 ANSWER_CANVAS_Y = 370
-SPLITS_BTN_X = 500
+SPLITS_BTN_X = 510
 SPLITS_BTN_Y = 25
-SOFTS_BTN_X = 700
+SOFTS_BTN_X = 710
 SOFTS_BTN_Y = 25
-HARDS_BTN_X = 950
+HARDS_BTN_X = 960
 HARDS_BTN_Y = 25
-ALL_BTN_X = 1210
+ALL_BTN_X = 1220
 ALL_BTN_Y = 25
 RAND_BTN_X = 20
 RAND_BTN_Y = 25
 INORDER_BTN_X = 20
-INORDER_BTN_Y = 80
+INORDER_BTN_Y = 90
 DEALER_CARD_CANVAS_X = 850
 DEALER_CARD_CANVAS_Y = 100
 DEALER_CARD_CANVAS_WIDTH = 200
@@ -575,16 +575,20 @@ window.iconphoto(True, icon)
 #window.configure(background="#3aa31a")
 window.configure(background="#135900")
 
-splitsBtn = tk.Button(window, text="Play Splits", font=("Arial", BUTTON_FONT), command=changeToSplits)
+splitsBtn = tk.Button(window, text="Play Splits", font=("Arial", BUTTON_FONT), bd=ACTION_BUTTON_BORDER,
+                      command=changeToSplits)
 splitsBtn.place(x=SPLITS_BTN_X, y=SPLITS_BTN_Y)
 
-softsBtn = tk.Button(window, text="Play Soft Totals", font=("Arial", BUTTON_FONT), command=changeToSofts)
+softsBtn = tk.Button(window, text="Play Soft Totals", font=("Arial", BUTTON_FONT), bd=ACTION_BUTTON_BORDER,
+                     command=changeToSofts)
 softsBtn.place(x=SOFTS_BTN_X, y=SOFTS_BTN_Y)
 
-hardsBtn = tk.Button(window, text="Play Hard Totals", font=("Arial", BUTTON_FONT), command=changeToHards)
+hardsBtn = tk.Button(window, text="Play Hard Totals", font=("Arial", BUTTON_FONT), bd=ACTION_BUTTON_BORDER,
+                     command=changeToHards)
 hardsBtn.place(x=HARDS_BTN_X, y=HARDS_BTN_Y)
 
-allBtn = tk.Button(window, text="Play All", font=("Arial", BUTTON_FONT), command=changeToAll)
+allBtn = tk.Button(window, text="Play All", font=("Arial", BUTTON_FONT), bd=ACTION_BUTTON_BORDER,
+                   command=changeToAll)
 allBtn.place(x=ALL_BTN_X, y=ALL_BTN_Y)
 
 #dealerCard = tk.Label(window, text="Dealer Card: ", font=("Arial", BUTTON_FONT))
@@ -596,8 +600,10 @@ allBtn.place(x=ALL_BTN_X, y=ALL_BTN_Y)
 curr_count = tk.Label(window, text="Cards Played: ", font=("Arial", BUTTON_FONT))
 #curr_count.place(x=100, y=400)
 
-randBtn = tk.Button(window, text="Play Random Hands", font=("Arial", BUTTON_FONT), command=playRandom)
-inOrderBtn = tk.Button(window, text="Play Hands In Order", font=("Arial", BUTTON_FONT), command=playInOrder)
+randBtn = tk.Button(window, text="Play Random Hands", font=("Arial", BUTTON_FONT), bd=ACTION_BUTTON_BORDER,
+                    command=playRandom)
+inOrderBtn = tk.Button(window, text="Play Hands In Order", font=("Arial", BUTTON_FONT), bd=ACTION_BUTTON_BORDER,
+                       command=playInOrder)
 randBtn.place(x=RAND_BTN_X, y=RAND_BTN_Y)
 inOrderBtn.place(x=INORDER_BTN_X, y=INORDER_BTN_Y)
 randBtn.config(relief=tk.SUNKEN, state=tk.DISABLED)
@@ -639,10 +645,12 @@ playerCard2Value.place(x=PLAYERCARD2_VALUE_X, y=PLAYERCARD2_VALUE_Y)
 playerCard1SuitValue.place(x=PLAYERCARD1_SUIT_X, y=PLAYERCARD1_SUIT_Y)
 playerCard2SuitValue.place(x=PLAYERCARD2_SUIT_X, y=PLAYERCARD2_SUIT_Y)
 
-chart_btn = tk.Button(window, text="Basic Strategy Chart", font=("Arial", BUTTON_FONT), command=vischart.runMain)
+chart_btn = tk.Button(window, text="Basic Strategy Chart", font=("Arial", BUTTON_FONT), bd=ACTION_BUTTON_BORDER,
+                      command=vischart.runMain)
 chart_btn.place(x=CHART_BTN_X, y=CHART_BTN_Y)
 
-close_btn = tk.Button(window, text="Close Window", font=("Arial", BUTTON_FONT), command=close_window)
+close_btn = tk.Button(window, text="Close Window", font=("Arial", BUTTON_FONT), bd=ACTION_BUTTON_BORDER,
+                      command=close_window)
 close_btn.place(x=CLOSE_BTN_X, y=CLOSE_BTN_Y)
 
 window.mainloop()
