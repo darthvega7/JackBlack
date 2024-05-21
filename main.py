@@ -87,6 +87,8 @@ checkAnswer = ""
 play_token = "none"
 play_random = True
 count = 0
+correct_count = 0
+incorrect_count = 0
 
 def resetCards():
     global play_token, count
@@ -198,9 +200,21 @@ def result(corr, answer):
         show(4000)
 
 def playRandom():
-    global play_random, count
+    global play_random, play_token, count, correct_count, incorrect_count
     play_random = True
     count = 0
+    correct_count = 0
+    incorrect_count = 0
+    correct_label.config(text="Correct: " + str(correct_count))
+    incorrect_label.config(text="Incorrect: " + str(incorrect_count))
+    if play_token == "splits" or play_token == "hards":
+        curr_count.config(text="Cards Played: " + str(count) + "/100")
+    elif play_token == "softs":
+        curr_count.config(text="Cards Played: " + str(count) + "/80")
+    elif play_token == "all":
+        curr_count.config(text="Cards Played: " + str(count) + "/280")
+    else:
+        curr_count.config(text="Cards Played: ")
     trainer.resetMode()
     randBtn.config(relief=tk.SUNKEN, state=tk.DISABLED)
     inOrderBtn.config(relief=tk.RAISED, state=tk.NORMAL)
@@ -214,9 +228,21 @@ def playRandom():
         nextAll()
 
 def playInOrder():
-    global play_random, count
+    global play_random, play_token, count, correct_count, incorrect_count
     play_random = False
     count = 0
+    correct_count = 0
+    incorrect_count = 0
+    correct_label.config(text="Correct: " + str(correct_count))
+    incorrect_label.config(text="Incorrect: " + str(incorrect_count))
+    if play_token == "splits" or play_token == "hards":
+        curr_count.config(text="Cards Played: " + str(count) + "/100")
+    elif play_token == "softs":
+        curr_count.config(text="Cards Played: " + str(count) + "/80")
+    elif play_token == "all":
+        curr_count.config(text="Cards Played: " + str(count) + "/280")
+    else:
+        curr_count.config(text="Cards Played: ")
     trainer.resetMode()
     randBtn.config(relief=tk.RAISED, state=tk.NORMAL)
     inOrderBtn.config(relief=tk.SUNKEN, state=tk.DISABLED)
@@ -298,49 +324,47 @@ def nextSplit():
     dealer_card, player_card, answer = trainer.playSplits(play_random)
     #dealerCard.config(text="Dealer Card: " + str(dealer_card))
     #playerCard.config(text="Player Card: " + str(player_card))
-    curr_count.config(text="Cards Played: " + str(count))
+    #curr_count.config(text="Cards Played: " + str(count) + "/100")
     checkAnswer = answer
     dealerCardValue.config(text=dealer_card)
     p1, p2 = player_card.split(",")
     playerCard1Value.config(text=p1)
     playerCard2Value.config(text=p2)
     randomSuit()
-    count += 1
+    #count += 1
 
 def nextSoft():
     global checkAnswer, play_random, count
     dealer_card, player_card, answer = trainer.playSofts(play_random)
     #dealerCard.config(text="Dealer Card: " + str(dealer_card))
     #playerCard.config(text="Player Card: " + str(player_card))
-    curr_count.config(text="Cards Played: " + str(count))
+    curr_count.config(text="Cards Played: " + str(count) + "/80")
     checkAnswer = answer
     dealerCardValue.config(text=dealer_card)
     p1, p2 = player_card.split(",")
     playerCard1Value.config(text=p1)
     playerCard2Value.config(text=p2)
     randomSuit()
-    count += 1
 
 def nextHard():
     global checkAnswer, play_random, count
     dealer_card, player_card, answer = trainer.playHards(play_random)
     #dealerCard.config(text="Dealer Card: " + str(dealer_card))
     #playerCard.config(text="Player Card: " + str(player_card))
-    curr_count.config(text="Cards Played: " + str(count))
+    curr_count.config(text="Cards Played: " + str(count) + "/100")
     checkAnswer = answer
     dealerCardValue.config(text=dealer_card)
     p1, p2 = trainer.hardTotalToCards(player_card)
     playerCard1Value.config(text=p1)
     playerCard2Value.config(text=p2)
     randomSuit()
-    count += 1
 
 def nextAll():
     global checkAnswer, play_random, count
     dealer_card, player_card, answer, check_mode = trainer.playAll(play_random)
     #dealerCard.config(text="Dealer Card: " + str(dealer_card))
     #playerCard.config(text="Player Card: " + str(player_card))
-    curr_count.config(text="Cards Played: " + str(count))
+    curr_count.config(text="Cards Played: " + str(count) + "/280")
     checkAnswer = answer
     if(check_mode == "splits"):
         hitBtn.place_forget()
@@ -374,12 +398,16 @@ def nextAll():
     else:
         print("ERROR in All Mode: Mode Not Found")
     randomSuit()
-    count += 1
 
 def changeToSplits():
-    global play_token, count
+    global play_token, count, correct_count, incorrect_count
     play_token = "splits"
     count = 0
+    correct_count = 0
+    incorrect_count = 0
+    correct_label.config(text="Correct: " + str(correct_count))
+    incorrect_label.config(text="Incorrect: " + str(incorrect_count))
+    curr_count.config(text="Cards Played: " + str(count) + "/100")
     splitsBtn.config(relief=tk.SUNKEN, state=tk.DISABLED)
     softsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
     hardsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
@@ -392,9 +420,14 @@ def changeToSplits():
     splitNoBtn.place(x=SPLIT_NO_BTN_X, y=SPLIT_NO_BTN_Y)
     nextSplit()
 def changeToSofts():
-    global play_token, count
+    global play_token, count, correct_count, incorrect_count
     play_token = "softs"
     count = 0
+    correct_count = 0
+    incorrect_count = 0
+    correct_label.config(text="Correct: " + str(correct_count))
+    incorrect_label.config(text="Incorrect: " + str(incorrect_count))
+    curr_count.config(text="Cards Played: " + str(count) + "/80")
     splitsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
     softsBtn.config(relief=tk.SUNKEN, state=tk.DISABLED)
     hardsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
@@ -408,9 +441,14 @@ def changeToSofts():
     nextSoft()
 
 def changeToHards():
-    global play_token, count
+    global play_token, count, correct_count, incorrect_count
     play_token = "hards"
     count = 0
+    correct_count = 0
+    incorrect_count = 0
+    correct_label.config(text="Correct: " + str(correct_count))
+    incorrect_label.config(text="Incorrect: " + str(incorrect_count))
+    curr_count.config(text="Cards Played: " + str(count) + "/100")
     splitsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
     softsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
     hardsBtn.config(relief=tk.SUNKEN, state=tk.DISABLED)
@@ -423,152 +461,211 @@ def changeToHards():
     doubleStandBtn.place(x=DS_BTN_X, y=DS_BTN_Y)
     nextHard()
 def changeToAll():
-    global play_token, count
+    global play_token, count, correct_count, incorrect_count
     play_token = "all"
     count = 0
+    correct_count = 0
+    incorrect_count = 0
+    correct_label.config(text="Correct: " + str(correct_count))
+    incorrect_label.config(text="Incorrect: " + str(incorrect_count))
+    curr_count.config(text="Cards Played: " + str(count) + "/280")
     splitsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
     softsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
     hardsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
     allBtn.config(relief=tk.SUNKEN, state=tk.DISABLED)
     nextAll()
 def checkSplitYes():
-    global play_token
+    global play_token, count, correct_count, incorrect_count
     print("Split Yes")
+    count += 1
+    if play_token == "splits":
+        curr_count.config(text="Cards Played: " + str(count) + "/100")
+    else:
+        curr_count.config(text="Cards Played: " + str(count) + "/280")
     if(checkAnswer == "Y"):
         print("Correct")
+        correct_count += 1
+        correct_label.config(text="Correct: " + str(correct_count))
         result(True, checkAnswer)
     else:
         print("Incorrect. Correct answer is Do Not Split")
+        incorrect_count += 1
+        incorrect_label.config(text="Incorrect: " + str(incorrect_count))
         result(False, checkAnswer)
+
 
     if(play_token == "splits"):
         if count >= 100:
+            #curr_count.config(text="Cards Played: " + str(count) + "/100")
             resetCards()
         else:
             nextSplit()
     else:
         if count >= 280:
+            #curr_count.config(text="Cards Played: " + str(count) + "/280")
             resetCards()
         else:
             nextAll()
 
 def checkSplitNo():
-    global play_token
+    global play_token, count, correct_count, incorrect_count
     print("Split No")
+    count += 1
+    if play_token == "splits":
+        curr_count.config(text="Cards Played: " + str(count) + "/100")
+    else:
+        curr_count.config(text="Cards Played: " + str(count) + "/280")
     if(checkAnswer == "N"):
         print("Correct")
+        correct_count += 1
+        correct_label.config(text="Correct: " + str(correct_count))
         result(True, checkAnswer)
     else:
         print("Incorrect. Correct answer is Split")
+        incorrect_count += 1
+        incorrect_label.config(text="Incorrect: " + str(incorrect_count))
         result(False, checkAnswer)
 
     if(play_token == "splits"):
         if count >= 100:
+            #curr_count.config(text="Cards Played: " + str(count) + "/100")
             resetCards()
         else:
             nextSplit()
     else:
         if count >= 280:
+            #curr_count.config(text="Cards Played: " + str(count) + "/280")
             resetCards()
         else:
             nextAll()
 
 def checkHit():
-    global play_token
+    global play_token, correct_count, incorrect_count
     print("Hit")
     if(checkAnswer == "H"):
         print("Correct")
+        correct_count += 1
+        correct_label.config(text="Correct: " + str(correct_count))
         result(True, checkAnswer)
     else:
         print("Incorrect. Correct answer is: " + checkAnswer)
+        incorrect_count += 1
+        incorrect_label.config(text="Incorrect: " + str(incorrect_count))
         result(False, checkAnswer)
 
     if(play_token == "softs"):
         if count >= 80:
+            curr_count.config(text="Cards Played: " + str(count) + "/80")
             resetCards()
         else:
             nextSoft()
     elif(play_token == "hards"):
         if count >= 100:
+            curr_count.config(text="Cards Played: " + str(count) + "/100")
             resetCards()
         else:
             nextHard()
     else:
         if count >= 280:
+            curr_count.config(text="Cards Played: " + str(count) + "/280")
             resetCards()
         else:
             nextAll()
 
 def checkStand():
+    global play_token, correct_count, incorrect_count
     print("Stand")
     if(checkAnswer == "S"):
         print("Correct")
+        correct_count += 1
+        correct_label.config(text="Correct: " + str(correct_count))
         result(True, checkAnswer)
     else:
         print("Incorrect. Correct answer is: " + checkAnswer)
+        incorrect_count += 1
+        incorrect_label.config(text="Incorrect: " + str(incorrect_count))
         result(False, checkAnswer)
 
     if(play_token == "softs"):
         if count >= 80:
+            curr_count.config(text="Cards Played: " + str(count) + "/80")
             resetCards()
         else:
             nextSoft()
     elif(play_token == "hards"):
         if count >= 100:
+            curr_count.config(text="Cards Played: " + str(count) + "/100")
             resetCards()
         else:
             nextHard()
     else:
         if count >= 280:
+            curr_count.config(text="Cards Played: " + str(count) + "/280")
             resetCards()
         else:
             nextAll()
 
 def checkDh():
+    global play_token, correct_count, incorrect_count
     print("Double or Hit")
     if(checkAnswer == "Dh"):
         print("Correct")
+        correct_count += 1
+        correct_label.config(text="Correct: " + str(correct_count))
         result(True, checkAnswer)
     else:
         print("Incorrect. Correct answer is: " + checkAnswer)
+        incorrect_count += 1
+        incorrect_label.config(text="Incorrect: " + str(incorrect_count))
         result(False, checkAnswer)
 
     if(play_token == "softs"):
         if count >= 80:
+            curr_count.config(text="Cards Played: " + str(count) + "/80")
             resetCards()
         else:
             nextSoft()
     elif(play_token == "hards"):
         if count >= 100:
+            curr_count.config(text="Cards Played: " + str(count) + "/100")
             resetCards()
         else:
             nextHard()
     else:
         if count >= 280:
+            curr_count.config(text="Cards Played: " + str(count) + "/280")
             resetCards()
         else:
             nextAll()
 def checkDs():
+    global play_token, correct_count, incorrect_count
     print("Double or Stand")
     if(checkAnswer == "Ds"):
         print("Correct")
+        correct_count += 1
+        correct_label.config(text="Correct: " + str(correct_count))
         result(True, checkAnswer)
     else:
         print("Incorrect. Correct answer is: " + checkAnswer)
+        incorrect_count += 1
+        incorrect_label.config(text="Incorrect: " + str(incorrect_count))
         result(False, checkAnswer)
 
     if(play_token == "softs"):
         if count >= 80:
+            curr_count.config(text="Cards Played: " + str(count) + "/80")
             resetCards()
         else:
             nextSoft()
     elif(play_token == "hards"):
         if count >= 100:
+            curr_count.config(text="Cards Played: " + str(count) + "/100")
             resetCards()
         else:
             nextHard()
     else:
         if count >= 280:
+            curr_count.config(text="Cards Played: " + str(count) + "/280")
             resetCards()
         else:
             nextAll()
@@ -608,7 +705,11 @@ allBtn.place(x=ALL_BTN_X, y=ALL_BTN_Y)
 #playerCard.place(x=100, y=350)
 
 curr_count = tk.Label(window, text="Cards Played: ", font=("Arial", BUTTON_FONT))
-#curr_count.place(x=100, y=400)
+curr_count.place(x=50, y=600)
+correct_label = tk.Label(window, text="Correct: 0", font=("Arial", BUTTON_FONT), fg="green")
+correct_label.place(x=50, y=650)
+incorrect_label = tk.Label(window, text="Incorrect: 0", font=("Arial", BUTTON_FONT), fg="red")
+incorrect_label.place(x=50, y=700)
 
 randBtn = tk.Button(window, text="Play Random Hands", font=("Arial", BUTTON_FONT), bd=ACTION_BUTTON_BORDER,
                     command=playRandom)
