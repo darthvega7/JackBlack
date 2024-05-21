@@ -6,6 +6,7 @@ import random
 green_color = "#24b670"
 yellow_color = "#efc514"
 blue_color = "#3ebab4"
+red_color = "#d1544b"
 
 BUTTON_FONT = 20
 CARD_FONT = 75
@@ -604,10 +605,10 @@ randBtn.config(relief=tk.SUNKEN, state=tk.DISABLED)
 splitYesBtn = tk.Button(window, text="Split", width=ACTION_BUTTON_WIDTH, height=ACTION_BUTTON_HEIGHT,
                         font=("Arial", BUTTON_FONT), bg=green_color, bd=ACTION_BUTTON_BORDER, command=checkSplitYes)
 splitNoBtn = tk.Button(window, text="Do Not Split", width=ACTION_BUTTON_WIDTH, height=ACTION_BUTTON_HEIGHT,
-                       font=("Arial", BUTTON_FONT), bg="white", bd=ACTION_BUTTON_BORDER, command=checkSplitNo)
+                       font=("Arial", BUTTON_FONT), bg=red_color, bd=ACTION_BUTTON_BORDER, command=checkSplitNo)
 
 hitBtn = tk.Button(window, text="Hit", width=ACTION_BUTTON_WIDTH, height=ACTION_BUTTON_HEIGHT,
-                   font=("Arial", BUTTON_FONT), bg="white", bd=ACTION_BUTTON_BORDER, command=checkHit)
+                   font=("Arial", BUTTON_FONT), bg=red_color, bd=ACTION_BUTTON_BORDER, command=checkHit)
 standBtn = tk.Button(window, text="Stand", width=ACTION_BUTTON_WIDTH, height=ACTION_BUTTON_HEIGHT,
                      font=("Arial", BUTTON_FONT), bg=yellow_color, bd=ACTION_BUTTON_BORDER, command=checkStand)
 doubleHitBtn = tk.Button(window, text="Double or Hit", width=ACTION_BUTTON_WIDTH, height=ACTION_BUTTON_HEIGHT,
