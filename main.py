@@ -3,10 +3,20 @@ import trainer_engine as trainer
 import visual_chart as vischart
 import random
 
-green_color = "#24b670"
-yellow_color = "#efc514"
-blue_color = "#3ebab4"
-red_color = "#d1544b"
+BG_COLOR = "#135900"
+SPLIT_YES_BG_COLOR = "#3aa31a"
+SPLIT_NO_BG_COLOR = "#d1544b"
+HIT_BG_COLOR = "#d1544b"
+STAND_BG_COLOR = "#efc514"
+DH_BG_COLOR = "#24b670"
+DS_BG_COLOR = "#3ebab4"
+
+SPLIT_YES_ACTIVE_BG = "#246311"
+SPLIT_NO_ACTIVE_BG = "#9c332c"
+HIT_ACTIVE_BG = "#9c332c"
+STAND_ACTIVE_BG = "#b59510"
+DH_ACTIVE_BG = "#248556"
+DS_ACTIVE_BG = "#1e706c"
 
 BUTTON_FONT = 20
 CARD_FONT = 75
@@ -116,15 +126,15 @@ def result(corr, answer):
         randBtn.config(state=tk.DISABLED)
         inOrderBtn.config(state=tk.DISABLED)
         answer_label.place(relx=0.5, rely=0.5, anchor="center")
-        # answer_canvas.bind("<Button-1>", lambda event: hide())
-        # answer_label.bind("<Button-1>", lambda event: hide())
-        window.bind("<Button-1>", lambda event: hide())
+        #answer_canvas.bind("<Button-1>", lambda event: hide())
+        #answer_label.bind("<Button-1>", lambda event: hide())
+        #window.bind("<Button-1>", lambda event: hide())
         window.after(time, hide)
         while not should_continue:
             window.update()
     def hide():
         global should_continue
-        window.unbind("<Button-1>")
+        #window.unbind("<Button-1>")
         answer_canvas.place_forget()
         answer_label.place_forget()
         should_continue = True
@@ -166,22 +176,22 @@ def result(corr, answer):
                                   bg="red")
         answer_canvas.place(x=ANSWER_CANVAS_X, y=ANSWER_CANVAS_Y)
         if answer == "Y":
-            answer_label = tk.Label(answer_canvas, text="Incorrect\nCorrect Answer Is:\nSplit",
+            answer_label = tk.Label(answer_canvas, text="INCORRECT\nCorrect Answer Is:\nSPLIT",
                                     font=("Arial", ANSWER_FONT), fg="white", bg="red")
         elif answer == "N":
-            answer_label = tk.Label(answer_canvas, text="Incorrect\nCorrect Answer Is:\nDo Not Split",
+            answer_label = tk.Label(answer_canvas, text="INCORRECT\nCorrect Answer Is:\nDO NOT SPLIT",
                                     font=("Arial", ANSWER_FONT), fg="white", bg="red")
         elif answer == "H":
-            answer_label = tk.Label(answer_canvas, text="Incorrect\nCorrect Answer Is:\nHit",
+            answer_label = tk.Label(answer_canvas, text="INCORRECT\nCorrect Answer Is:\nHIT",
                                     font=("Arial", ANSWER_FONT), fg="white", bg="red")
         elif answer == "S":
-            answer_label = tk.Label(answer_canvas, text="Incorrect\nCorrect Answer Is:\nStand",
+            answer_label = tk.Label(answer_canvas, text="INCORRECT\nCorrect Answer Is:\nSTAND",
                                     font=("Arial", ANSWER_FONT), fg="white", bg="red")
         elif answer == "Dh":
-            answer_label = tk.Label(answer_canvas, text="Incorrect\nCorrect Answer Is:\nDouble or Hit",
+            answer_label = tk.Label(answer_canvas, text="INCORRECT\nCorrect Answer Is:\nDOUBLE OR HIT",
                                     font=("Arial", ANSWER_FONT), fg="white", bg="red")
         elif answer == "Ds":
-            answer_label = tk.Label(answer_canvas, text="Incorrect\nCorrect Answer Is:\nDouble or Stand",
+            answer_label = tk.Label(answer_canvas, text="INCORRECT\nCorrect Answer Is:\nDOUBLE OR STAND",
                                     font=("Arial", ANSWER_FONT), fg="white", bg="red")
         else:
             print("Error in Answer")
@@ -573,7 +583,7 @@ window.geometry("+0+0")
 icon = tk.PhotoImage(file="bitcoin.png")
 window.iconphoto(True, icon)
 #window.configure(background="#3aa31a")
-window.configure(background="#135900")
+window.configure(background=BG_COLOR)
 
 splitsBtn = tk.Button(window, text="Play Splits", font=("Arial", BUTTON_FONT), bd=ACTION_BUTTON_BORDER,
                       command=changeToSplits)
@@ -609,18 +619,25 @@ inOrderBtn.place(x=INORDER_BTN_X, y=INORDER_BTN_Y)
 randBtn.config(relief=tk.SUNKEN, state=tk.DISABLED)
 
 splitYesBtn = tk.Button(window, text="Split", width=ACTION_BUTTON_WIDTH, height=ACTION_BUTTON_HEIGHT,
-                        font=("Arial", BUTTON_FONT), bg=green_color, bd=ACTION_BUTTON_BORDER, command=checkSplitYes)
+                        font=("Arial", BUTTON_FONT), bg=SPLIT_YES_BG_COLOR, bd=ACTION_BUTTON_BORDER,
+                        activebackground=SPLIT_YES_ACTIVE_BG, command=checkSplitYes)
+
 splitNoBtn = tk.Button(window, text="Do Not Split", width=ACTION_BUTTON_WIDTH, height=ACTION_BUTTON_HEIGHT,
-                       font=("Arial", BUTTON_FONT), bg=red_color, bd=ACTION_BUTTON_BORDER, command=checkSplitNo)
+                       font=("Arial", BUTTON_FONT), bg=SPLIT_NO_BG_COLOR, bd=ACTION_BUTTON_BORDER,
+                       activebackground=SPLIT_NO_ACTIVE_BG, command=checkSplitNo)
 
 hitBtn = tk.Button(window, text="Hit", width=ACTION_BUTTON_WIDTH, height=ACTION_BUTTON_HEIGHT,
-                   font=("Arial", BUTTON_FONT), bg=red_color, bd=ACTION_BUTTON_BORDER, command=checkHit)
+                   font=("Arial", BUTTON_FONT), bg=HIT_BG_COLOR, bd=ACTION_BUTTON_BORDER,
+                   activebackground=HIT_ACTIVE_BG, command=checkHit)
 standBtn = tk.Button(window, text="Stand", width=ACTION_BUTTON_WIDTH, height=ACTION_BUTTON_HEIGHT,
-                     font=("Arial", BUTTON_FONT), bg=yellow_color, bd=ACTION_BUTTON_BORDER, command=checkStand)
+                     font=("Arial", BUTTON_FONT), bg=STAND_BG_COLOR, bd=ACTION_BUTTON_BORDER,
+                     activebackground=STAND_ACTIVE_BG, command=checkStand)
 doubleHitBtn = tk.Button(window, text="Double or Hit", width=ACTION_BUTTON_WIDTH, height=ACTION_BUTTON_HEIGHT,
-                         font=("Arial", BUTTON_FONT), bg=green_color, bd=ACTION_BUTTON_BORDER, command=checkDh)
+                         font=("Arial", BUTTON_FONT), bg=DH_BG_COLOR, bd=ACTION_BUTTON_BORDER,
+                         activebackground=DH_ACTIVE_BG, command=checkDh)
 doubleStandBtn = tk.Button(window, text="Double or Stand", width=ACTION_BUTTON_WIDTH, height=ACTION_BUTTON_HEIGHT,
-                           font=("Arial", BUTTON_FONT), bg=blue_color, bd=ACTION_BUTTON_BORDER, command=checkDs)
+                           font=("Arial", BUTTON_FONT), bg=DS_BG_COLOR, bd=ACTION_BUTTON_BORDER,
+                           activebackground=DS_ACTIVE_BG, command=checkDs)
 
 dealerCardCanvas = tk.Canvas(window, width=DEALER_CARD_CANVAS_WIDTH, height=DEALER_CARD_CANVAS_HEIGHT, bg="white")
 dealerCardCanvas.place(x=DEALER_CARD_CANVAS_X, y=DEALER_CARD_CANVAS_Y)
