@@ -110,23 +110,55 @@ def resetCards():
     doubleStandBtn.place_forget()
     play_token = "none"
 
-def result(corr, answer):
+def hide_action_buttons():
+    splitYesBtn.config(state=tk.DISABLED)
+    splitNoBtn.config(state=tk.DISABLED)
+    hitBtn.config(state=tk.DISABLED)
+    standBtn.config(state=tk.DISABLED)
+    doubleHitBtn.config(state=tk.DISABLED)
+    doubleStandBtn.config(state=tk.DISABLED)
+    splitsBtn.config(state=tk.DISABLED)
+    softsBtn.config(state=tk.DISABLED)
+    hardsBtn.config(state=tk.DISABLED)
+    allBtn.config(state=tk.DISABLED)
+    randBtn.config(state=tk.DISABLED)
+    inOrderBtn.config(state=tk.DISABLED)
+
+def show_action_buttons():
     global play_token, play_random
+
+    splitYesBtn.config(state=tk.NORMAL)
+    splitNoBtn.config(state=tk.NORMAL)
+    hitBtn.config(state=tk.NORMAL)
+    standBtn.config(state=tk.NORMAL)
+    doubleHitBtn.config(state=tk.NORMAL)
+    doubleStandBtn.config(state=tk.NORMAL)
+    if play_token == "splits":
+        softsBtn.config(state=tk.NORMAL)
+        hardsBtn.config(state=tk.NORMAL)
+        allBtn.config(state=tk.NORMAL)
+    elif play_token == "softs":
+        splitsBtn.config(state=tk.NORMAL)
+        hardsBtn.config(state=tk.NORMAL)
+        allBtn.config(state=tk.NORMAL)
+    elif play_token == "hards":
+        splitsBtn.config(state=tk.NORMAL)
+        softsBtn.config(state=tk.NORMAL)
+        allBtn.config(state=tk.NORMAL)
+    elif play_token == "all":
+        splitsBtn.config(state=tk.NORMAL)
+        softsBtn.config(state=tk.NORMAL)
+        hardsBtn.config(state=tk.NORMAL)
+    if play_random:
+        inOrderBtn.config(state=tk.NORMAL)
+    else:
+        randBtn.config(state=tk.NORMAL)
+
+def result(corr, answer):
     def show(time):
         global should_continue
         should_continue = False
-        splitYesBtn.config(state=tk.DISABLED)
-        splitNoBtn.config(state=tk.DISABLED)
-        hitBtn.config(state=tk.DISABLED)
-        standBtn.config(state=tk.DISABLED)
-        doubleHitBtn.config(state=tk.DISABLED)
-        doubleStandBtn.config(state=tk.DISABLED)
-        splitsBtn.config(state=tk.DISABLED)
-        softsBtn.config(state=tk.DISABLED)
-        hardsBtn.config(state=tk.DISABLED)
-        allBtn.config(state=tk.DISABLED)
-        randBtn.config(state=tk.DISABLED)
-        inOrderBtn.config(state=tk.DISABLED)
+        hide_action_buttons()
         answer_label.place(relx=0.5, rely=0.5, anchor="center")
         #answer_canvas.bind("<Button-1>", lambda event: hide())
         #answer_label.bind("<Button-1>", lambda event: hide())
@@ -140,32 +172,8 @@ def result(corr, answer):
         answer_canvas.place_forget()
         answer_label.place_forget()
         should_continue = True
-        splitYesBtn.config(state=tk.NORMAL)
-        splitNoBtn.config(state=tk.NORMAL)
-        hitBtn.config(state=tk.NORMAL)
-        standBtn.config(state=tk.NORMAL)
-        doubleHitBtn.config(state=tk.NORMAL)
-        doubleStandBtn.config(state=tk.NORMAL)
-        if play_token == "splits":
-            softsBtn.config(state=tk.NORMAL)
-            hardsBtn.config(state=tk.NORMAL)
-            allBtn.config(state=tk.NORMAL)
-        elif play_token == "softs":
-            splitsBtn.config(state=tk.NORMAL)
-            hardsBtn.config(state=tk.NORMAL)
-            allBtn.config(state=tk.NORMAL)
-        elif play_token == "hards":
-            splitsBtn.config(state=tk.NORMAL)
-            softsBtn.config(state=tk.NORMAL)
-            allBtn.config(state=tk.NORMAL)
-        elif play_token == "all":
-            splitsBtn.config(state=tk.NORMAL)
-            softsBtn.config(state=tk.NORMAL)
-            hardsBtn.config(state=tk.NORMAL)
-        if play_random:
-            inOrderBtn.config(state=tk.NORMAL)
-        else:
-            randBtn.config(state=tk.NORMAL)
+        show_action_buttons()
+
 
     if corr:
         answer_canvas = tk.Canvas(window, width=CORRECT_ANSWER_CANVAS_WIDTH, height=CORRECT_ANSWER_CANVAS_HEIGHT,
@@ -418,6 +426,7 @@ def changeToSplits():
     splitYesBtn.place(x=SPLIT_YES_BTN_X, y=SPLIT_YES_BTN_Y)
     splitNoBtn.place(x=SPLIT_NO_BTN_X, y=SPLIT_NO_BTN_Y)
     nextSplit()
+
 def changeToSofts():
     global play_token, count, correct_count, incorrect_count
     play_token = "softs"
@@ -459,6 +468,7 @@ def changeToHards():
     doubleHitBtn.place(x=DH_BTN_X, y=DH_BTN_Y)
     doubleStandBtn.place(x=DS_BTN_X, y=DS_BTN_Y)
     nextHard()
+
 def changeToAll():
     global play_token, count, correct_count, incorrect_count
     play_token = "all"
@@ -473,6 +483,7 @@ def changeToAll():
     hardsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
     allBtn.config(relief=tk.SUNKEN, state=tk.DISABLED)
     nextAll()
+
 def checkSplitYes():
     global play_token, count, correct_count, incorrect_count
     print("Split Yes")
@@ -657,6 +668,7 @@ def checkDh():
             resetCards()
         else:
             nextAll()
+
 def checkDs():
     global play_token, count, correct_count, incorrect_count
     print("Double or Stand")
