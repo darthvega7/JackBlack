@@ -331,7 +331,6 @@ def nextSplit():
     playerCard1Value.config(text=p1)
     playerCard2Value.config(text=p2)
     randomSuit()
-    #count += 1
 
 def nextSoft():
     global checkAnswer, play_random, count
@@ -540,8 +539,15 @@ def checkSplitNo():
             nextAll()
 
 def checkHit():
-    global play_token, correct_count, incorrect_count
+    global play_token, count, correct_count, incorrect_count
     print("Hit")
+    count += 1
+    if play_token == "softs":
+        curr_count.config(text="Cards Played: " + str(count) + "/80")
+    elif play_token == "hards":
+        curr_count.config(text="Cards Played: " + str(count) + "/100")
+    elif play_token == "all":
+        curr_count.config(text="Cards Played: " + str(count) + "/280")
     if(checkAnswer == "H"):
         print("Correct")
         correct_count += 1
@@ -555,26 +561,33 @@ def checkHit():
 
     if(play_token == "softs"):
         if count >= 80:
-            curr_count.config(text="Cards Played: " + str(count) + "/80")
+            #curr_count.config(text="Cards Played: " + str(count) + "/80")
             resetCards()
         else:
             nextSoft()
     elif(play_token == "hards"):
         if count >= 100:
-            curr_count.config(text="Cards Played: " + str(count) + "/100")
+            #curr_count.config(text="Cards Played: " + str(count) + "/100")
             resetCards()
         else:
             nextHard()
     else:
         if count >= 280:
-            curr_count.config(text="Cards Played: " + str(count) + "/280")
+            #curr_count.config(text="Cards Played: " + str(count) + "/280")
             resetCards()
         else:
             nextAll()
 
 def checkStand():
-    global play_token, correct_count, incorrect_count
+    global play_token, count, correct_count, incorrect_count
     print("Stand")
+    count += 1
+    if play_token == "softs":
+        curr_count.config(text="Cards Played: " + str(count) + "/80")
+    elif play_token == "hards":
+        curr_count.config(text="Cards Played: " + str(count) + "/100")
+    elif play_token == "all":
+        curr_count.config(text="Cards Played: " + str(count) + "/280")
     if(checkAnswer == "S"):
         print("Correct")
         correct_count += 1
@@ -588,26 +601,33 @@ def checkStand():
 
     if(play_token == "softs"):
         if count >= 80:
-            curr_count.config(text="Cards Played: " + str(count) + "/80")
+            #curr_count.config(text="Cards Played: " + str(count) + "/80")
             resetCards()
         else:
             nextSoft()
     elif(play_token == "hards"):
         if count >= 100:
-            curr_count.config(text="Cards Played: " + str(count) + "/100")
+            #curr_count.config(text="Cards Played: " + str(count) + "/100")
             resetCards()
         else:
             nextHard()
     else:
         if count >= 280:
-            curr_count.config(text="Cards Played: " + str(count) + "/280")
+            #curr_count.config(text="Cards Played: " + str(count) + "/280")
             resetCards()
         else:
             nextAll()
 
 def checkDh():
-    global play_token, correct_count, incorrect_count
+    global play_token, count, correct_count, incorrect_count
     print("Double or Hit")
+    count += 1
+    if play_token == "softs":
+        curr_count.config(text="Cards Played: " + str(count) + "/80")
+    elif play_token == "hards":
+        curr_count.config(text="Cards Played: " + str(count) + "/100")
+    elif play_token == "all":
+        curr_count.config(text="Cards Played: " + str(count) + "/280")
     if(checkAnswer == "Dh"):
         print("Correct")
         correct_count += 1
@@ -621,25 +641,32 @@ def checkDh():
 
     if(play_token == "softs"):
         if count >= 80:
-            curr_count.config(text="Cards Played: " + str(count) + "/80")
+            #curr_count.config(text="Cards Played: " + str(count) + "/80")
             resetCards()
         else:
             nextSoft()
     elif(play_token == "hards"):
         if count >= 100:
-            curr_count.config(text="Cards Played: " + str(count) + "/100")
+            #curr_count.config(text="Cards Played: " + str(count) + "/100")
             resetCards()
         else:
             nextHard()
     else:
         if count >= 280:
-            curr_count.config(text="Cards Played: " + str(count) + "/280")
+            #curr_count.config(text="Cards Played: " + str(count) + "/280")
             resetCards()
         else:
             nextAll()
 def checkDs():
-    global play_token, correct_count, incorrect_count
+    global play_token, count, correct_count, incorrect_count
     print("Double or Stand")
+    count += 1
+    if play_token == "softs":
+        curr_count.config(text="Cards Played: " + str(count) + "/80")
+    elif play_token == "hards":
+        curr_count.config(text="Cards Played: " + str(count) + "/100")
+    elif play_token == "all":
+        curr_count.config(text="Cards Played: " + str(count) + "/280")
     if(checkAnswer == "Ds"):
         print("Correct")
         correct_count += 1
@@ -653,19 +680,19 @@ def checkDs():
 
     if(play_token == "softs"):
         if count >= 80:
-            curr_count.config(text="Cards Played: " + str(count) + "/80")
+            #curr_count.config(text="Cards Played: " + str(count) + "/80")
             resetCards()
         else:
             nextSoft()
     elif(play_token == "hards"):
         if count >= 100:
-            curr_count.config(text="Cards Played: " + str(count) + "/100")
+            #curr_count.config(text="Cards Played: " + str(count) + "/100")
             resetCards()
         else:
             nextHard()
     else:
         if count >= 280:
-            curr_count.config(text="Cards Played: " + str(count) + "/280")
+            #curr_count.config(text="Cards Played: " + str(count) + "/280")
             resetCards()
         else:
             nextAll()
