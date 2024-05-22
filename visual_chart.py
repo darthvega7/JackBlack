@@ -8,6 +8,7 @@ def runMain():
 
     cell_size = 60  # Adjust this value to change the size of each cell
 
+    BUTTON_BORDER = 5
     MAIN_CANVAS_X = 0
     MAIN_CANVAS_Y = 75
     BUTTON_FONT = 20
@@ -379,11 +380,15 @@ def runMain():
     hards_canvas = tk.Canvas(root, width=cell_size*11, height=cell_size*11, borderwidth=0, highlightthickness=0)
     create_grid_hards(root, 11, 11)
 
-    splits_btn = tk.Button(root, text="Splits Chart", font=("Arial", BUTTON_FONT), command=change_to_splits)
+    splits_btn = tk.Button(root, text="Splits Chart", font=("Arial", BUTTON_FONT), bd=BUTTON_BORDER,
+                           command=change_to_splits)
     splits_btn.config(relief=tk.SUNKEN, state=tk.DISABLED)
-    softs_btn = tk.Button(root, text="Soft Totals Chart", font=("Arial", BUTTON_FONT), command=change_to_softs)
-    hards_btn = tk.Button(root, text="Hard Totals Chart", font=("Arial", BUTTON_FONT), command=change_to_hards)
-    close_btn = tk.Button(root, text="Close Window", font=("Arial", BUTTON_FONT), command=close_window)
+    softs_btn = tk.Button(root, text="Soft Totals Chart", font=("Arial", BUTTON_FONT),bd=BUTTON_BORDER,
+                          command=change_to_softs)
+    hards_btn = tk.Button(root, text="Hard Totals Chart", font=("Arial", BUTTON_FONT), bd=BUTTON_BORDER,
+                          command=change_to_hards)
+    close_btn = tk.Button(root, text="Close Window", font=("Arial", BUTTON_FONT), bd=BUTTON_BORDER,
+                          command=close_window)
     splits_btn.place(x=SPLITS_BTN_X, y=SPLITS_BTN_Y)
     softs_btn.place(x=SOFTS_BTN_X, y=SOFTS_BTN_Y)
     hards_btn.place(x=HARDS_BTN_X, y=HARDS_BTN_Y)
