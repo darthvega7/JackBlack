@@ -154,6 +154,19 @@ def show_action_buttons():
     else:
         randBtn.config(state=tk.NORMAL)
 
+def moveCardUp():
+    dealer_card_y = dealerCardCanvas.winfo_y()
+    if dealer_card_y > -400:
+        def animate():
+            count += 1
+            new_y = dealerCardCanvas.winfo_y() - 5
+            dealerCardCanvas.place(x=DEALER_CARD_CANVAS_X, y=new_y)
+            if new_y > -400:
+                window.after(5, animate)
+        animate()
+    print("Furry Kittens")
+
+
 def result(corr, answer):
     def show(time):
         global should_continue
@@ -412,6 +425,7 @@ def changeToSplits():
     count = 0
     correct_count = 0
     incorrect_count = 0
+    moveCardUp()
     correct_label.config(text="Correct: " + str(correct_count))
     incorrect_label.config(text="Incorrect: " + str(incorrect_count))
     curr_count.config(text="Cards Played: " + str(count) + "/100")
