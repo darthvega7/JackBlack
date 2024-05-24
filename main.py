@@ -3,6 +3,8 @@ import trainer_engine as trainer
 import visual_chart as vischart
 import random
 
+ANIMATION = False
+
 BG_COLOR = "#135900"
 SPLIT_YES_BG_COLOR = "#3aa31a"
 SPLIT_NO_BG_COLOR = "#d1544b"
@@ -41,6 +43,7 @@ INORDER_BTN_X = 20
 INORDER_BTN_Y = 90
 DEALER_CARD_CANVAS_X = 850
 DEALER_CARD_CANVAS_Y = 100
+DEALER_CARD_CANVAS_Y_OFFSCREEN = -400
 DEALER_CARD_CANVAS_WIDTH = 200
 DEALER_CARD_CANVAS_HEIGHT = 300
 DEALER_CARD_VALUE_X = 25
@@ -49,10 +52,12 @@ DEALER_SUIT_VALUE_X = 100
 DEALER_SUIT_VALUE_Y = 165
 PLAYERCARD1_CANVAS_X = 735
 PLAYERCARD1_CANVAS_Y = 450
+PLAYERCARD1_CANVAS_Y_OFFSCREEN = 1180
 PLAYERCARD1_CANVAS_WIDTH = 200
 PLAYERCARD1_CANVAS_HEIGHT = 300
 PLAYERCARD2_CANVAS_X = 985
 PLAYERCARD2_CANVAS_Y = 450
+PLAYERCARD2_CANVAS_Y_OFFSCREEN = 1180
 PLAYERCARD2_CANVAS_WIDTH = 200
 PLAYERCARD2_CANVAS_HEIGHT = 300
 PLAYERCARD1_VALUE_X = 25
@@ -154,18 +159,65 @@ def show_action_buttons():
     else:
         randBtn.config(state=tk.NORMAL)
 
-def moveCardUp():
-    dealer_card_y = dealerCardCanvas.winfo_y()
-    if dealer_card_y > -400:
-        def animate():
-            count += 1
-            new_y = dealerCardCanvas.winfo_y() - 5
-            dealerCardCanvas.place(x=DEALER_CARD_CANVAS_X, y=new_y)
-            if new_y > -400:
-                window.after(5, animate)
-        animate()
-    print("Furry Kittens")
+def moveCardsOffScreen():
+    def animate_dealer_card():
+        new_y = dealerCardCanvas.winfo_y() - 5
+        dealerCardCanvas.place(y=new_y)
+        if new_y > DEALER_CARD_CANVAS_Y_OFFSCREEN:
+            window.after(5, animate_dealer_card)
+        else:
+            animate_player_card1()
 
+    def animate_player_card1():
+        new_y = playerCard1Canvas.winfo_y() + 5
+        playerCard1Canvas.place(y=new_y)
+        if new_y < PLAYERCARD1_CANVAS_Y_OFFSCREEN:
+            window.after(5, animate_player_card1)
+        else:
+            animate_player_card2()
+
+    def animate_player_card2():
+        new_y = playerCard2Canvas.winfo_y() + 5
+        playerCard2Canvas.place(y=new_y)
+        if new_y < PLAYERCARD2_CANVAS_Y_OFFSCREEN:
+            window.after(5, animate_player_card2)
+
+    if dealerCardCanvas.winfo_y() > DEALER_CARD_CANVAS_Y_OFFSCREEN:
+        animate_dealer_card()
+    elif playerCard1Canvas.winfo_y() < PLAYERCARD1_CANVAS_Y_OFFSCREEN:
+        animate_player_card1()
+    elif playerCard2Canvas.winfo_y() < PLAYERCARD2_CANVAS_Y_OFFSCREEN:
+        animate_player_card2()
+
+def moveCardsOnScreen():
+    def animate_dealer_card():
+        new_y = dealerCardCanvas.winfo_y() + 5
+        dealerCardCanvas.place(y=new_y)
+        if new_y < DEALER_CARD_CANVAS_Y:
+            window.after(5, animate_dealer_card)
+        else:
+            animate_player_card1()
+
+    def animate_player_card1():
+        new_y = playerCard1Canvas.winfo_y() - 5
+        playerCard1Canvas.place(y=new_y)
+        if new_y > PLAYERCARD1_CANVAS_Y:
+            window.after(5, animate_player_card1)
+        else:
+            animate_player_card2()
+
+    def animate_player_card2():
+        new_y = playerCard2Canvas.winfo_y() - 5
+        playerCard2Canvas.place(y=new_y)
+        if new_y > PLAYERCARD2_CANVAS_Y:
+            window.after(5, animate_player_card2)
+
+    if dealerCardCanvas.winfo_y() < DEALER_CARD_CANVAS_Y:
+        animate_dealer_card()
+    elif playerCard1Canvas.winfo_y() > PLAYERCARD1_CANVAS_Y:
+        animate_player_card1()
+    elif playerCard2Canvas.winfo_y() > PLAYERCARD2_CANVAS_Y:
+        animate_player_card2()
 
 def result(corr, answer):
     def show(time):
@@ -226,6 +278,8 @@ def playRandom():
     count = 0
     correct_count = 0
     incorrect_count = 0
+    if ANIMATION:
+        moveCardsOffScreen()
     correct_label.config(text="Correct: " + str(correct_count))
     incorrect_label.config(text="Incorrect: " + str(incorrect_count))
     if play_token == "splits" or play_token == "hards":
@@ -254,6 +308,8 @@ def playInOrder():
     count = 0
     correct_count = 0
     incorrect_count = 0
+    if ANIMATION:
+        moveCardsOffScreen()
     correct_label.config(text="Correct: " + str(correct_count))
     incorrect_label.config(text="Incorrect: " + str(incorrect_count))
     if play_token == "splits" or play_token == "hards":
@@ -352,6 +408,8 @@ def nextSplit():
     playerCard1Value.config(text=p1)
     playerCard2Value.config(text=p2)
     randomSuit()
+    if ANIMATION:
+        moveCardsOnScreen()
 
 def nextSoft():
     global checkAnswer, play_random, count
@@ -365,6 +423,8 @@ def nextSoft():
     playerCard1Value.config(text=p1)
     playerCard2Value.config(text=p2)
     randomSuit()
+    if ANIMATION:
+        moveCardsOnScreen()
 
 def nextHard():
     global checkAnswer, play_random, count
@@ -378,6 +438,8 @@ def nextHard():
     playerCard1Value.config(text=p1)
     playerCard2Value.config(text=p2)
     randomSuit()
+    if ANIMATION:
+        moveCardsOnScreen()
 
 def nextAll():
     global checkAnswer, play_random, count
@@ -418,6 +480,8 @@ def nextAll():
     else:
         print("ERROR in All Mode: Mode Not Found")
     randomSuit()
+    if ANIMATION:
+        moveCardsOnScreen()
 
 def changeToSplits():
     global play_token, count, correct_count, incorrect_count
@@ -425,7 +489,8 @@ def changeToSplits():
     count = 0
     correct_count = 0
     incorrect_count = 0
-    moveCardUp()
+    if ANIMATION:
+        moveCardsOffScreen()
     correct_label.config(text="Correct: " + str(correct_count))
     incorrect_label.config(text="Incorrect: " + str(incorrect_count))
     curr_count.config(text="Cards Played: " + str(count) + "/100")
@@ -447,6 +512,8 @@ def changeToSofts():
     count = 0
     correct_count = 0
     incorrect_count = 0
+    if ANIMATION:
+        moveCardsOffScreen()
     correct_label.config(text="Correct: " + str(correct_count))
     incorrect_label.config(text="Incorrect: " + str(incorrect_count))
     curr_count.config(text="Cards Played: " + str(count) + "/80")
@@ -468,6 +535,8 @@ def changeToHards():
     count = 0
     correct_count = 0
     incorrect_count = 0
+    if ANIMATION:
+        moveCardsOffScreen()
     correct_label.config(text="Correct: " + str(correct_count))
     incorrect_label.config(text="Incorrect: " + str(incorrect_count))
     curr_count.config(text="Cards Played: " + str(count) + "/100")
@@ -489,6 +558,8 @@ def changeToAll():
     count = 0
     correct_count = 0
     incorrect_count = 0
+    if ANIMATION:
+        moveCardsOffScreen()
     correct_label.config(text="Correct: " + str(correct_count))
     incorrect_label.config(text="Incorrect: " + str(incorrect_count))
     curr_count.config(text="Cards Played: " + str(count) + "/280")
@@ -517,6 +588,8 @@ def checkSplitYes():
         incorrect_label.config(text="Incorrect: " + str(incorrect_count))
         result(False, checkAnswer)
 
+    if ANIMATION:
+        moveCardsOffScreen()
 
     if(play_token == "splits"):
         if count >= 100:
@@ -549,6 +622,9 @@ def checkSplitNo():
         incorrect_count += 1
         incorrect_label.config(text="Incorrect: " + str(incorrect_count))
         result(False, checkAnswer)
+
+    if ANIMATION:
+        moveCardsOffScreen()
 
     if(play_token == "splits"):
         if count >= 100:
@@ -583,6 +659,9 @@ def checkHit():
         incorrect_count += 1
         incorrect_label.config(text="Incorrect: " + str(incorrect_count))
         result(False, checkAnswer)
+
+    if ANIMATION:
+        moveCardsOffScreen()
 
     if(play_token == "softs"):
         if count >= 80:
@@ -624,6 +703,9 @@ def checkStand():
         incorrect_label.config(text="Incorrect: " + str(incorrect_count))
         result(False, checkAnswer)
 
+    if ANIMATION:
+        moveCardsOffScreen()
+
     if(play_token == "softs"):
         if count >= 80:
             #curr_count.config(text="Cards Played: " + str(count) + "/80")
@@ -664,6 +746,9 @@ def checkDh():
         incorrect_label.config(text="Incorrect: " + str(incorrect_count))
         result(False, checkAnswer)
 
+    if ANIMATION:
+        moveCardsOffScreen()
+
     if(play_token == "softs"):
         if count >= 80:
             #curr_count.config(text="Cards Played: " + str(count) + "/80")
@@ -703,6 +788,9 @@ def checkDs():
         incorrect_count += 1
         incorrect_label.config(text="Incorrect: " + str(incorrect_count))
         result(False, checkAnswer)
+
+    if ANIMATION:
+        moveCardsOffScreen()
 
     if(play_token == "softs"):
         if count >= 80:
@@ -794,12 +882,17 @@ doubleStandBtn = tk.Button(window, text="Double or Stand", width=ACTION_BUTTON_W
                            activebackground=DS_ACTIVE_BG, command=checkDs)
 
 dealerCardCanvas = tk.Canvas(window, width=DEALER_CARD_CANVAS_WIDTH, height=DEALER_CARD_CANVAS_HEIGHT, bg="white")
-dealerCardCanvas.place(x=DEALER_CARD_CANVAS_X, y=DEALER_CARD_CANVAS_Y)
-
 playerCard1Canvas = tk.Canvas(window, width=PLAYERCARD1_CANVAS_WIDTH, height=PLAYERCARD1_CANVAS_HEIGHT, bg="white")
-playerCard1Canvas.place(x=PLAYERCARD1_CANVAS_X, y=PLAYERCARD1_CANVAS_Y)
 playerCard2Canvas = tk.Canvas(window, width=PLAYERCARD2_CANVAS_WIDTH, height=PLAYERCARD2_CANVAS_HEIGHT, bg="white")
-playerCard2Canvas.place(x=PLAYERCARD2_CANVAS_X, y=PLAYERCARD2_CANVAS_Y)
+
+if ANIMATION:
+    dealerCardCanvas.place(x=DEALER_CARD_CANVAS_X, y=DEALER_CARD_CANVAS_Y_OFFSCREEN)
+    playerCard1Canvas.place(x=PLAYERCARD1_CANVAS_X, y=PLAYERCARD1_CANVAS_Y_OFFSCREEN)
+    playerCard2Canvas.place(x=PLAYERCARD2_CANVAS_X, y=PLAYERCARD2_CANVAS_Y_OFFSCREEN)
+else:
+    dealerCardCanvas.place(x=DEALER_CARD_CANVAS_X, y=DEALER_CARD_CANVAS_Y)
+    playerCard1Canvas.place(x=PLAYERCARD1_CANVAS_X, y=PLAYERCARD1_CANVAS_Y)
+    playerCard2Canvas.place(x=PLAYERCARD2_CANVAS_X, y=PLAYERCARD2_CANVAS_Y)
 
 dealerCardValue = tk.Label(dealerCardCanvas, text="", font=("Arial", CARD_FONT, "bold"), bg="white")
 dealerSuitValue = tk.Label(dealerCardCanvas, text="", font=("Arial", CARD_FONT, "bold"), bg="white")
