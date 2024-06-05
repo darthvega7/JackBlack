@@ -410,13 +410,14 @@ def nextSplit():
     randomSuit()
     if ANIMATION:
         moveCardsOnScreen()
+        #window.after(3000, moveCardsOnScreen)
 
 def nextSoft():
     global checkAnswer, play_random, count
     dealer_card, player_card, answer = trainer.playSofts(play_random)
     #dealerCard.config(text="Dealer Card: " + str(dealer_card))
     #playerCard.config(text="Player Card: " + str(player_card))
-    curr_count.config(text="Cards Played: " + str(count) + "/80")
+    #curr_count.config(text="Cards Played: " + str(count) + "/80")
     checkAnswer = answer
     dealerCardValue.config(text=dealer_card)
     p1, p2 = player_card.split(",")
@@ -431,7 +432,7 @@ def nextHard():
     dealer_card, player_card, answer = trainer.playHards(play_random)
     #dealerCard.config(text="Dealer Card: " + str(dealer_card))
     #playerCard.config(text="Player Card: " + str(player_card))
-    curr_count.config(text="Cards Played: " + str(count) + "/100")
+    #curr_count.config(text="Cards Played: " + str(count) + "/100")
     checkAnswer = answer
     dealerCardValue.config(text=dealer_card)
     p1, p2 = trainer.hardTotalToCards(player_card)
@@ -446,7 +447,7 @@ def nextAll():
     dealer_card, player_card, answer, check_mode = trainer.playAll(play_random)
     #dealerCard.config(text="Dealer Card: " + str(dealer_card))
     #playerCard.config(text="Player Card: " + str(player_card))
-    curr_count.config(text="Cards Played: " + str(count) + "/280")
+    #curr_count.config(text="Cards Played: " + str(count) + "/280")
     checkAnswer = answer
     if(check_mode == "splits"):
         hitBtn.place_forget()
