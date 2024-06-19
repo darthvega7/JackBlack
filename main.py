@@ -2,8 +2,9 @@ import tkinter as tk
 import trainer_engine as trainer
 import visual_chart as vischart
 import random
+from card_movement import moveCardsOffScreen, moveCardsOnScreen
 
-ANIMATION = False
+ANIMATION = True
 
 BG_COLOR = "#135900"
 SPLIT_YES_BG_COLOR = "#3aa31a"
@@ -95,6 +96,7 @@ count = 0
 correct_count = 0
 incorrect_count = 0
 
+
 def resetCards():
     global play_token, count
     dealerCardValue.config(text="")
@@ -115,6 +117,7 @@ def resetCards():
     doubleStandBtn.place_forget()
     play_token = "none"
 
+
 def hide_action_buttons():
     splitYesBtn.config(state=tk.DISABLED)
     splitNoBtn.config(state=tk.DISABLED)
@@ -128,6 +131,7 @@ def hide_action_buttons():
     allBtn.config(state=tk.DISABLED)
     randBtn.config(state=tk.DISABLED)
     inOrderBtn.config(state=tk.DISABLED)
+
 
 def show_action_buttons():
     global play_token, play_random
@@ -159,65 +163,6 @@ def show_action_buttons():
     else:
         randBtn.config(state=tk.NORMAL)
 
-def moveCardsOffScreen():
-    def animate_dealer_card():
-        new_y = dealerCardCanvas.winfo_y() - 5
-        dealerCardCanvas.place(y=new_y)
-        if new_y > DEALER_CARD_CANVAS_Y_OFFSCREEN:
-            window.after(5, animate_dealer_card)
-        else:
-            animate_player_card1()
-
-    def animate_player_card1():
-        new_y = playerCard1Canvas.winfo_y() + 5
-        playerCard1Canvas.place(y=new_y)
-        if new_y < PLAYERCARD1_CANVAS_Y_OFFSCREEN:
-            window.after(5, animate_player_card1)
-        else:
-            animate_player_card2()
-
-    def animate_player_card2():
-        new_y = playerCard2Canvas.winfo_y() + 5
-        playerCard2Canvas.place(y=new_y)
-        if new_y < PLAYERCARD2_CANVAS_Y_OFFSCREEN:
-            window.after(5, animate_player_card2)
-
-    if dealerCardCanvas.winfo_y() > DEALER_CARD_CANVAS_Y_OFFSCREEN:
-        animate_dealer_card()
-    elif playerCard1Canvas.winfo_y() < PLAYERCARD1_CANVAS_Y_OFFSCREEN:
-        animate_player_card1()
-    elif playerCard2Canvas.winfo_y() < PLAYERCARD2_CANVAS_Y_OFFSCREEN:
-        animate_player_card2()
-
-def moveCardsOnScreen():
-    def animate_dealer_card():
-        new_y = dealerCardCanvas.winfo_y() + 5
-        dealerCardCanvas.place(y=new_y)
-        if new_y < DEALER_CARD_CANVAS_Y:
-            window.after(5, animate_dealer_card)
-        else:
-            animate_player_card1()
-
-    def animate_player_card1():
-        new_y = playerCard1Canvas.winfo_y() - 5
-        playerCard1Canvas.place(y=new_y)
-        if new_y > PLAYERCARD1_CANVAS_Y:
-            window.after(5, animate_player_card1)
-        else:
-            animate_player_card2()
-
-    def animate_player_card2():
-        new_y = playerCard2Canvas.winfo_y() - 5
-        playerCard2Canvas.place(y=new_y)
-        if new_y > PLAYERCARD2_CANVAS_Y:
-            window.after(5, animate_player_card2)
-
-    if dealerCardCanvas.winfo_y() < DEALER_CARD_CANVAS_Y:
-        animate_dealer_card()
-    elif playerCard1Canvas.winfo_y() > PLAYERCARD1_CANVAS_Y:
-        animate_player_card1()
-    elif playerCard2Canvas.winfo_y() > PLAYERCARD2_CANVAS_Y:
-        animate_player_card2()
 
 def result(corr, answer):
     def show(time):
@@ -225,20 +170,19 @@ def result(corr, answer):
         should_continue = False
         hide_action_buttons()
         answer_label.place(relx=0.5, rely=0.5, anchor="center")
-        #answer_canvas.bind("<Button-1>", lambda event: hide())
-        #answer_label.bind("<Button-1>", lambda event: hide())
-        #window.bind("<Button-1>", lambda event: hide())
         window.after(time, hide)
         while not should_continue:
             window.update()
+
     def hide():
         global should_continue
-        #window.unbind("<Button-1>")
         answer_canvas.place_forget()
         answer_label.place_forget()
         should_continue = True
         show_action_buttons()
-
+        if ANIMATION:
+            moveCardsOffScreen([dealerCardCanvas, playerCard1Canvas, playerCard2Canvas], window,
+                               updateCardValuesAndMoveCardsOnScreen, constants)
 
     if corr:
         answer_canvas = tk.Canvas(window, width=CORRECT_ANSWER_CANVAS_WIDTH, height=CORRECT_ANSWER_CANVAS_HEIGHT,
@@ -272,6 +216,7 @@ def result(corr, answer):
             print("Error in Answer")
         show(4000)
 
+
 def playRandom():
     global play_random, play_token, count, correct_count, incorrect_count
     play_random = True
@@ -279,7 +224,7 @@ def playRandom():
     correct_count = 0
     incorrect_count = 0
     if ANIMATION:
-        moveCardsOffScreen()
+        startCardAnimations()
     correct_label.config(text="Correct: " + str(correct_count))
     incorrect_label.config(text="Incorrect: " + str(incorrect_count))
     if play_token == "splits" or play_token == "hards":
@@ -293,14 +238,15 @@ def playRandom():
     trainer.resetMode()
     randBtn.config(relief=tk.SUNKEN, state=tk.DISABLED)
     inOrderBtn.config(relief=tk.RAISED, state=tk.NORMAL)
-    if play_token == "splits":
-        nextSplit()
-    elif play_token == "softs":
-        nextSoft()
-    elif play_token == "hards":
-        nextHard()
-    elif play_token == "all":
-        nextAll()
+    if not ANIMATION:
+        if play_token == "splits":
+            nextSplit()
+        elif play_token == "softs":
+            nextSoft()
+        elif play_token == "hards":
+            nextHard()
+        elif play_token == "all":
+            nextAll()
 
 def playInOrder():
     global play_random, play_token, count, correct_count, incorrect_count
@@ -309,7 +255,7 @@ def playInOrder():
     correct_count = 0
     incorrect_count = 0
     if ANIMATION:
-        moveCardsOffScreen()
+        startCardAnimations()
     correct_label.config(text="Correct: " + str(correct_count))
     incorrect_label.config(text="Incorrect: " + str(incorrect_count))
     if play_token == "splits" or play_token == "hards":
@@ -323,32 +269,29 @@ def playInOrder():
     trainer.resetMode()
     randBtn.config(relief=tk.RAISED, state=tk.NORMAL)
     inOrderBtn.config(relief=tk.SUNKEN, state=tk.DISABLED)
-    if play_token == "splits":
-        nextSplit()
-    elif play_token == "softs":
-        nextSoft()
-    elif play_token == "hards":
-        nextHard()
-    elif play_token == "all":
-        nextAll()
+    if not ANIMATION:
+        if play_token == "splits":
+            nextSplit()
+        elif play_token == "softs":
+            nextSoft()
+        elif play_token == "hards":
+            nextHard()
+        elif play_token == "all":
+            nextAll()
 
 def randomSuit():
     random_dealer_suit = random.randint(1, 4)
     match(random_dealer_suit):
         case 1:
-            #print("Dealer suit is Hearts")
             dealerSuitValue.config(text="♥", fg="red")
             dealerCardValue.config(fg="red")
         case 2:
-            #print("Dealer suit is Spades")
             dealerSuitValue.config(text="♠", fg="black")
             dealerCardValue.config(fg="black")
         case 3:
-            #print("Dealer suit is Clubs")
             dealerSuitValue.config(text="♣", fg="green")
             dealerCardValue.config(fg="green")
         case 4:
-            #print("Dealer suit is Diamonds")
             dealerSuitValue.config(text="♦", fg="blue")
             dealerCardValue.config(fg="blue")
         case _:
@@ -358,19 +301,15 @@ def randomSuit():
     random_p2_suit = random.randint(1, 4)
     match(random_p1_suit):
         case 1:
-            #print("Player Card 1 suit is Hearts")
             playerCard1SuitValue.config(text="♥", fg="red")
             playerCard1Value.config(fg="red")
         case 2:
-            #print("Player Card 1 suit is Spades")
             playerCard1SuitValue.config(text="♠", fg="black")
             playerCard1Value.config(fg="black")
         case 3:
-            #print("Player Card 1 suit is Clubs")
             playerCard1SuitValue.config(text="♣", fg="green")
             playerCard1Value.config(fg="green")
         case 4:
-            #print("Player Card 1 suit is Diamonds")
             playerCard1SuitValue.config(text="♦", fg="blue")
             playerCard1Value.config(fg="blue")
         case _:
@@ -378,30 +317,24 @@ def randomSuit():
 
     match(random_p2_suit):
         case 1:
-            #print("Player Card 2 suit is Hearts")
             playerCard2SuitValue.config(text="♥", fg="red")
             playerCard2Value.config(fg="red")
         case 2:
-            #print("Player Card 2 suit is Spades")
             playerCard2SuitValue.config(text="♠", fg="black")
             playerCard2Value.config(fg="black")
         case 3:
-            #print("Player Card 2 suit is Clubs")
             playerCard2SuitValue.config(text="♣", fg="green")
             playerCard2Value.config(fg="green")
         case 4:
-            #print("Player Card 2 suit is Diamonds")
             playerCard2SuitValue.config(text="♦", fg="blue")
             playerCard2Value.config(fg="blue")
         case _:
             print("ERROR choosing p2 suit")
 
+
 def nextSplit():
     global checkAnswer, play_random, count
     dealer_card, player_card, answer = trainer.playSplits(play_random)
-    #dealerCard.config(text="Dealer Card: " + str(dealer_card))
-    #playerCard.config(text="Player Card: " + str(player_card))
-    #curr_count.config(text="Cards Played: " + str(count) + "/100")
     checkAnswer = answer
     dealerCardValue.config(text=dealer_card)
     p1, p2 = player_card.split(",")
@@ -409,15 +342,13 @@ def nextSplit():
     playerCard2Value.config(text=p2)
     randomSuit()
     if ANIMATION:
-        moveCardsOnScreen()
-        #window.after(3000, moveCardsOnScreen)
+        moveCardsOnScreen([dealerCardCanvas, playerCard1Canvas, playerCard2Canvas], window, constants)
+
 
 def nextSoft():
     global checkAnswer, play_random, count
     dealer_card, player_card, answer = trainer.playSofts(play_random)
-    #dealerCard.config(text="Dealer Card: " + str(dealer_card))
-    #playerCard.config(text="Player Card: " + str(player_card))
-    #curr_count.config(text="Cards Played: " + str(count) + "/80")
+    curr_count.config(text="Cards Played: " + str(count) + "/80")
     checkAnswer = answer
     dealerCardValue.config(text=dealer_card)
     p1, p2 = player_card.split(",")
@@ -425,14 +356,13 @@ def nextSoft():
     playerCard2Value.config(text=p2)
     randomSuit()
     if ANIMATION:
-        moveCardsOnScreen()
+        moveCardsOnScreen([dealerCardCanvas, playerCard1Canvas, playerCard2Canvas], window, constants)
+
 
 def nextHard():
     global checkAnswer, play_random, count
     dealer_card, player_card, answer = trainer.playHards(play_random)
-    #dealerCard.config(text="Dealer Card: " + str(dealer_card))
-    #playerCard.config(text="Player Card: " + str(player_card))
-    #curr_count.config(text="Cards Played: " + str(count) + "/100")
+    curr_count.config(text="Cards Played: " + str(count) + "/100")
     checkAnswer = answer
     dealerCardValue.config(text=dealer_card)
     p1, p2 = trainer.hardTotalToCards(player_card)
@@ -440,16 +370,15 @@ def nextHard():
     playerCard2Value.config(text=p2)
     randomSuit()
     if ANIMATION:
-        moveCardsOnScreen()
+        moveCardsOnScreen([dealerCardCanvas, playerCard1Canvas, playerCard2Canvas], window, constants)
+
 
 def nextAll():
     global checkAnswer, play_random, count
     dealer_card, player_card, answer, check_mode = trainer.playAll(play_random)
-    #dealerCard.config(text="Dealer Card: " + str(dealer_card))
-    #playerCard.config(text="Player Card: " + str(player_card))
-    #curr_count.config(text="Cards Played: " + str(count) + "/280")
+    curr_count.config(text="Cards Played: " + str(count) + "/280")
     checkAnswer = answer
-    if(check_mode == "splits"):
+    if check_mode == "splits":
         hitBtn.place_forget()
         standBtn.place_forget()
         doubleHitBtn.place_forget()
@@ -463,17 +392,17 @@ def nextAll():
         standBtn.place(x=STAND_BTN_X, y=STAND_BTN_Y)
         doubleHitBtn.place(x=DH_BTN_X, y=DH_BTN_Y)
         doubleStandBtn.place(x=DS_BTN_X, y=DS_BTN_Y)
-    if(check_mode == "splits"):
+    if check_mode == "splits":
         dealerCardValue.config(text=dealer_card)
         p1, p2 = player_card.split(",")
         playerCard1Value.config(text=p1)
         playerCard2Value.config(text=p2)
-    elif(check_mode == "softs"):
+    elif check_mode == "softs":
         dealerCardValue.config(text=dealer_card)
         p1, p2 = player_card.split(",")
         playerCard1Value.config(text=p1)
         playerCard2Value.config(text=p2)
-    elif(check_mode == "hards"):
+    elif check_mode == "hards":
         dealerCardValue.config(text=dealer_card)
         p1, p2 = trainer.hardTotalToCards(player_card)
         playerCard1Value.config(text=p1)
@@ -482,7 +411,8 @@ def nextAll():
         print("ERROR in All Mode: Mode Not Found")
     randomSuit()
     if ANIMATION:
-        moveCardsOnScreen()
+        moveCardsOnScreen([dealerCardCanvas, playerCard1Canvas, playerCard2Canvas], window, constants)
+
 
 def changeToSplits():
     global play_token, count, correct_count, incorrect_count
@@ -491,7 +421,7 @@ def changeToSplits():
     correct_count = 0
     incorrect_count = 0
     if ANIMATION:
-        moveCardsOffScreen()
+        startCardAnimations()
     correct_label.config(text="Correct: " + str(correct_count))
     incorrect_label.config(text="Incorrect: " + str(incorrect_count))
     curr_count.config(text="Cards Played: " + str(count) + "/100")
@@ -507,6 +437,7 @@ def changeToSplits():
     splitNoBtn.place(x=SPLIT_NO_BTN_X, y=SPLIT_NO_BTN_Y)
     nextSplit()
 
+
 def changeToSofts():
     global play_token, count, correct_count, incorrect_count
     play_token = "softs"
@@ -514,7 +445,7 @@ def changeToSofts():
     correct_count = 0
     incorrect_count = 0
     if ANIMATION:
-        moveCardsOffScreen()
+        startCardAnimations()
     correct_label.config(text="Correct: " + str(correct_count))
     incorrect_label.config(text="Incorrect: " + str(incorrect_count))
     curr_count.config(text="Cards Played: " + str(count) + "/80")
@@ -530,6 +461,7 @@ def changeToSofts():
     doubleStandBtn.place(x=DS_BTN_X, y=DS_BTN_Y)
     nextSoft()
 
+
 def changeToHards():
     global play_token, count, correct_count, incorrect_count
     play_token = "hards"
@@ -537,7 +469,7 @@ def changeToHards():
     correct_count = 0
     incorrect_count = 0
     if ANIMATION:
-        moveCardsOffScreen()
+        startCardAnimations()
     correct_label.config(text="Correct: " + str(correct_count))
     incorrect_label.config(text="Incorrect: " + str(incorrect_count))
     curr_count.config(text="Cards Played: " + str(count) + "/100")
@@ -553,6 +485,7 @@ def changeToHards():
     doubleStandBtn.place(x=DS_BTN_X, y=DS_BTN_Y)
     nextHard()
 
+
 def changeToAll():
     global play_token, count, correct_count, incorrect_count
     play_token = "all"
@@ -560,7 +493,7 @@ def changeToAll():
     correct_count = 0
     incorrect_count = 0
     if ANIMATION:
-        moveCardsOffScreen()
+        startCardAnimations()
     correct_label.config(text="Correct: " + str(correct_count))
     incorrect_label.config(text="Incorrect: " + str(incorrect_count))
     curr_count.config(text="Cards Played: " + str(count) + "/280")
@@ -570,6 +503,7 @@ def changeToAll():
     allBtn.config(relief=tk.SUNKEN, state=tk.DISABLED)
     nextAll()
 
+
 def checkSplitYes():
     global play_token, count, correct_count, incorrect_count
     print("Split Yes")
@@ -578,7 +512,7 @@ def checkSplitYes():
         curr_count.config(text="Cards Played: " + str(count) + "/100")
     else:
         curr_count.config(text="Cards Played: " + str(count) + "/280")
-    if(checkAnswer == "Y"):
+    if checkAnswer == "Y":
         print("Correct")
         correct_count += 1
         correct_label.config(text="Correct: " + str(correct_count))
@@ -588,22 +522,21 @@ def checkSplitYes():
         incorrect_count += 1
         incorrect_label.config(text="Incorrect: " + str(incorrect_count))
         result(False, checkAnswer)
-
-    if ANIMATION:
-        moveCardsOffScreen()
-
     if(play_token == "splits"):
         if count >= 100:
             #curr_count.config(text="Cards Played: " + str(count) + "/100")
             resetCards()
         else:
-            nextSplit()
+            if not ANIMATION:
+                nextSplit()
     else:
         if count >= 280:
             #curr_count.config(text="Cards Played: " + str(count) + "/280")
+            startCardAnimations()
             resetCards()
         else:
-            nextAll()
+            if not ANIMATION:
+                nextAll()
 
 def checkSplitNo():
     global play_token, count, correct_count, incorrect_count
@@ -613,7 +546,7 @@ def checkSplitNo():
         curr_count.config(text="Cards Played: " + str(count) + "/100")
     else:
         curr_count.config(text="Cards Played: " + str(count) + "/280")
-    if(checkAnswer == "N"):
+    if checkAnswer == "N":
         print("Correct")
         correct_count += 1
         correct_label.config(text="Correct: " + str(correct_count))
@@ -623,22 +556,21 @@ def checkSplitNo():
         incorrect_count += 1
         incorrect_label.config(text="Incorrect: " + str(incorrect_count))
         result(False, checkAnswer)
-
-    if ANIMATION:
-        moveCardsOffScreen()
-
     if(play_token == "splits"):
         if count >= 100:
             #curr_count.config(text="Cards Played: " + str(count) + "/100")
+            startCardAnimations()
             resetCards()
         else:
-            nextSplit()
+            if not ANIMATION:
+                nextSplit()
     else:
         if count >= 280:
             #curr_count.config(text="Cards Played: " + str(count) + "/280")
             resetCards()
         else:
-            nextAll()
+            if not ANIMATION:
+                nextAll()
 
 def checkHit():
     global play_token, count, correct_count, incorrect_count
@@ -650,7 +582,7 @@ def checkHit():
         curr_count.config(text="Cards Played: " + str(count) + "/100")
     elif play_token == "all":
         curr_count.config(text="Cards Played: " + str(count) + "/280")
-    if(checkAnswer == "H"):
+    if checkAnswer == "H":
         print("Correct")
         correct_count += 1
         correct_label.config(text="Correct: " + str(correct_count))
@@ -660,28 +592,28 @@ def checkHit():
         incorrect_count += 1
         incorrect_label.config(text="Incorrect: " + str(incorrect_count))
         result(False, checkAnswer)
-
-    if ANIMATION:
-        moveCardsOffScreen()
-
     if(play_token == "softs"):
         if count >= 80:
             #curr_count.config(text="Cards Played: " + str(count) + "/80")
             resetCards()
         else:
-            nextSoft()
+            if not ANIMATION:
+                nextSoft()
     elif(play_token == "hards"):
         if count >= 100:
             #curr_count.config(text="Cards Played: " + str(count) + "/100")
             resetCards()
         else:
-            nextHard()
+            if not ANIMATION:
+                nextHard()
     else:
         if count >= 280:
             #curr_count.config(text="Cards Played: " + str(count) + "/280")
             resetCards()
         else:
-            nextAll()
+            if not ANIMATION:
+                nextAll()
+
 
 def checkStand():
     global play_token, count, correct_count, incorrect_count
@@ -693,7 +625,7 @@ def checkStand():
         curr_count.config(text="Cards Played: " + str(count) + "/100")
     elif play_token == "all":
         curr_count.config(text="Cards Played: " + str(count) + "/280")
-    if(checkAnswer == "S"):
+    if checkAnswer == "S":
         print("Correct")
         correct_count += 1
         correct_label.config(text="Correct: " + str(correct_count))
@@ -703,28 +635,27 @@ def checkStand():
         incorrect_count += 1
         incorrect_label.config(text="Incorrect: " + str(incorrect_count))
         result(False, checkAnswer)
-
-    if ANIMATION:
-        moveCardsOffScreen()
-
     if(play_token == "softs"):
         if count >= 80:
             #curr_count.config(text="Cards Played: " + str(count) + "/80")
             resetCards()
         else:
-            nextSoft()
+            if not ANIMATION:
+                nextSoft()
     elif(play_token == "hards"):
         if count >= 100:
             #curr_count.config(text="Cards Played: " + str(count) + "/100")
             resetCards()
         else:
-            nextHard()
+            if not ANIMATION:
+                nextHard()
     else:
         if count >= 280:
             #curr_count.config(text="Cards Played: " + str(count) + "/280")
             resetCards()
         else:
-            nextAll()
+            if not ANIMATION:
+                nextAll()
 
 def checkDh():
     global play_token, count, correct_count, incorrect_count
@@ -736,7 +667,7 @@ def checkDh():
         curr_count.config(text="Cards Played: " + str(count) + "/100")
     elif play_token == "all":
         curr_count.config(text="Cards Played: " + str(count) + "/280")
-    if(checkAnswer == "Dh"):
+    if checkAnswer == "Dh":
         print("Correct")
         correct_count += 1
         correct_label.config(text="Correct: " + str(correct_count))
@@ -746,28 +677,27 @@ def checkDh():
         incorrect_count += 1
         incorrect_label.config(text="Incorrect: " + str(incorrect_count))
         result(False, checkAnswer)
-
-    if ANIMATION:
-        moveCardsOffScreen()
-
     if(play_token == "softs"):
         if count >= 80:
             #curr_count.config(text="Cards Played: " + str(count) + "/80")
             resetCards()
         else:
-            nextSoft()
+            if not ANIMATION:
+                nextSoft()
     elif(play_token == "hards"):
         if count >= 100:
             #curr_count.config(text="Cards Played: " + str(count) + "/100")
             resetCards()
         else:
-            nextHard()
+            if not ANIMATION:
+                nextHard()
     else:
         if count >= 280:
             #curr_count.config(text="Cards Played: " + str(count) + "/280")
             resetCards()
         else:
-            nextAll()
+            if not ANIMATION:
+                nextAll()
 
 def checkDs():
     global play_token, count, correct_count, incorrect_count
@@ -779,7 +709,7 @@ def checkDs():
         curr_count.config(text="Cards Played: " + str(count) + "/100")
     elif play_token == "all":
         curr_count.config(text="Cards Played: " + str(count) + "/280")
-    if(checkAnswer == "Ds"):
+    if checkAnswer == "Ds":
         print("Correct")
         correct_count += 1
         correct_label.config(text="Correct: " + str(correct_count))
@@ -789,31 +719,81 @@ def checkDs():
         incorrect_count += 1
         incorrect_label.config(text="Incorrect: " + str(incorrect_count))
         result(False, checkAnswer)
-
     if ANIMATION:
-        moveCardsOffScreen()
+        startCardAnimations()
 
-    if(play_token == "softs"):
+    if play_token == "softs":
         if count >= 80:
-            #curr_count.config(text="Cards Played: " + str(count) + "/80")
             resetCards()
         else:
             nextSoft()
-    elif(play_token == "hards"):
+    elif play_token == "hards":
         if count >= 100:
-            #curr_count.config(text="Cards Played: " + str(count) + "/100")
             resetCards()
         else:
             nextHard()
     else:
         if count >= 280:
-            #curr_count.config(text="Cards Played: " + str(count) + "/280")
             resetCards()
         else:
             nextAll()
+    if(play_token == "softs"):
+        if count >= 80:
+            #curr_count.config(text="Cards Played: " + str(count) + "/80")
+            resetCards()
+        else:
+            if not ANIMATION:
+                nextSoft()
+    elif(play_token == "hards"):
+        if count >= 100:
+            #curr_count.config(text="Cards Played: " + str(count) + "/100")
+            resetCards()
+        else:
+            if not ANIMATION:
+                nextHard()
+    else:
+        if count >= 280:
+            #curr_count.config(text="Cards Played: " + str(count) + "/280")
+            resetCards()
+        else:
+            if not ANIMATION:
+                nextAll()
 
 def close_window():
     window.destroy()
+
+
+# <--------------------------   Updates Functions ---------------------------------->
+
+def updateCardValuesAndMoveCardsOnScreen():
+    updateCardValues()
+    moveCardsBackOnScreen()
+    #show_action_buttons()
+
+def updateCardValues():
+    global play_token
+    if play_token == "splits":
+        nextSplit()
+    elif play_token == "softs":
+        nextSoft()
+    elif play_token == "hards":
+        nextHard()
+    elif play_token == "all":
+        nextAll()
+
+
+def moveCardsBackOnScreen():
+    moveCardsOnScreen([dealerCardCanvas, playerCard1Canvas, playerCard2Canvas], window, constants)
+
+
+def startCardAnimations():
+    #hide_action_buttons()
+    moveCardsOffScreen([dealerCardCanvas, playerCard1Canvas, playerCard2Canvas], window,
+                       updateCardValuesAndMoveCardsOnScreen, constants)
+
+
+# <--------------------------   Updates Functions ---------------------------------->
+
 
 window = tk.Tk()
 window.title("Joshy's BlackJack Basic Strategy Trainer")
@@ -821,7 +801,6 @@ window.geometry("1920x1080")
 window.geometry("+0+0")
 icon = tk.PhotoImage(file="bitcoin.png")
 window.iconphoto(True, icon)
-#window.configure(background="#3aa31a")
 window.configure(background=BG_COLOR)
 
 splitsBtn = tk.Button(window, text="Play Splits", font=("Arial", BUTTON_FONT), bd=ACTION_BUTTON_BORDER,
@@ -839,12 +818,6 @@ hardsBtn.place(x=HARDS_BTN_X, y=HARDS_BTN_Y)
 allBtn = tk.Button(window, text="Play All", font=("Arial", BUTTON_FONT), bd=ACTION_BUTTON_BORDER,
                    command=changeToAll)
 allBtn.place(x=ALL_BTN_X, y=ALL_BTN_Y)
-
-#dealerCard = tk.Label(window, text="Dealer Card: ", font=("Arial", BUTTON_FONT))
-#dealerCard.place(x=100, y=300)
-
-#playerCard = tk.Label(window, text="Player Card: ", font=("Arial", BUTTON_FONT))
-#playerCard.place(x=100, y=350)
 
 curr_count = tk.Label(window, text="Cards Played: ", font=("Arial", BUTTON_FONT))
 curr_count.place(x=50, y=600)
@@ -917,5 +890,14 @@ chart_btn.place(x=CHART_BTN_X, y=CHART_BTN_Y)
 close_btn = tk.Button(window, text="Close Window", font=("Arial", BUTTON_FONT), bd=ACTION_BUTTON_BORDER,
                       command=close_window)
 close_btn.place(x=CLOSE_BTN_X, y=CLOSE_BTN_Y)
+
+constants = {
+    'DEALER_CARD_CANVAS_Y_OFFSCREEN': DEALER_CARD_CANVAS_Y_OFFSCREEN,
+    'PLAYERCARD1_CANVAS_Y_OFFSCREEN': PLAYERCARD1_CANVAS_Y_OFFSCREEN,
+    'PLAYERCARD2_CANVAS_Y_OFFSCREEN': PLAYERCARD2_CANVAS_Y_OFFSCREEN,
+    'DEALER_CARD_CANVAS_Y': DEALER_CARD_CANVAS_Y,
+    'PLAYERCARD1_CANVAS_Y': PLAYERCARD1_CANVAS_Y,
+    'PLAYERCARD2_CANVAS_Y': PLAYERCARD2_CANVAS_Y,
+}
 
 window.mainloop()
