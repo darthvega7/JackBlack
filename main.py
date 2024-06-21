@@ -119,7 +119,7 @@ def resetCards():
     play_token = "none"
 
 
-def hide_action_buttons():
+def disable_action_buttons():
     splitYesBtn.config(state=tk.DISABLED)
     splitNoBtn.config(state=tk.DISABLED)
     hitBtn.config(state=tk.DISABLED)
@@ -134,7 +134,7 @@ def hide_action_buttons():
     inOrderBtn.config(state=tk.DISABLED)
 
 
-def show_action_buttons():
+def enable_action_buttons():
     global play_token, play_random
 
     splitYesBtn.config(state=tk.NORMAL)
@@ -169,7 +169,7 @@ def result(corr, answer):
     def show(time):
         global should_continue
         should_continue = False
-        hide_action_buttons()
+        disable_action_buttons()
         answer_label.place(relx=0.5, rely=0.5, anchor="center")
         window.after(time, hide)
         while not should_continue:
@@ -180,7 +180,7 @@ def result(corr, answer):
         answer_canvas.place_forget()
         answer_label.place_forget()
         should_continue = True
-        show_action_buttons()
+        enable_action_buttons()
         if ANIMATION:
             moveCardsOffScreen([dealerCardCanvas, playerCard1Canvas, playerCard2Canvas], window,
                                updateCardValuesAndMoveCardsOnScreen, constants)
@@ -775,7 +775,7 @@ def close_window():
 def updateCardValuesAndMoveCardsOnScreen():
     updateCardValues()
     moveCardsBackOnScreen()
-    #show_action_buttons()
+    #enable_action_buttons()
 
 def updateCardValues():
     global play_token, switched
@@ -797,7 +797,7 @@ def moveCardsBackOnScreen():
 
 
 def startCardAnimations():
-    #hide_action_buttons()
+    #disable_action_buttons()
     moveCardsOffScreen([dealerCardCanvas, playerCard1Canvas, playerCard2Canvas], window,
                        updateCardValuesAndMoveCardsOnScreen, constants)
 
