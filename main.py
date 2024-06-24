@@ -95,7 +95,6 @@ play_random = True
 count = 0
 correct_count = 0
 incorrect_count = 0
-switched = False
 
 
 def resetCards():
@@ -219,12 +218,11 @@ def result(corr, answer):
 
 
 def playRandom():
-    global play_random, play_token, count, correct_count, incorrect_count, switched
+    global play_random, play_token, count, correct_count, incorrect_count
     play_random = True
     count = 0
     correct_count = 0
     incorrect_count = 0
-    switched = False
     if ANIMATION:
         startCardAnimations()
     correct_label.config(text="Correct: " + str(correct_count))
@@ -251,12 +249,11 @@ def playRandom():
             nextAll()
 
 def playInOrder():
-    global play_random, play_token, count, correct_count, incorrect_count, switched
+    global play_random, play_token, count, correct_count, incorrect_count
     play_random = False
     count = 0
     correct_count = 0
     incorrect_count = 0
-    switched = False
     if ANIMATION:
         startCardAnimations()
     correct_label.config(text="Correct: " + str(correct_count))
@@ -418,12 +415,11 @@ def nextAll():
 
 
 def changeToSplits():
-    global play_token, count, correct_count, incorrect_count, switched
+    global play_token, count, correct_count, incorrect_count
     play_token = "splits"
     count = 0
     correct_count = 0
     incorrect_count = 0
-    switched = True
     if ANIMATION:
         startCardAnimations()
     correct_label.config(text="Correct: " + str(correct_count))
@@ -443,12 +439,11 @@ def changeToSplits():
 
 
 def changeToSofts():
-    global play_token, count, correct_count, incorrect_count, switched
+    global play_token, count, correct_count, incorrect_count
     play_token = "softs"
     count = 0
     correct_count = 0
     incorrect_count = 0
-    switched = True
     if ANIMATION:
         startCardAnimations()
     correct_label.config(text="Correct: " + str(correct_count))
@@ -468,12 +463,11 @@ def changeToSofts():
 
 
 def changeToHards():
-    global play_token, count, correct_count, incorrect_count, switched
+    global play_token, count, correct_count, incorrect_count
     play_token = "hards"
     count = 0
     correct_count = 0
     incorrect_count = 0
-    switched = True
     if ANIMATION:
         startCardAnimations()
     correct_label.config(text="Correct: " + str(correct_count))
@@ -493,12 +487,11 @@ def changeToHards():
 
 
 def changeToAll():
-    global play_token, count, correct_count, incorrect_count, switched
+    global play_token, count, correct_count, incorrect_count
     play_token = "all"
     count = 0
     correct_count = 0
     incorrect_count = 0
-    switched = True
     if ANIMATION:
         startCardAnimations()
     correct_label.config(text="Correct: " + str(correct_count))
@@ -728,22 +721,6 @@ def checkDs():
         result(False, checkAnswer)
     if ANIMATION:
         startCardAnimations()
-
-    if play_token == "softs":
-        if count >= 80:
-            resetCards()
-        else:
-            nextSoft()
-    elif play_token == "hards":
-        if count >= 100:
-            resetCards()
-        else:
-            nextHard()
-    else:
-        if count >= 280:
-            resetCards()
-        else:
-            nextAll()
     if(play_token == "softs"):
         if count >= 80:
             #curr_count.config(text="Cards Played: " + str(count) + "/80")
@@ -778,18 +755,15 @@ def updateCardValuesAndMoveCardsOnScreen():
     #enable_action_buttons()
 
 def updateCardValues():
-    global play_token, switched
-    if not switched:
-        if play_token == "splits":
-            nextSplit()
-        elif play_token == "softs":
-            nextSoft()
-        elif play_token == "hards":
-            nextHard()
-        elif play_token == "all":
-            nextAll()
-    else:
-        switched = False
+    global play_token
+    if play_token == "splits":
+        nextSplit()
+    elif play_token == "softs":
+        nextSoft()
+    elif play_token == "hards":
+        nextHard()
+    elif play_token == "all":
+        nextAll()
 
 
 def moveCardsBackOnScreen():
