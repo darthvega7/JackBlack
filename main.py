@@ -99,12 +99,13 @@ incorrect_count = 0
 
 def resetCards():
     global play_token, count
-    dealerCardValue.config(text="")
-    dealerSuitValue.config(text="")
-    playerCard1Value.config(text="")
-    playerCard2Value.config(text="")
-    playerCard1SuitValue.config(text="")
-    playerCard2SuitValue.config(text="")
+    if not ANIMATION:
+        dealerCardValue.config(text="")
+        dealerSuitValue.config(text="")
+        playerCard1Value.config(text="")
+        playerCard2Value.config(text="")
+        playerCard1SuitValue.config(text="")
+        playerCard2SuitValue.config(text="")
     splitsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
     softsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
     hardsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
@@ -180,9 +181,9 @@ def result(corr, answer):
         answer_label.place_forget()
         should_continue = True
         enable_action_buttons()
-        if ANIMATION:
-            moveCardsOffScreen([dealerCardCanvas, playerCard1Canvas, playerCard2Canvas], window,
-                               updateCardValuesAndMoveCardsOnScreen, constants)
+        # if ANIMATION:
+            # moveCardsOffScreen([dealerCardCanvas, playerCard1Canvas, playerCard2Canvas], window,
+            #                    updateCardValuesAndMoveCardsOnScreen, constants)
 
     if corr:
         answer_canvas = tk.Canvas(window, width=CORRECT_ANSWER_CANVAS_WIDTH, height=CORRECT_ANSWER_CANVAS_HEIGHT,
@@ -524,19 +525,22 @@ def checkSplitYes():
         result(False, checkAnswer)
     if(play_token == "splits"):
         if count >= 100:
-            #curr_count.config(text="Cards Played: " + str(count) + "/100")
+            startCardAnimations()
             resetCards()
         else:
             if not ANIMATION:
                 nextSplit()
+            else:
+                startCardAnimations()
     else:
         if count >= 280:
-            #curr_count.config(text="Cards Played: " + str(count) + "/280")
             startCardAnimations()
             resetCards()
         else:
             if not ANIMATION:
                 nextAll()
+            else:
+                startCardAnimations()
 
 def checkSplitNo():
     global play_token, count, correct_count, incorrect_count
@@ -558,19 +562,22 @@ def checkSplitNo():
         result(False, checkAnswer)
     if(play_token == "splits"):
         if count >= 100:
-            #curr_count.config(text="Cards Played: " + str(count) + "/100")
             startCardAnimations()
             resetCards()
         else:
             if not ANIMATION:
                 nextSplit()
+            else:
+                startCardAnimations()
     else:
         if count >= 280:
-            #curr_count.config(text="Cards Played: " + str(count) + "/280")
+            startCardAnimations()
             resetCards()
         else:
             if not ANIMATION:
                 nextAll()
+            else:
+                startCardAnimations()
 
 def checkHit():
     global play_token, count, correct_count, incorrect_count
@@ -594,25 +601,31 @@ def checkHit():
         result(False, checkAnswer)
     if(play_token == "softs"):
         if count >= 80:
-            #curr_count.config(text="Cards Played: " + str(count) + "/80")
+            startCardAnimations()
             resetCards()
         else:
             if not ANIMATION:
                 nextSoft()
+            else:
+                startCardAnimations()
     elif(play_token == "hards"):
         if count >= 100:
-            #curr_count.config(text="Cards Played: " + str(count) + "/100")
+            startCardAnimations()
             resetCards()
         else:
             if not ANIMATION:
                 nextHard()
+            else:
+                startCardAnimations()
     else:
         if count >= 280:
-            #curr_count.config(text="Cards Played: " + str(count) + "/280")
+            startCardAnimations()
             resetCards()
         else:
             if not ANIMATION:
                 nextAll()
+            else:
+                startCardAnimations()
 
 
 def checkStand():
@@ -637,25 +650,31 @@ def checkStand():
         result(False, checkAnswer)
     if(play_token == "softs"):
         if count >= 80:
-            #curr_count.config(text="Cards Played: " + str(count) + "/80")
+            startCardAnimations()
             resetCards()
         else:
             if not ANIMATION:
                 nextSoft()
+            else:
+                startCardAnimations()
     elif(play_token == "hards"):
         if count >= 100:
-            #curr_count.config(text="Cards Played: " + str(count) + "/100")
+            startCardAnimations()
             resetCards()
         else:
             if not ANIMATION:
                 nextHard()
+            else:
+                startCardAnimations()
     else:
         if count >= 280:
-            #curr_count.config(text="Cards Played: " + str(count) + "/280")
+            startCardAnimations()
             resetCards()
         else:
             if not ANIMATION:
                 nextAll()
+            else:
+                startCardAnimations()
 
 def checkDh():
     global play_token, count, correct_count, incorrect_count
@@ -679,25 +698,31 @@ def checkDh():
         result(False, checkAnswer)
     if(play_token == "softs"):
         if count >= 80:
-            #curr_count.config(text="Cards Played: " + str(count) + "/80")
+            startCardAnimations()
             resetCards()
         else:
             if not ANIMATION:
                 nextSoft()
+            else:
+                startCardAnimations()
     elif(play_token == "hards"):
         if count >= 100:
-            #curr_count.config(text="Cards Played: " + str(count) + "/100")
+            startCardAnimations()
             resetCards()
         else:
             if not ANIMATION:
                 nextHard()
+            else:
+                startCardAnimations()
     else:
         if count >= 280:
-            #curr_count.config(text="Cards Played: " + str(count) + "/280")
+            startCardAnimations()
             resetCards()
         else:
             if not ANIMATION:
                 nextAll()
+            else:
+                startCardAnimations()
 
 def checkDs():
     global play_token, count, correct_count, incorrect_count
@@ -719,29 +744,35 @@ def checkDs():
         incorrect_count += 1
         incorrect_label.config(text="Incorrect: " + str(incorrect_count))
         result(False, checkAnswer)
-    if ANIMATION:
-        startCardAnimations()
+    # if ANIMATION:
+    #     startCardAnimations()
     if(play_token == "softs"):
         if count >= 80:
-            #curr_count.config(text="Cards Played: " + str(count) + "/80")
+            startCardAnimations()
             resetCards()
         else:
             if not ANIMATION:
                 nextSoft()
+            else:
+                startCardAnimations()
     elif(play_token == "hards"):
         if count >= 100:
-            #curr_count.config(text="Cards Played: " + str(count) + "/100")
+            startCardAnimations()
             resetCards()
         else:
             if not ANIMATION:
                 nextHard()
+            else:
+                startCardAnimations()
     else:
         if count >= 280:
-            #curr_count.config(text="Cards Played: " + str(count) + "/280")
+            startCardAnimations()
             resetCards()
         else:
             if not ANIMATION:
                 nextAll()
+            else:
+                startCardAnimations()
 
 def close_window():
     window.destroy()
