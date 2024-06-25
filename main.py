@@ -95,6 +95,7 @@ play_random = True
 count = 0
 correct_count = 0
 incorrect_count = 0
+last_card_played = False
 
 
 def resetCards():
@@ -506,7 +507,7 @@ def changeToAll():
 
 
 def checkSplitYes():
-    global play_token, count, correct_count, incorrect_count
+    global play_token, count, correct_count, incorrect_count, last_card_played
     print("Split Yes")
     count += 1
     if play_token == "splits":
@@ -525,6 +526,7 @@ def checkSplitYes():
         result(False, checkAnswer)
     if(play_token == "splits"):
         if count >= 100:
+            last_card_played = True
             startCardAnimations()
             resetCards()
         else:
@@ -534,6 +536,7 @@ def checkSplitYes():
                 startCardAnimations()
     else:
         if count >= 280:
+            last_card_played = True
             startCardAnimations()
             resetCards()
         else:
@@ -543,7 +546,7 @@ def checkSplitYes():
                 startCardAnimations()
 
 def checkSplitNo():
-    global play_token, count, correct_count, incorrect_count
+    global play_token, count, correct_count, incorrect_count, last_card_played
     print("Split No")
     count += 1
     if play_token == "splits":
@@ -562,6 +565,7 @@ def checkSplitNo():
         result(False, checkAnswer)
     if(play_token == "splits"):
         if count >= 100:
+            last_card_played = True
             startCardAnimations()
             resetCards()
         else:
@@ -571,6 +575,7 @@ def checkSplitNo():
                 startCardAnimations()
     else:
         if count >= 280:
+            last_card_played = True
             startCardAnimations()
             resetCards()
         else:
@@ -580,7 +585,7 @@ def checkSplitNo():
                 startCardAnimations()
 
 def checkHit():
-    global play_token, count, correct_count, incorrect_count
+    global play_token, count, correct_count, incorrect_count, last_card_played
     print("Hit")
     count += 1
     if play_token == "softs":
@@ -601,6 +606,7 @@ def checkHit():
         result(False, checkAnswer)
     if(play_token == "softs"):
         if count >= 80:
+            last_card_played = True
             startCardAnimations()
             resetCards()
         else:
@@ -610,6 +616,7 @@ def checkHit():
                 startCardAnimations()
     elif(play_token == "hards"):
         if count >= 100:
+            last_card_played = True
             startCardAnimations()
             resetCards()
         else:
@@ -619,6 +626,7 @@ def checkHit():
                 startCardAnimations()
     else:
         if count >= 280:
+            last_card_played = True
             startCardAnimations()
             resetCards()
         else:
@@ -629,7 +637,7 @@ def checkHit():
 
 
 def checkStand():
-    global play_token, count, correct_count, incorrect_count
+    global play_token, count, correct_count, incorrect_count, last_card_played
     print("Stand")
     count += 1
     if play_token == "softs":
@@ -650,6 +658,7 @@ def checkStand():
         result(False, checkAnswer)
     if(play_token == "softs"):
         if count >= 80:
+            last_card_played = True
             startCardAnimations()
             resetCards()
         else:
@@ -659,6 +668,7 @@ def checkStand():
                 startCardAnimations()
     elif(play_token == "hards"):
         if count >= 100:
+            last_card_played = True
             startCardAnimations()
             resetCards()
         else:
@@ -668,6 +678,7 @@ def checkStand():
                 startCardAnimations()
     else:
         if count >= 280:
+            last_card_played = True
             startCardAnimations()
             resetCards()
         else:
@@ -677,7 +688,7 @@ def checkStand():
                 startCardAnimations()
 
 def checkDh():
-    global play_token, count, correct_count, incorrect_count
+    global play_token, count, correct_count, incorrect_count, last_card_played
     print("Double or Hit")
     count += 1
     if play_token == "softs":
@@ -698,6 +709,7 @@ def checkDh():
         result(False, checkAnswer)
     if(play_token == "softs"):
         if count >= 80:
+            last_card_played = True
             startCardAnimations()
             resetCards()
         else:
@@ -707,6 +719,7 @@ def checkDh():
                 startCardAnimations()
     elif(play_token == "hards"):
         if count >= 100:
+            last_card_played = True
             startCardAnimations()
             resetCards()
         else:
@@ -716,6 +729,7 @@ def checkDh():
                 startCardAnimations()
     else:
         if count >= 280:
+            last_card_played = True
             startCardAnimations()
             resetCards()
         else:
@@ -725,7 +739,7 @@ def checkDh():
                 startCardAnimations()
 
 def checkDs():
-    global play_token, count, correct_count, incorrect_count
+    global play_token, count, correct_count, incorrect_count, last_card_played
     print("Double or Stand")
     count += 1
     if play_token == "softs":
@@ -748,6 +762,7 @@ def checkDs():
     #     startCardAnimations()
     if(play_token == "softs"):
         if count >= 80:
+            last_card_played = True
             startCardAnimations()
             resetCards()
         else:
@@ -757,6 +772,7 @@ def checkDs():
                 startCardAnimations()
     elif(play_token == "hards"):
         if count >= 100:
+            last_card_played = True
             startCardAnimations()
             resetCards()
         else:
@@ -766,6 +782,7 @@ def checkDs():
                 startCardAnimations()
     else:
         if count >= 280:
+            last_card_played = True
             startCardAnimations()
             resetCards()
         else:
@@ -781,8 +798,12 @@ def close_window():
 # <--------------------------   Updates Functions ---------------------------------->
 
 def updateCardValuesAndMoveCardsOnScreen():
+    global last_card_played
     updateCardValues()
-    moveCardsBackOnScreen()
+    if last_card_played:
+        last_card_played = False
+    else:
+        moveCardsBackOnScreen()
     #enable_action_buttons()
 
 def updateCardValues():
