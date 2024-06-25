@@ -5,6 +5,7 @@ import random
 from card_movement import moveCardsOffScreen, moveCardsOnScreen
 
 ANIMATION = True
+FIRST_CARD = True
 
 BG_COLOR = "#135900"
 SPLIT_YES_BG_COLOR = "#3aa31a"
@@ -417,7 +418,7 @@ def nextAll():
 
 
 def changeToSplits():
-    global play_token, count, correct_count, incorrect_count
+    global play_token, count, correct_count, incorrect_count, FIRST_CARD
     play_token = "splits"
     count = 0
     correct_count = 0
@@ -437,11 +438,13 @@ def changeToSplits():
     doubleStandBtn.place_forget()
     splitYesBtn.place(x=SPLIT_YES_BTN_X, y=SPLIT_YES_BTN_Y)
     splitNoBtn.place(x=SPLIT_NO_BTN_X, y=SPLIT_NO_BTN_Y)
-    nextSplit()
-
+    if not ANIMATION or FIRST_CARD:
+        nextSplit()
+    if FIRST_CARD:
+        FIRST_CARD = False
 
 def changeToSofts():
-    global play_token, count, correct_count, incorrect_count
+    global play_token, count, correct_count, incorrect_count, FIRST_CARD
     play_token = "softs"
     count = 0
     correct_count = 0
@@ -461,11 +464,13 @@ def changeToSofts():
     standBtn.place(x=STAND_BTN_X, y=STAND_BTN_Y)
     doubleHitBtn.place(x=DH_BTN_X, y=DH_BTN_Y)
     doubleStandBtn.place(x=DS_BTN_X, y=DS_BTN_Y)
-    nextSoft()
-
+    if not ANIMATION or FIRST_CARD:
+        nextSoft()
+    if FIRST_CARD:
+        FIRST_CARD = False
 
 def changeToHards():
-    global play_token, count, correct_count, incorrect_count
+    global play_token, count, correct_count, incorrect_count, FIRST_CARD
     play_token = "hards"
     count = 0
     correct_count = 0
@@ -485,11 +490,13 @@ def changeToHards():
     standBtn.place(x=STAND_BTN_X, y=STAND_BTN_Y)
     doubleHitBtn.place(x=DH_BTN_X, y=DH_BTN_Y)
     doubleStandBtn.place(x=DS_BTN_X, y=DS_BTN_Y)
-    nextHard()
-
+    if not ANIMATION or FIRST_CARD:
+        nextHard()
+    if FIRST_CARD:
+        FIRST_CARD = False
 
 def changeToAll():
-    global play_token, count, correct_count, incorrect_count
+    global play_token, count, correct_count, incorrect_count, FIRST_CARD
     play_token = "all"
     count = 0
     correct_count = 0
@@ -503,8 +510,10 @@ def changeToAll():
     softsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
     hardsBtn.config(relief=tk.RAISED, state=tk.NORMAL)
     allBtn.config(relief=tk.SUNKEN, state=tk.DISABLED)
-    nextAll()
-
+    if not ANIMATION or FIRST_CARD:
+        nextAll()
+    if FIRST_CARD:
+        FIRST_CARD = False
 
 def checkSplitYes():
     global play_token, count, correct_count, incorrect_count, last_card_played
@@ -798,10 +807,11 @@ def close_window():
 # <--------------------------   Updates Functions ---------------------------------->
 
 def updateCardValuesAndMoveCardsOnScreen():
-    global last_card_played
+    global last_card_played, FIRST_CARD
     updateCardValues()
     if last_card_played:
         last_card_played = False
+        FIRST_CARD = True
     else:
         moveCardsBackOnScreen()
     #enable_action_buttons()
