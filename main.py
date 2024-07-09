@@ -182,7 +182,8 @@ def result(corr, answer):
         answer_canvas.place_forget()
         answer_label.place_forget()
         should_continue = True
-        enable_action_buttons()
+        if not ANIMATION:
+            enable_action_buttons()
         # if ANIMATION:
             # moveCardsOffScreen([dealerCardCanvas, playerCard1Canvas, playerCard2Canvas], window,
             #                    updateCardValuesAndMoveCardsOnScreen, constants)
@@ -424,6 +425,7 @@ def changeToSplits():
     correct_count = 0
     incorrect_count = 0
     if ANIMATION:
+        disable_action_buttons()
         startCardAnimations()
     correct_label.config(text="Correct: " + str(correct_count))
     incorrect_label.config(text="Incorrect: " + str(incorrect_count))
@@ -442,6 +444,9 @@ def changeToSplits():
         nextSplit()
     if FIRST_CARD:
         FIRST_CARD = False
+        if ANIMATION:
+            window.after(900, enable_action_buttons)
+
 
 def changeToSofts():
     global play_token, count, correct_count, incorrect_count, FIRST_CARD
@@ -450,6 +455,7 @@ def changeToSofts():
     correct_count = 0
     incorrect_count = 0
     if ANIMATION:
+        disable_action_buttons()
         startCardAnimations()
     correct_label.config(text="Correct: " + str(correct_count))
     incorrect_label.config(text="Incorrect: " + str(incorrect_count))
@@ -468,6 +474,8 @@ def changeToSofts():
         nextSoft()
     if FIRST_CARD:
         FIRST_CARD = False
+        if ANIMATION:
+            window.after(900, enable_action_buttons)
 
 def changeToHards():
     global play_token, count, correct_count, incorrect_count, FIRST_CARD
@@ -476,6 +484,7 @@ def changeToHards():
     correct_count = 0
     incorrect_count = 0
     if ANIMATION:
+        disable_action_buttons()
         startCardAnimations()
     correct_label.config(text="Correct: " + str(correct_count))
     incorrect_label.config(text="Incorrect: " + str(incorrect_count))
@@ -494,6 +503,8 @@ def changeToHards():
         nextHard()
     if FIRST_CARD:
         FIRST_CARD = False
+        if ANIMATION:
+            window.after(900, enable_action_buttons)
 
 def changeToAll():
     global play_token, count, correct_count, incorrect_count, FIRST_CARD
@@ -502,6 +513,7 @@ def changeToAll():
     correct_count = 0
     incorrect_count = 0
     if ANIMATION:
+        disable_action_buttons()
         startCardAnimations()
     correct_label.config(text="Correct: " + str(correct_count))
     incorrect_label.config(text="Incorrect: " + str(incorrect_count))
@@ -514,6 +526,8 @@ def changeToAll():
         nextAll()
     if FIRST_CARD:
         FIRST_CARD = False
+        if ANIMATION:
+            window.after(900, enable_action_buttons)
 
 def checkSplitYes():
     global play_token, count, correct_count, incorrect_count, last_card_played
@@ -814,7 +828,6 @@ def updateCardValuesAndMoveCardsOnScreen():
         FIRST_CARD = True
     else:
         moveCardsBackOnScreen()
-    #enable_action_buttons()
 
 def updateCardValues():
     global play_token
@@ -830,6 +843,8 @@ def updateCardValues():
 
 def moveCardsBackOnScreen():
     moveCardsOnScreen([dealerCardCanvas, playerCard1Canvas, playerCard2Canvas], window, constants)
+    #enable_action_buttons()
+    window.after(900, enable_action_buttons)
 
 
 def startCardAnimations():
